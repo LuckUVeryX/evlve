@@ -4,5 +4,7 @@
     "signInPageEmail": "Email",
     "signInPagePassword": "Password",
     "signInPageButton": "Sign In",
-    "otpPageTitle": "OTP"
+    "otpPageTitle": "OTP",
+    "bottomNavSchedule": "Schedule",
+    "bottomNavSettings": "Settings"
 }

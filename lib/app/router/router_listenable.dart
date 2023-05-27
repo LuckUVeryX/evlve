@@ -27,12 +27,14 @@ class RouterListenable extends _$RouterListenable implements Listenable {
   String? redirect(BuildContext context, GoRouterState state) {
     if (this.state.isLoading || this.state.hasError) return null;
 
-    final isHome = state.location == HomeRoute.path;
+    const otpPath = '${SignInRoute.path}/${OTPRoute.path}';
+    final authPaths = {SignInRoute.path, otpPath};
+    final isAuth = authPaths.contains(state.location);
 
     return _authState?.when(
-      loggedIn: () => isHome ? null : HomeRoute.path,
+      loggedIn: () => !isAuth ? null : HomeRoute.path,
       loggedOut: () => SignInRoute.path,
-      requireOtp: () => '${SignInRoute.path}/${OTPRoute.path}',
+      requireOtp: () => otpPath,
     );
   }
 
