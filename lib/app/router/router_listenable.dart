@@ -32,7 +32,7 @@ class RouterListenable extends _$RouterListenable implements Listenable {
     return _authState?.when(
       loggedIn: () => isHome ? null : HomeRoute.path,
       loggedOut: () => SignInRoute.path,
-      requireOtp: () => SignInRoute.path,
+      requireOtp: () => '${SignInRoute.path}/${OTPRoute.path}',
     );
   }
 

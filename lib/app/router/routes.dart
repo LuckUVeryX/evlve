@@ -16,13 +16,24 @@ class SplashRoute extends GoRouteData {
   }
 }
 
-@TypedGoRoute<SignInRoute>(path: SignInRoute.path)
+@TypedGoRoute<SignInRoute>(
+  path: SignInRoute.path,
+  routes: [TypedGoRoute<OTPRoute>(path: OTPRoute.path)],
+)
 class SignInRoute extends GoRouteData {
   static const path = '/auth';
 
   @override
   Widget build(BuildContext context, GoRouterState state) {
     return const SigninPage();
+  }
+}
+
+class OTPRoute extends GoRouteData {
+  static const path = 'OTP';
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return const OTPPage();
   }
 }
 
