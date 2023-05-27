@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:evlve/api/api.dart';
 import 'package:evlve/modules/auth/models/models.dart';
+import 'package:evlve/modules/user/user.dart';
 import 'package:evlve/providers/providers.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -40,10 +41,16 @@ class AuthRepo {
     return response;
   }
 
-  Future<void> signInWithToken() async {
+  Future<User> signInWithToken() async {
     final token = await _storage.read(key: _tokenKey);
     if (token == null) throw Exception();
     _api.addAuthHeader(token);
+
+    final res = await _api.get(ApiPath.getMemberships);
+    final memberships = (res.data as List<dynamic>?)
+        ?.map((e) => User.fromJson(e as Map<String, dynamic>))
+        .toList();
+    return memberships!.first;
   }
 
   Future<void> signOut() async {

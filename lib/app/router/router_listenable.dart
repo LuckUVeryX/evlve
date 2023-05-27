@@ -31,10 +31,10 @@ class RouterListenable extends _$RouterListenable implements Listenable {
     final authPaths = {SplashRoute.path, SignInRoute.path, otpPath};
     final isAuth = authPaths.contains(state.location);
 
-    return _authState?.when(
-      loggedIn: () => isAuth ? HomeRoute.path : null,
-      loggedOut: () => SignInRoute.path,
-      requireOtp: () => otpPath,
+    return _authState?.map(
+      loggedIn: (_) => isAuth ? HomeRoute.path : null,
+      loggedOut: (_) => SignInRoute.path,
+      requireOtp: (_) => otpPath,
     );
   }
 
