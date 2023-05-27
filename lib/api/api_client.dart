@@ -19,7 +19,11 @@ ApiClient api(ApiRef ref) {
         },
       ),
     )..interceptors.add(
-        LogInterceptor(),
+        LogInterceptor(
+          request: false,
+          requestHeader: false,
+          responseHeader: false,
+        ),
       ),
   );
 }
