@@ -1,6 +1,7 @@
 import 'package:evlve/app/app.dart';
 import 'package:evlve/modules/auth/auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 part 'routes.g.dart';
@@ -34,6 +35,25 @@ class HomeRoute extends GoRouteData {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Home'),
+        actions: [
+          Consumer(
+            builder: (context, ref, child) {
+              final auth = ref.watch(authControllerProvider);
+              return auth.maybeWhen(
+                loading: null,
+                orElse: () => IconButton(
+                  onPressed: () {
+                    ref.read(authControllerProvider.notifier).logout();
+                  },
+                  icon: auth.maybeWhen(
+                    loading: () => const CircularProgressIndicator(),
+                    orElse: () => const Icon(Icons.logout),
+                  ),
+                ),
+              );
+            },
+          ),
+        ],
       ),
     );
   }
