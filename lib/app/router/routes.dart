@@ -1,5 +1,6 @@
 import 'package:evlve/app/app.dart';
 import 'package:evlve/modules/auth/auth.dart';
+import 'package:evlve/modules/schedule/schedule.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -57,13 +58,7 @@ class HomeRoute extends GoRouteData {
   static const path = '/';
   @override
   Page<void> buildPage(BuildContext context, GoRouterState state) {
-    return NoTransitionPage(
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Home'),
-        ),
-      ),
-    );
+    return const NoTransitionPage(child: SchedulePage());
   }
 }
 
