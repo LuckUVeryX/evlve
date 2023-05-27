@@ -1,6 +1,8 @@
 import 'package:evlve/app/app.dart';
 import 'package:evlve/l10n/l10n.dart';
+import 'package:evlve/modules/auth/controllers/controllers.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class SigninPage extends StatefulWidget {
   const SigninPage({super.key});
@@ -11,6 +13,16 @@ class SigninPage extends StatefulWidget {
 
 class _SigninPageState extends State<SigninPage> {
   final _formKey = GlobalKey<FormState>();
+
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +47,7 @@ class _SigninPageState extends State<SigninPage> {
                       ),
                     ),
                     TextFormField(
+                      controller: _emailController,
                       autofillHints: const [AutofillHints.email],
                       validator: (value) {
                         return (value?.trim().isEmpty ?? true) ? '' : null;
@@ -44,30 +57,19 @@ class _SigninPageState extends State<SigninPage> {
                         labelText: context.l10n.signInPageEmail,
                       ),
                     ),
-                    TextFormField(
-                      obscureText: true,
-                      autofillHints: const [AutofillHints.password],
-                      decoration: InputDecoration(
-                        prefixIcon: const Icon(Icons.key),
-                        labelText: context.l10n.signInPagePassword,
-                      ),
-                      validator: (value) {
-                        return (value?.trim().isEmpty ?? true) ? '' : null;
-                      },
-                    ),
+                    _PasswordTextField(controller: _passwordController),
                     const SizedBox(height: 12),
                     Row(
                       children: [
                         const Spacer(),
                         Expanded(
                           flex: 2,
-                          child: FilledButton(
-                            onPressed: () {
-                              if (_formKey.currentState?.validate() ?? false) {
-                                return;
-                              }
-                            },
-                            child: Text(context.l10n.signInPageButton),
+                          child: _SignInButton(
+                            formKey: _formKey,
+                            controllers: (
+                              _emailController,
+                              _passwordController
+                            ),
                           ),
                         ),
                         const Spacer(),
@@ -80,6 +82,82 @@ class _SigninPageState extends State<SigninPage> {
           ),
         ),
       ),
+    );
+  }
+}
+
+class _PasswordTextField extends StatefulWidget {
+  const _PasswordTextField({
+    required this.controller,
+  });
+
+  final TextEditingController controller;
+
+  @override
+  State<_PasswordTextField> createState() => _PasswordTextFieldState();
+}
+
+class _PasswordTextFieldState extends State<_PasswordTextField> {
+  bool _obscureText = true;
+
+  void _toggleVisibility() {
+    setState(() => _obscureText = !_obscureText);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      obscureText: _obscureText,
+      controller: widget.controller,
+      autofillHints: const [AutofillHints.password],
+      decoration: InputDecoration(
+        prefixIcon: const Icon(Icons.key_outlined),
+        labelText: context.l10n.signInPagePassword,
+        suffixIcon: IconButton(
+          icon: Icon(
+            _obscureText
+                ? Icons.visibility_outlined
+                : Icons.visibility_off_outlined,
+          ),
+          onPressed: _toggleVisibility,
+        ),
+      ),
+      validator: (value) {
+        return (value?.trim().isEmpty ?? true) ? '' : null;
+      },
+    );
+  }
+}
+
+class _SignInButton extends ConsumerWidget {
+  const _SignInButton({
+    required this.formKey,
+    required this.controllers,
+  });
+
+  final GlobalKey<FormState> formKey;
+  final (
+    TextEditingController email,
+    TextEditingController password
+  ) controllers;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final value = ref.watch(authControllerProvider);
+
+    return FilledButton(
+      onPressed: value.maybeWhen(
+        loading: null,
+        orElse: () => () {
+          final isValid = formKey.currentState?.validate() ?? false;
+          if (!isValid) return;
+          final (email, password) = controllers;
+          ref
+              .read(authControllerProvider.notifier)
+              .signIn(email: email.text, password: password.text);
+        },
+      ),
+      child: Text(context.l10n.signInPageButton),
     );
   }
 }
