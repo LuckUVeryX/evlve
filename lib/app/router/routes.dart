@@ -39,20 +39,17 @@ class OTPRoute extends GoRouteData {
   }
 }
 
-@TypedShellRoute<RootRoute>(
-  routes: [
-    TypedGoRoute<HomeRoute>(path: HomeRoute.path),
-    TypedGoRoute<SettingsRoute>(path: SettingsRoute.path),
+final rootRoute = StatefulShellRoute.indexedStack(
+  builder: (context, state, navigationShell) {
+    return RootPage(navigationShell: navigationShell);
+  },
+  branches: [
+    StatefulShellBranch(routes: [$homeRoute]),
+    StatefulShellBranch(routes: [$settingsRoute]),
   ],
-)
-class RootRoute extends ShellRouteData {
-  const RootRoute();
-  @override
-  Widget builder(BuildContext context, GoRouterState state, Widget navigator) {
-    return RootPage(navigator: navigator);
-  }
-}
+);
 
+@TypedGoRoute<HomeRoute>(path: HomeRoute.path)
 class HomeRoute extends GoRouteData {
   const HomeRoute();
   static const path = '/';
@@ -62,6 +59,7 @@ class HomeRoute extends GoRouteData {
   }
 }
 
+@TypedGoRoute<SettingsRoute>(path: SettingsRoute.path)
 class SettingsRoute extends GoRouteData {
   const SettingsRoute();
   static const path = '/settings';
