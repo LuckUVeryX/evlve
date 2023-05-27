@@ -43,13 +43,16 @@ class _SigninPageState extends State<SigninPage> {
                       alignment: Alignment.topLeft,
                       child: Text(
                         context.l10n.signInPageTitle,
-                        style: context.textTheme.titleLarge,
+                        style: context.textTheme.titleLarge
+                            ?.copyWith(color: context.colorScheme.onBackground),
                       ),
                     ),
                     TextFormField(
                       controller: _emailController,
                       keyboardType: TextInputType.emailAddress,
                       autofillHints: const [AutofillHints.email],
+                      style: context.textTheme.bodyMedium
+                          ?.copyWith(color: context.colorScheme.onBackground),
                       validator: (value) {
                         return (value?.trim().isEmpty ?? true) ? '' : null;
                       },
@@ -114,6 +117,8 @@ class _PasswordTextFieldState extends State<_PasswordTextField> {
       keyboardType: TextInputType.visiblePassword,
       autofillHints: const [AutofillHints.password],
       autovalidateMode: AutovalidateMode.onUserInteraction,
+      style: context.textTheme.bodyMedium
+          ?.copyWith(color: context.colorScheme.onBackground),
       decoration: InputDecoration(
         prefixIcon: const Icon(Icons.key_outlined),
         labelText: context.l10n.signInPagePassword,
