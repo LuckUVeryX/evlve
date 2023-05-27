@@ -9,6 +9,14 @@ Future<ScheduleList> schedule(
   ScheduleRef ref, {
   required DateTime date,
   required Area area,
-}) {
-  return ref.watch(scheduleRepoProvider).fetchSchedule(date, area);
+}) async {
+  final rawSchedules =
+      await ref.watch(scheduleRepoProvider).fetchSchedule(date, area);
+  return rawSchedules.copyWith(
+    schedules: [...rawSchedules.schedules]
+      ..removeWhere(
+        (s) => !s.date.isAtSameMomentAs(date),
+      )
+      ..sort((a, b) => a.start.compareTo(b.start)),
+  );
 }
