@@ -3,5 +3,6 @@
     "signInPageTitle": "Sign In",
     "signInPageEmail": "Email",
     "signInPagePassword": "Password",
-    "signInPageButton": "Sign In"
+    "signInPageButton": "Sign In",
+    "otpPageTitle": "OTP"
 }
