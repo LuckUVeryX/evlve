@@ -1,5 +1,6 @@
 import 'package:evlve/app/controllers/controllers.dart';
 import 'package:evlve/l10n/l10n.dart';
+import 'package:evlve/modules/schedule/controllers/schedule_date_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -29,8 +30,15 @@ class _BottomNavigationBar extends ConsumerWidget {
 
     return NavigationBar(
       selectedIndex: selectedIndex,
-      onDestinationSelected:
-          ref.read(bottomNavControllerProvider.notifier).onDestinationSelected,
+      onDestinationSelected: (value) {
+        ref
+            .read(bottomNavControllerProvider.notifier)
+            .onDestinationSelected(value);
+
+        if (selectedIndex == 0 && selectedIndex == value) {
+          ref.read(scheduleDateControllerProvider.notifier).resetDate();
+        }
+      },
       destinations: [
         NavigationDestination(
           icon: const Icon(Icons.calendar_month),
