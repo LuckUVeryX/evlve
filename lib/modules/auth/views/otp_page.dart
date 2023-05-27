@@ -93,7 +93,7 @@ class _OTPButton extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final auth = ref.watch(authControllerProvider);
-    ref.listenErrors(context, [authControllerProvider]);
+    ref.listenErrors([authControllerProvider]);
 
     return FilledButton(
       onPressed: auth.isLoading
