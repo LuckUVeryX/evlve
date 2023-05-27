@@ -6,7 +6,7 @@ part 'signin_response.g.dart';
 
 @freezed
 class SignInResponse with _$SignInResponse {
-  @Assert('(token == null) ^ (memberships == null)')
+  @Assert('(token == null) == (memberships == null)')
   const factory SignInResponse({
     String? token,
     List<User>? memberships,
