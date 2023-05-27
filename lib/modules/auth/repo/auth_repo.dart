@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:evlve/api/api.dart';
 import 'package:evlve/modules/auth/models/models.dart';
-import 'package:evlve/modules/auth/models/signin_response.dart';
 import 'package:evlve/providers/providers.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
