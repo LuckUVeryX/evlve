@@ -1,3 +1,4 @@
+import 'package:evlve/utils/date_utils.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'schedule_date_controller.g.dart';
@@ -6,15 +7,14 @@ part 'schedule_date_controller.g.dart';
 class ScheduleDateController extends _$ScheduleDateController {
   @override
   DateTime build() {
-    return DateTime.now();
+    return DateTime.now().stripTime();
   }
 
-  // ignore: use_setters_to_change_properties
   void onDateSelected(DateTime dt) {
-    state = dt;
+    state = dt.stripTime();
   }
 
   void resetDate() {
-    state = DateTime.now();
+    state = DateTime.now().stripTime();
   }
 }
