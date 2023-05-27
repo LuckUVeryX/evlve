@@ -39,6 +39,7 @@ class _OTPPageState extends State<OTPPage> {
                   child: TextFormField(
                     maxLength: 6,
                     autofocus: true,
+                    controller: _controller,
                     textAlign: TextAlign.center,
                     keyboardType: TextInputType.number,
                     autofillHints: const [AutofillHints.oneTimeCode],
