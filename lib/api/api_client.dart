@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:evlve/app/api/api.dart';
+import 'package:evlve/api/api.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'api_client.g.dart';
