@@ -3,19 +3,20 @@ import 'package:evlve/l10n/l10n.dart';
 import 'package:evlve/modules/schedule/controllers/schedule_date_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class RootPage extends StatelessWidget {
   const RootPage({
-    required this.navigator,
+    required this.navigationShell,
     super.key,
   });
 
-  final Widget navigator;
+  final StatefulNavigationShell navigationShell;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: navigator,
+      body: navigationShell,
       bottomNavigationBar: const _BottomNavigationBar(),
     );
   }

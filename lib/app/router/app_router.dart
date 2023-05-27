@@ -11,7 +11,8 @@ final _key = GlobalKey<NavigatorState>(debugLabel: 'routerKey');
 Raw<GoRouter> router(RouterRef ref) {
   final notifier = ref.watch(routerListenableProvider.notifier);
   return GoRouter(
-    routes: $appRoutes,
+    // FIXME: Remove when StatefulShellRoute is supported by GoRouterBuilder
+    routes: [rootRoute, $splashRoute, $signInRoute],
     navigatorKey: _key,
     debugLogDiagnostics: true,
     redirect: notifier.redirect,
