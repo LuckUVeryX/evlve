@@ -23,8 +23,8 @@ class AuthController extends _$AuthController {
   Future<AuthState> _attemptTokenSignIn() async {
     final repo = ref.read(authRepoProvider);
     try {
-      await repo.signInWithToken();
-      return const AuthState.loggedIn();
+      final user = await repo.signInWithToken();
+      return AuthState.loggedIn(user);
     } catch (e) {
       return const AuthState.loggedOut();
     }
@@ -39,7 +39,7 @@ class AuthController extends _$AuthController {
     state = await AsyncValue.guard(() async {
       final repo = ref.read(authRepoProvider);
       final res = await repo.signIn(email: email, password: password);
-      if (res.token != null) return const AuthState.loggedIn();
+      if (res.token != null) return AuthState.loggedIn(res.user);
       _cred = (email, password);
       return const AuthState.requireOtp();
     });
@@ -62,7 +62,7 @@ class AuthController extends _$AuthController {
       );
       if (res.token == null) return const AuthState.requireOtp();
       _cred = (null, null);
-      return const AuthState.loggedIn();
+      return AuthState.loggedIn(res.user);
     });
   }
 
