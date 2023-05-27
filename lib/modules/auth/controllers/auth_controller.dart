@@ -11,9 +11,12 @@ class AuthController extends _$AuthController {
   @override
   FutureOr<AuthState> build() async {
     final repo = ref.watch(authRepoProvider);
-    ref.listenSelf((_, value) {
-      value.whenOrNull(error: (e, st) => repo.signOut());
-    });
+    ref.listenSelf(
+      (_, value) {
+        value.whenOrNull(error: (e, st) => repo.signOut());
+      },
+      onError: (e, st) => repo.signOut(),
+    );
     return _attemptTokenSignIn();
   }
 
@@ -57,7 +60,7 @@ class AuthController extends _$AuthController {
         password: password!,
         otp: otp,
       );
-      if (res.token == null) state = const AsyncData(AuthState.requireOtp());
+      if (res.token == null) return const AuthState.requireOtp();
       _cred = (null, null);
       return const AuthState.loggedIn();
     });
