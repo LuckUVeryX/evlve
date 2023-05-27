@@ -13,6 +13,8 @@ class BottomNavController extends _$BottomNavController {
   }
 
   void onDestinationSelected(int value) {
+    if (state == value) return;
+
     state = value;
     ref.read(routerProvider).go(_routes[value]);
   }

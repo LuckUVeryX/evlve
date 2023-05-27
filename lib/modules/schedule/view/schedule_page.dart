@@ -1,33 +1,33 @@
-import 'package:evlve/modules/schedule/schedule.dart';
-import 'package:evlve/utils/ref_extensions.dart';
+import 'package:calendar_timeline/calendar_timeline.dart';
+import 'package:evlve/app/app.dart';
+import 'package:evlve/modules/schedule/controllers/schedule_date_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 class SchedulePage extends ConsumerWidget {
   const SchedulePage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final date = ref.watch(scheduleDateControllerProvider);
-    final provider = scheduleProvider(
-      date: date,
-      area: Area.kinexMt,
-    );
-
-    ref.listenErrors([provider]);
-
-    final value = ref.watch(provider);
+    final now = DateTime.now();
     return Scaffold(
       body: SafeArea(
-        child: SfCalendar(
-          timeSlotViewSettings:
-              const TimeSlotViewSettings(startHour: 5, endHour: 23),
-          dataSource: ScheduleDataSource(
-            value.whenOrNull(data: (data) => data.schedules) ?? [],
-          ),
-          onViewChanged:
-              ref.read(scheduleDateControllerProvider.notifier).onViewChanged,
+        child: Column(
+          children: [
+            CalendarTimeline(
+              leftMargin: 16,
+              initialDate: ref.watch(scheduleDateControllerProvider),
+              firstDate: now.subtract(const Duration(days: 100)),
+              lastDate: now.add(const Duration(days: 100)),
+              onDateSelected: ref
+                  .read(scheduleDateControllerProvider.notifier)
+                  .onDateSelected,
+              activeDayColor: context.colorScheme.onPrimary,
+              activeBackgroundDayColor: context.colorScheme.primary,
+              dayColor: context.colorScheme.secondary,
+              monthColor: context.colorScheme.secondary,
+            )
+          ],
         ),
       ),
     );
