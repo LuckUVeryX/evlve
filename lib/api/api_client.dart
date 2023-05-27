@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:evlve/api/api.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -66,6 +68,10 @@ class ApiClient {
   }
 
   void addAuthHeader(String token) {
-    _dio.options.headers['Authorization'] = 'Bearer $token';
+    _dio.options.headers[HttpHeaders.authorizationHeader] = 'Bearer $token';
+  }
+
+  void removeAuthHeader() {
+    _dio.options.headers.remove(HttpHeaders.authorizationHeader);
   }
 }
