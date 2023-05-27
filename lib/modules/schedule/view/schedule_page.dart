@@ -1,3 +1,4 @@
+import 'package:evlve/app/app.dart';
 import 'package:evlve/modules/schedule/schedule.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -26,6 +27,7 @@ class SchedulePage extends ConsumerWidget {
               final schedule = scheduleList.schedules[i];
               return ListTile(
                 title: Text(schedule.title),
+                textColor: context.colorScheme.onBackground,
                 subtitle: Text(schedule.start.toIso8601String()),
               );
             },
