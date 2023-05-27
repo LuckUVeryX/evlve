@@ -1,3 +1,4 @@
+import 'package:evlve/app/app.dart';
 import 'package:evlve/l10n/l10n.dart';
 import 'package:evlve/modules/auth/controllers/controllers.dart';
 import 'package:evlve/utils/ref_extensions.dart';
@@ -45,6 +46,8 @@ class _OTPPageState extends State<OTPPage> {
                     autofillHints: const [AutofillHints.oneTimeCode],
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                    style: context.textTheme.bodyMedium
+                        ?.copyWith(color: context.colorScheme.onBackground),
                     decoration: const InputDecoration(
                       labelText: 'OTP',
                       floatingLabelAlignment: FloatingLabelAlignment.center,
