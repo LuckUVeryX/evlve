@@ -27,6 +27,10 @@ enum Area {
   svJj
 }
 
+extension FacilityX on Facility {
+  String get key => _$FacilityEnumMap[this]!;
+}
+
 extension AreaX on Area {
   String get key => _$AreaEnumMap[this]!;
 }

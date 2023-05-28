@@ -6,5 +6,6 @@
     "signInPageButton": "Sign In",
     "otpPageTitle": "OTP",
     "bottomNavSchedule": "Schedule",
-    "bottomNavSettings": "Settings"
+    "bottomNavSettings": "Settings",
+    "facilityDialogTitle": "Facility"
 }
