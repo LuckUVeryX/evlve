@@ -7,5 +7,6 @@
     "otpPageTitle": "OTP",
     "bottomNavSchedule": "Schedule",
     "bottomNavSettings": "Settings",
-    "facilityDialogTitle": "Facility"
+    "facilityDialogTitle": "Facility",
+    "qrDialogShakeSnackbar": "Shake!"
 }
