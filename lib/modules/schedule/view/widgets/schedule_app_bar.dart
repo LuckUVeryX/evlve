@@ -13,8 +13,9 @@ class ScheduleAppBar extends ConsumerWidget {
     final areas = facility.areas;
 
     return SliverAppBar(
-      floating: true,
       pinned: true,
+      floating: true,
+      titleSpacing: 0,
       title: const ScheduleDayPicker(),
       toolbarHeight: kToolbarHeight + 44,
       bottom: TabBar(
