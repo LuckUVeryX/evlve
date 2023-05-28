@@ -1,3 +1,4 @@
+import 'package:evlve/app/app.dart';
 import 'package:evlve/l10n/l10n.dart';
 import 'package:evlve/modules/schedule/schedule.dart';
 import 'package:evlve/modules/user/user.dart';
@@ -21,13 +22,22 @@ class ScheduleFacilityDialog extends ConsumerWidget {
     final facilities = user.facilities;
 
     return SimpleDialog(
+      backgroundColor: context.colorScheme.surface,
       clipBehavior: Clip.antiAlias,
-      title: Text(context.l10n.facilityDialogTitle),
+      title: Text(
+        context.l10n.facilityDialogTitle,
+        style: context.textTheme.titleLarge
+            ?.copyWith(color: context.colorScheme.onSurface),
+      ),
       children: [
         for (final facility in facilities)
           SimpleDialogOption(
             onPressed: () => context.pop(facility),
-            child: Text(facility.key.key),
+            child: Text(
+              facility.key.key,
+              style: context.textTheme.bodyMedium
+                  ?.copyWith(color: context.colorScheme.onSurface),
+            ),
           )
       ],
     );

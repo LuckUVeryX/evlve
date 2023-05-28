@@ -55,7 +55,9 @@ class _ScheduleLocation extends ConsumerWidget {
           const SizedBox(width: 16, height: 40),
         Text(
           facility.key.key,
-          style: context.textTheme.titleLarge,
+          style: context.textTheme.titleLarge?.copyWith(
+            color: context.colorScheme.onBackground,
+          ),
         ),
       ],
     );
