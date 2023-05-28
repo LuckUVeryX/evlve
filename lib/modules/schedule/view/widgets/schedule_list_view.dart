@@ -4,6 +4,7 @@ import 'package:evlve/modules/schedule/schedule.dart';
 import 'package:evlve/utils/ref_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 
 class ScheduleListView extends ConsumerWidget {
   const ScheduleListView({
@@ -77,7 +78,7 @@ class ScheduleListView extends ConsumerWidget {
                           ?.copyWith(color: context.colorScheme.onSurface),
                     ),
                     subtitle: Text(
-                      schedule.start.toIso8601String(),
+                      DateFormat.Hms().format(schedule.start),
                       style: context.textTheme.bodyMedium?.copyWith(
                         color: context.colorScheme.onSurfaceVariant,
                       ),
