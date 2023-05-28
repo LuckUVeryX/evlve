@@ -11,8 +11,8 @@ part 'shake_repo.g.dart';
 ShakeRepo shakeRepo(
   ShakeRepoRef ref, {
   VoidCallback? onPhoneShake,
-  double shakeThresholdForce = 3,
-  Duration debounce = const Duration(milliseconds: 500),
+  double shakeThresholdForce = 2,
+  Duration debounce = const Duration(milliseconds: 100),
   Duration shakeCountReset = const Duration(seconds: 3),
   int minShakeCount = 1,
 }) {
