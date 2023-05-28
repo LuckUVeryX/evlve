@@ -1,4 +1,6 @@
 import 'package:evlve/app/app.dart';
+import 'package:evlve/l10n/l10n.dart';
+import 'package:evlve/modules/qr/qr.dart';
 import 'package:evlve/modules/schedule/schedule.dart';
 import 'package:evlve/modules/user/user.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +21,7 @@ class ScheduleAppBar extends ConsumerWidget {
       floating: true,
       snap: true,
       titleSpacing: 0,
-      toolbarHeight: kToolbarHeight + 44 + 40,
+      toolbarHeight: kToolbarHeight + 92,
       bottom: TabBar(tabs: [for (final area in areas) Tab(text: area.key.key)]),
       title: const Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -48,17 +50,32 @@ class _ScheduleLocation extends ConsumerWidget {
                   .read(scheduleFacilityControllerProvider.notifier)
                   .onFacilityChanged(newFacility);
             },
-            visualDensity: VisualDensity.compact,
             icon: const Icon(Icons.place_outlined),
           )
         else
-          const SizedBox(width: 16, height: 40),
+          const SizedBox(width: 16),
         Text(
           facility.key.key,
           style: context.textTheme.titleLarge?.copyWith(
             color: context.colorScheme.onBackground,
           ),
         ),
+        const Spacer(),
+        IconButton(
+          onPressed: () async {
+            await QRDialog.show(context, id: user.id);
+            if (context.mounted) {
+              ScaffoldMessenger.of(context)
+                ..hideCurrentSnackBar()
+                ..showSnackBar(
+                  SnackBar(
+                    content: Text(context.l10n.qrDialogShakeSnackbar),
+                  ),
+                );
+            }
+          },
+          icon: const Icon(Icons.qr_code_rounded),
+        )
       ],
     );
   }
