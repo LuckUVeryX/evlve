@@ -1,0 +1,36 @@
+import 'package:evlve/modules/booking/booking.dart';
+import 'package:evlve/modules/schedule/models/models.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+part 'booking_controller.g.dart';
+
+@riverpod
+class BookingController extends _$BookingController {
+  @override
+  FutureOr<BookingResponse> build({required Schedule schedule}) async {
+    return BookingResponse(schedule: schedule, message: null);
+  }
+
+  Future<void> book() async => _optimisticUpdate(true);
+  Future<void> cancel() async => _optimisticUpdate(false);
+
+  Future<void> _optimisticUpdate(bool toBook) async {
+    final repo = ref.read(bookingRepoProvider);
+    final value = state.value;
+    if (value != null) {
+      state = AsyncData(
+        value.copyWith.schedule.event.classDetails(isBookedByMe: true),
+      );
+    }
+    state = const AsyncLoading();
+    state = await AsyncValue.guard(() async {
+      return toBook
+          ? repo.book(id: schedule.event.id, dt: schedule.start)
+          : repo.cancel(id: schedule.event.id, dt: schedule.start);
+    });
+
+    if (state.hasError && value != null) {
+      state = AsyncData(value).copyWithPrevious(state);
+    }
+  }
+}

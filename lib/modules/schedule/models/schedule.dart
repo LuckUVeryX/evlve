@@ -34,6 +34,7 @@ class Schedule with _$Schedule {
 @freezed
 class ScheduleExtraData with _$ScheduleExtraData {
   const factory ScheduleExtraData({
+    required String id,
     @_DateTimeToLocalConverter() required DateTime createdAt,
     @_DateTimeToLocalConverter() required DateTime updatedAt,
     required ClassDetails classDetails,
