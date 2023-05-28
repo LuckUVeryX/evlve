@@ -1,4 +1,5 @@
 import 'package:evlve/modules/schedule/models/models.dart';
+import 'package:evlve/utils/date_utils.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'schedule.freezed.dart';
@@ -29,6 +30,46 @@ class Schedule with _$Schedule {
       _$ScheduleFromJson(json);
 
   const Schedule._();
+
+  bool get isLateBooking {
+    final now = DateTime.now();
+
+    final isWeekday =
+        start.weekday >= DateTime.monday && start.weekday <= DateTime.friday;
+
+    bool isWithinWindow(List<DateTime> window) {
+      return start.isAfter(window.first) && start.isBefore(window.last);
+    }
+
+    // Weekdays 6.30-7.45 am
+    final earlyWindow = [
+      start.stripTime().add(const Duration(hours: 6, minutes: 30)),
+      start.stripTime().add(const Duration(hours: 7, minutes: 45)),
+    ];
+    // Late cancellation: After 10 pm The Night Before
+    if (isWeekday && isWithinWindow(earlyWindow)) {
+      return now.isAfter(start.stripTime().subtract(const Duration(hours: 2)));
+    }
+
+    // Weekdays 12-12:45 pm
+    final lunchWindow = [
+      start.stripTime().add(const Duration(hours: 12)),
+      start.stripTime().add(const Duration(hours: 12, minutes: 45)),
+    ];
+    if (isWeekday && isWithinWindow(lunchWindow)) {
+      return now.isAfter(start.subtract(const Duration(hours: 6)));
+    }
+
+    final eveningWindow = [
+      start.stripTime().add(const Duration(hours: 6)),
+      start.stripTime().add(const Duration(hours: 8, minutes: 45)),
+    ];
+    if (isWeekday && isWithinWindow(eveningWindow)) {
+      return now.isAfter(start.subtract(const Duration(hours: 6)));
+    }
+
+    return now.isAfter(start.subtract(const Duration(hours: 3)));
+  }
 }
 
 @freezed
