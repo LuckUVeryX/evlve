@@ -27,6 +27,8 @@ class Schedule with _$Schedule {
 
   factory Schedule.fromJson(Map<String, dynamic> json) =>
       _$ScheduleFromJson(json);
+
+  const Schedule._();
 }
 
 @freezed
@@ -64,6 +66,12 @@ class ClassDetails with _$ClassDetails {
 
   factory ClassDetails.fromJson(Map<String, dynamic> json) =>
       _$ClassDetailsFromJson(json);
+
+  const ClassDetails._();
+
+  bool get canBook {
+    return !isPast && !isCP && isBookAvailable && isBookingAvailable;
+  }
 }
 
 class _DateTimeToLocalConverter extends JsonConverter<DateTime, String> {

@@ -26,11 +26,24 @@ class ScheduleListView extends ConsumerWidget {
           data: (scheduleList) {
             final schedules = scheduleList.schedules;
             if (index >= schedules.length) return null;
+
             final schedule = scheduleList.schedules[index];
-            return ListTile(
-              title: Text(schedule.title),
-              textColor: context.colorScheme.onBackground,
-              subtitle: Text(schedule.start.toIso8601String()),
+            final details = schedule.event.classDetails;
+
+            return CheckboxListTile(
+              tristate: true,
+              value: details.isCP ? null : details.isBookedByMe,
+              onChanged: !details.canBook ? null : (value) {},
+              title: Text(
+                schedule.title,
+                style: context.textTheme.bodyLarge
+                    ?.copyWith(color: context.colorScheme.onSurface),
+              ),
+              subtitle: Text(
+                schedule.start.toIso8601String(),
+                style: context.textTheme.bodyMedium
+                    ?.copyWith(color: context.colorScheme.onSurfaceVariant),
+              ),
             );
           },
           error: (e, st) {
