@@ -16,8 +16,8 @@ class ScheduleDayPicker extends ConsumerWidget {
     return CalendarTimeline(
       leftMargin: 16,
       initialDate: ref.watch(scheduleDateControllerProvider),
-      firstDate: now.subtract(const Duration(days: 100)),
-      lastDate: now.add(const Duration(days: 100)),
+      firstDate: DateTime(now.year - 1),
+      lastDate: DateTime(now.year + 2),
       onDateSelected:
           ref.read(scheduleDateControllerProvider.notifier).onDateSelected,
       activeDayColor: context.colorScheme.onPrimary,
