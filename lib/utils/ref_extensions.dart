@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:dio/dio.dart';
+import 'package:evlve/app/app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -18,7 +19,16 @@ extension WidgetRefX on WidgetRef {
   void _showErrorSnackbar(Object e, StackTrace st) {
     ScaffoldMessenger.of(context)
       ..hideCurrentSnackBar()
-      ..showSnackBar(SnackBar(content: Text(e.toString())));
+      ..showSnackBar(
+        SnackBar(
+          content: Text(
+            e.toString(),
+            style: context.textTheme.bodyMedium
+                ?.copyWith(color: context.colorScheme.onError),
+          ),
+          backgroundColor: context.colorScheme.error,
+        ),
+      );
   }
 }
 
