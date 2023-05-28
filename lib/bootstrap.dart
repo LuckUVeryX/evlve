@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:developer';
 
+import 'package:evlve/modules/logs/logs.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -9,7 +10,7 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
     log(details.exceptionAsString(), stackTrace: details.stack);
   };
 
-  // Add cross-flavor configuration here
-
-  runApp(ProviderScope(child: await builder()));
+  runApp(
+    ProviderScope(observers: [AsyncErrorObserver()], child: await builder()),
+  );
 }
