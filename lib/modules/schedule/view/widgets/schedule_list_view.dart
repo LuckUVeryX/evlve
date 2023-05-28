@@ -1,4 +1,5 @@
 import 'package:evlve/app/app.dart';
+import 'package:evlve/app/views/shimmer_widget.dart';
 import 'package:evlve/modules/booking/booking.dart';
 import 'package:evlve/modules/schedule/schedule.dart';
 import 'package:evlve/utils/ref_extensions.dart';
@@ -97,12 +98,49 @@ class ScheduleListView extends ConsumerWidget {
               return index == 0 ? Text(e.toString()) : null;
             },
             loading: () {
-              return index == 0
-                  ? const Center(child: CircularProgressIndicator())
-                  : null;
+              return const _ScheduleLoadingShimmer();
             },
           );
         },
+      ),
+    );
+  }
+}
+
+class _ScheduleLoadingShimmer extends StatelessWidget {
+  const _ScheduleLoadingShimmer();
+
+  @override
+  Widget build(BuildContext context) {
+    return ShimmerWidget(
+      child: CheckboxListTile(
+        value: false,
+        onChanged: null,
+        title: Row(
+          children: [
+            Expanded(
+              flex: 2,
+              child: Container(
+                color: Colors.white,
+                width: 120,
+                height: context.textTheme.bodyLarge?.fontSize,
+              ),
+            ),
+            const Spacer(flex: 3),
+          ],
+        ),
+        subtitle: Row(
+          children: [
+            Expanded(
+              child: Container(
+                color: Colors.white,
+                width: 80,
+                height: context.textTheme.bodyMedium?.fontSize,
+              ),
+            ),
+            const Spacer(flex: 2)
+          ],
+        ),
       ),
     );
   }
