@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:evlve/app/app.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
@@ -25,7 +26,7 @@ class QRDialog extends StatelessWidget {
           dataModuleShape: QrDataModuleShape.circle,
           color: context.colorScheme.onBackground,
         ),
-        embeddedImage: const NetworkImage(
+        embeddedImage: const CachedNetworkImageProvider(
           'https://yt3.googleusercontent.com/ytc/AGIKgqPmxDPeoyBRQEQzjURVgiSH8mA942AA_UL4ndx4=s900-c-k-c0x00ffffff-no-rj',
         ),
       ),
