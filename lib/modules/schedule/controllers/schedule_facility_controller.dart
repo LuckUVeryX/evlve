@@ -5,20 +5,16 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'schedule_area_controller.g.dart';
 
 @riverpod
-class ScheduleAreaController extends _$ScheduleAreaController {
-  @override
-  AreaExtraData build() {
-    final facility = ref.watch(scheduleFacilityControllerProvider);
-    return facility.areas.first;
-  }
-}
-
-@riverpod
 class ScheduleFacilityController extends _$ScheduleFacilityController {
   @override
   FacilityExtraData build() {
     final user = ref.watch(userProvider);
     return user.facilities
         .firstWhere((facility) => facility.key == user.defaultLocation);
+  }
+
+  void onFacilityChanged(FacilityExtraData facility) {
+    if (state == facility) return;
+    state = facility;
   }
 }
