@@ -19,6 +19,6 @@ class ScheduleFacilityController extends _$ScheduleFacilityController {
   FacilityExtraData build() {
     final user = ref.watch(userProvider);
     return user.facilities
-        .firstWhere((element) => element.key == user.defaultLocation);
+        .firstWhere((facility) => facility.key == user.defaultLocation);
   }
 }
