@@ -8,8 +8,11 @@ class SchedulePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final facility = ref.watch(scheduleFacilityControllerProvider);
+    final areas = facility.areas;
+
     return DefaultTabController(
-      length: 2,
+      length: areas.length,
       child: Scaffold(
         body: NestedScrollView(
           headerSliverBuilder: (context, innerBoxIsScrolled) {
@@ -21,8 +24,7 @@ class SchedulePage extends ConsumerWidget {
                 toolbarHeight: kToolbarHeight + 44,
                 bottom: TabBar(
                   tabs: [
-                    Tab(text: Area.cqMt.name),
-                    Tab(text: Area.cqJj.name),
+                    for (final area in facility.areas) Tab(text: area.key.key)
                   ],
                 ),
               )
@@ -30,12 +32,12 @@ class SchedulePage extends ConsumerWidget {
           },
           body: TabBarView(
             children: [
-              for (int i = 0; i < 2; i++)
+              for (final area in areas)
                 ListView.builder(
                   padding: EdgeInsets.zero,
                   itemBuilder: (context, index) {
                     final provider = scheduleProvider(
-                      area: Area.kinexMt,
+                      area: area.key,
                       date: ref.watch(scheduleDateControllerProvider),
                     );
                     final scheduleValue = ref.watch(provider);
