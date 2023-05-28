@@ -13,4 +13,10 @@ class User with _$User {
   }) = _User;
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
+
+  const User._();
+
+  bool get isBlackCard {
+    return facilities.length > 1;
+  }
 }
