@@ -8,39 +8,63 @@ class SchedulePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Scaffold(
-      body: ListView.builder(
-        itemBuilder: (context, index) {
-          final i = index - 1; // Account for the [ScheduleDayPicker].
-          if (index == 0) return const SafeArea(child: ScheduleDayPicker());
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        body: NestedScrollView(
+          headerSliverBuilder: (context, innerBoxIsScrolled) {
+            return [
+              SliverAppBar(
+                floating: true,
+                pinned: true,
+                title: const ScheduleDayPicker(),
+                toolbarHeight: kToolbarHeight + 44,
+                bottom: TabBar(
+                  tabs: [
+                    Tab(text: Area.cqMt.name),
+                    Tab(text: Area.cqJj.name),
+                  ],
+                ),
+              )
+            ];
+          },
+          body: TabBarView(
+            children: [
+              for (int i = 0; i < 2; i++)
+                ListView.builder(
+                  padding: EdgeInsets.zero,
+                  itemBuilder: (context, index) {
+                    final provider = scheduleProvider(
+                      area: Area.kinexMt,
+                      date: ref.watch(scheduleDateControllerProvider),
+                    );
+                    final scheduleValue = ref.watch(provider);
 
-          final provider = scheduleProvider(
-            area: Area.kinexMt,
-            date: ref.watch(scheduleDateControllerProvider),
-          );
-          final scheduleValue = ref.watch(provider);
-
-          return scheduleValue.when(
-            data: (scheduleList) {
-              final schedules = scheduleList.schedules;
-              if (i >= schedules.length) return null;
-              final schedule = scheduleList.schedules[i];
-              return ListTile(
-                title: Text(schedule.title),
-                textColor: context.colorScheme.onBackground,
-                subtitle: Text(schedule.start.toIso8601String()),
-              );
-            },
-            error: (e, st) {
-              return i == 0 ? Text(e.toString()) : null;
-            },
-            loading: () {
-              return i == 0
-                  ? const Center(child: CircularProgressIndicator())
-                  : null;
-            },
-          );
-        },
+                    return scheduleValue.when(
+                      data: (scheduleList) {
+                        final schedules = scheduleList.schedules;
+                        if (index >= schedules.length) return null;
+                        final schedule = scheduleList.schedules[index];
+                        return ListTile(
+                          title: Text(schedule.title),
+                          textColor: context.colorScheme.onBackground,
+                          subtitle: Text(schedule.start.toIso8601String()),
+                        );
+                      },
+                      error: (e, st) {
+                        return index == 0 ? Text(e.toString()) : null;
+                      },
+                      loading: () {
+                        return index == 0
+                            ? const Center(child: CircularProgressIndicator())
+                            : null;
+                      },
+                    );
+                  },
+                ),
+            ],
+          ),
+        ),
       ),
     );
   }
