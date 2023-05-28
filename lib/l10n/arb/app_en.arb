@@ -8,5 +8,8 @@
     "bottomNavSchedule": "Schedule",
     "bottomNavSettings": "Settings",
     "facilityDialogTitle": "Facility",
-    "qrDialogShakeSnackbar": "Shake!"
+    "qrDialogShakeSnackbar": "Shake!",
+    "dialogContinue": "Continue",
+    "lateBookingDialogTitle": "Late Book/Cancel",
+    "lateBookingDialogContent": "It seems like you are trying to book/cancel a class within the late booking window. Are you sure you want to continue?"
 }

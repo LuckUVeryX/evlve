@@ -1,5 +1,5 @@
 import 'package:evlve/app/app.dart';
-import 'package:evlve/modules/booking/controllers/booking_controller.dart';
+import 'package:evlve/modules/booking/booking.dart';
 import 'package:evlve/modules/schedule/schedule.dart';
 import 'package:evlve/utils/ref_extensions.dart';
 import 'package:flutter/material.dart';
@@ -67,6 +67,12 @@ class ScheduleListView extends ConsumerWidget {
                     onChanged: !canBook
                         ? null
                         : (_) async {
+                            if (schedule.isLateBooking) {
+                              final confirm =
+                                  await LateBookingConfirmDialog.show(context);
+                              if (confirm != true) return;
+                            }
+
                             final notifier = ref.read(bookingProvider.notifier);
                             details.isBookedByMe
                                 ? await notifier.cancel()
