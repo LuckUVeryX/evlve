@@ -2,7 +2,7 @@ import 'package:evlve/modules/schedule/schedule.dart';
 import 'package:evlve/modules/user/user.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'schedule_area_controller.g.dart';
+part 'schedule_facility_controller.g.dart';
 
 @riverpod
 class ScheduleFacilityController extends _$ScheduleFacilityController {
