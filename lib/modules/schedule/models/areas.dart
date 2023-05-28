@@ -27,6 +27,10 @@ enum Area {
   svJj
 }
 
+extension AreaX on Area {
+  String get key => _$AreaEnumMap[this]!;
+}
+
 @freezed
 class FacilityExtraData with _$FacilityExtraData {
   const factory FacilityExtraData({
