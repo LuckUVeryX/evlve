@@ -1,3 +1,4 @@
+import 'package:evlve/app/theme/theme_extensions.dart';
 import 'package:evlve/l10n/l10n.dart';
 import 'package:evlve/modules/qr/qr.dart';
 import 'package:evlve/modules/schedule/schedule.dart';
@@ -40,19 +41,22 @@ class _ScheduleLocation extends ConsumerWidget {
 
     return Row(
       children: [
-        if (user.isBlackCard)
-          IconButton(
-            onPressed: () async {
-              final newFacility = await ScheduleFacilityDialog.show(context);
-              if (newFacility == null) return;
-              ref
-                  .read(scheduleFacilityControllerProvider.notifier)
-                  .onFacilityChanged(newFacility);
-            },
-            icon: const Icon(Icons.place_outlined),
-          )
-        else
-          const SizedBox(width: 16),
+        IconButton(
+          onPressed: !user.isBlackCard
+              ? null
+              : () async {
+                  final newFacility =
+                      await ScheduleFacilityDialog.show(context);
+                  if (newFacility == null) return;
+                  ref
+                      .read(scheduleFacilityControllerProvider.notifier)
+                      .onFacilityChanged(newFacility);
+                },
+          icon: Icon(
+            Icons.place_outlined,
+            color: context.colorScheme.onBackground,
+          ),
+        ),
         Text(facility.key.key),
         const Spacer(),
         IconButton(
@@ -69,7 +73,7 @@ class _ScheduleLocation extends ConsumerWidget {
             }
           },
           icon: const Icon(Icons.qr_code_rounded),
-        )
+        ),
       ],
     );
   }
