@@ -2,6 +2,7 @@ import 'package:evlve/app/theme/theme_extensions.dart';
 import 'package:evlve/l10n/l10n.dart';
 import 'package:evlve/modules/qr/qr.dart';
 import 'package:evlve/modules/schedule/schedule.dart';
+import 'package:evlve/modules/schedule_filter/schedule_filter.dart';
 import 'package:evlve/modules/user/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -23,7 +24,10 @@ class ScheduleAppBar extends ConsumerWidget {
       leading: const _LocationIconButton(),
       title: Text(facility.key.key),
       centerTitle: false,
-      actions: const [_QRIconButton()],
+      actions: const [
+        _FilterIconButton(),
+        _QRIconButton(),
+      ],
     );
   }
 }
@@ -45,6 +49,20 @@ class _AppBarBottom extends ConsumerWidget implements PreferredSizeWidget {
 
   @override
   Size get preferredSize => const Size.fromHeight(92 + kToolbarHeight);
+}
+
+class _FilterIconButton extends StatelessWidget {
+  const _FilterIconButton();
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      onPressed: () async {
+        await ScheduleFilterDialog.show(context);
+      },
+      icon: const Icon(Icons.tune),
+    );
+  }
 }
 
 class _QRIconButton extends ConsumerWidget {

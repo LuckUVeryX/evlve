@@ -11,5 +11,13 @@
     "qrDialogShakeSnackbar": "Try shaking!",
     "dialogContinue": "Continue",
     "lateBookingDialogTitle": "Late Book/Cancel",
-    "lateBookingDialogContent": "It seems like you are trying to book/cancel a class within the late booking window. Are you sure you want to continue?"
+    "lateBookingDialogContent": "It seems like you are trying to book/cancel a class within the late booking window. Are you sure you want to continue?",
+    "scheduleFilterDialogTitle": "Filters",
+    "scheduleFilterResetButton": "Reset",
+    "scheduleFilterSectionMT": "Muay Thai",
+    "scheduleFilterSectionBoxing": "Boxing",
+    "scheduleFilterSectionBJJ": "BJJ",
+    "scheduleFilterSectionOthers": "Others",
+    "scheduleFilterCancel": "Cancel",
+    "scheduleFilterApply": "Apply"
 }
