@@ -24,20 +24,12 @@ class ScheduleFacilityDialog extends ConsumerWidget {
     return SimpleDialog(
       backgroundColor: context.colorScheme.surface,
       clipBehavior: Clip.antiAlias,
-      title: Text(
-        context.l10n.facilityDialogTitle,
-        style: context.textTheme.titleLarge
-            ?.copyWith(color: context.colorScheme.onSurface),
-      ),
+      title: Text(context.l10n.facilityDialogTitle),
       children: [
         for (final facility in facilities)
           SimpleDialogOption(
             onPressed: () => context.pop(facility),
-            child: Text(
-              facility.key.key,
-              style: context.textTheme.bodyMedium
-                  ?.copyWith(color: context.colorScheme.onSurface),
-            ),
+            child: Text(facility.key.key),
           )
       ],
     );

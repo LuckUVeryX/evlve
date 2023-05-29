@@ -1,4 +1,3 @@
-import 'package:evlve/app/app.dart';
 import 'package:evlve/l10n/l10n.dart';
 import 'package:evlve/modules/qr/qr.dart';
 import 'package:evlve/modules/schedule/schedule.dart';
@@ -54,12 +53,7 @@ class _ScheduleLocation extends ConsumerWidget {
           )
         else
           const SizedBox(width: 16),
-        Text(
-          facility.key.key,
-          style: context.textTheme.titleLarge?.copyWith(
-            color: context.colorScheme.onBackground,
-          ),
-        ),
+        Text(facility.key.key),
         const Spacer(),
         IconButton(
           onPressed: () async {
