@@ -32,14 +32,21 @@ class ScheduleFilterDialog extends StatelessWidget {
         children: [
           Expanded(
             child: ListView(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
               children: [
+                // * Booking
+                _FilterHeader(
+                  icon: Icons.event_available_outlined,
+                  label: context.l10n.scheduleFilterBookingStatus,
+                ),
+                const Divider(indent: 16, endIndent: 16),
+                const _BookingFilterButton(),
+                const SizedBox(height: 16),
                 // * MT
                 _FilterHeader(
                   icon: Icons.sports_martial_arts,
                   label: context.l10n.scheduleFilterSectionMT,
                 ),
-                const Divider(),
+                const Divider(indent: 16, endIndent: 16),
                 _FilterList(levels: Level.mt),
                 const SizedBox(height: 16),
                 // * Boxing
@@ -47,7 +54,7 @@ class ScheduleFilterDialog extends StatelessWidget {
                   icon: Icons.sports_mma_outlined,
                   label: context.l10n.scheduleFilterSectionBoxing,
                 ),
-                const Divider(),
+                const Divider(indent: 16, endIndent: 16),
                 _FilterList(levels: Level.boxing),
                 const SizedBox(height: 16),
                 // * BJJ
@@ -55,7 +62,7 @@ class ScheduleFilterDialog extends StatelessWidget {
                   icon: Icons.sports_kabaddi_outlined,
                   label: context.l10n.scheduleFilterSectionBJJ,
                 ),
-                const Divider(),
+                const Divider(indent: 16, endIndent: 16),
                 _FilterList(levels: Level.bjj),
                 const SizedBox(height: 16),
                 // * Others
@@ -63,7 +70,7 @@ class ScheduleFilterDialog extends StatelessWidget {
                   icon: Icons.sports_kabaddi_outlined,
                   label: context.l10n.scheduleFilterSectionOthers,
                 ),
-                const Divider(),
+                const Divider(indent: 16, endIndent: 16),
                 _FilterList(levels: Level.others),
                 const SizedBox(height: 16),
               ],
@@ -94,13 +101,56 @@ class ScheduleFilterDialog extends StatelessWidget {
   }
 }
 
-class _ResetButton extends StatelessWidget {
+class _BookingFilterButton extends ConsumerWidget {
+  const _BookingFilterButton();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final groupValue = ref.watch(
+      scheduleFilterDialogControllerProvider
+          .select((value) => value.filterBooked),
+    );
+
+    return Column(
+      children: [
+        RadioListTile(
+          dense: true,
+          visualDensity: VisualDensity.compact,
+          value: false,
+          groupValue: groupValue,
+          title: Text(context.l10n.scheduleFilterBookingAll),
+          onChanged: ref
+              .read(scheduleFilterDialogControllerProvider.notifier)
+              .onBookingFilterSelected,
+        ),
+        RadioListTile(
+          dense: true,
+          visualDensity: VisualDensity.compact,
+          value: true,
+          groupValue: groupValue,
+          title: Text(context.l10n.scheduleFilterBookingBooked),
+          onChanged: ref
+              .read(scheduleFilterDialogControllerProvider.notifier)
+              .onBookingFilterSelected,
+        ),
+      ],
+    );
+  }
+}
+
+class _ResetButton extends ConsumerWidget {
   const _ResetButton();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final noFilter = ref.watch(
+      scheduleFilterDialogControllerProvider
+          .select((value) => value == const ScheduleFilter()),
+    );
     return TextButton(
-      onPressed: () => context.pop(const ScheduleFilter()),
+      onPressed: noFilter
+          ? null
+          : ref.read(scheduleFilterDialogControllerProvider.notifier).reset,
       child: Text(context.l10n.scheduleFilterResetButton),
     );
   }
@@ -131,11 +181,14 @@ class _FilterList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Wrap(
-      spacing: 4,
-      children: [
-        for (final level in levels) _LevelFilterChip(level: level),
-      ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: Wrap(
+        spacing: 4,
+        children: [
+          for (final level in levels) _LevelFilterChip(level: level),
+        ],
+      ),
     );
   }
 }
@@ -151,17 +204,20 @@ class _FilterHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Icon(icon),
-        const SizedBox(width: 8),
-        Text(
-          label,
-          style: context.textTheme.titleMedium?.copyWith(
-            fontWeight: FontWeight.bold,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: Row(
+        children: [
+          Icon(icon),
+          const SizedBox(width: 8),
+          Text(
+            label,
+            style: context.textTheme.titleMedium?.copyWith(
+              fontWeight: FontWeight.bold,
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
@@ -175,10 +231,13 @@ class _LevelFilterChip extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final filter = ref.watch(scheduleFilterDialogControllerProvider);
+    final selected = ref.watch(
+      scheduleFilterDialogControllerProvider
+          .select((value) => value.levelFilters.contains(level)),
+    );
 
     return FilterChip(
-      selected: filter.levelFilters.contains(level),
+      selected: selected,
       label: Text(level.key),
       onSelected: (_) => ref
           .read(scheduleFilterDialogControllerProvider.notifier)

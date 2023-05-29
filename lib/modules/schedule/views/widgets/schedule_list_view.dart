@@ -34,10 +34,19 @@ class ScheduleListView extends ConsumerWidget {
           return scheduleValue.when(
             data: (scheduleList) {
               final filter = ref.watch(scheduleFilterControllerProvider);
-              final schedules = [...scheduleList.schedules]..removeWhere((s) {
-                  if (filter == const ScheduleFilter()) return false;
-                  return !filter.levelFilters
-                      .contains(s.event.classDetails.level);
+              final schedules = [...scheduleList.schedules]..retainWhere((s) {
+                  if (filter == const ScheduleFilter()) return true;
+
+                  var bookFilter = true;
+                  if (filter.filterBooked) {
+                    bookFilter = s.event.classDetails.isBookedByMe;
+                  }
+                  var levelFilter = true;
+                  if (filter.levelFilters.isNotEmpty) {
+                    levelFilter = filter.levelFilters
+                        .contains(s.event.classDetails.level);
+                  }
+                  return bookFilter && levelFilter;
                 });
 
               if (index >= schedules.length) return null;
