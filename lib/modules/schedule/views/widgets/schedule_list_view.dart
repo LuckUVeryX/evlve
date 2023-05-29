@@ -39,8 +39,9 @@ class ScheduleListView extends ConsumerWidget {
                   return !filter.levelFilters
                       .contains(s.event.classDetails.level);
                 });
+
               if (index >= schedules.length) return null;
-              final schedule = scheduleList.schedules[index];
+              final schedule = schedules[index];
 
               final bookingProvider =
                   bookingControllerProvider(schedule: schedule);
