@@ -2,6 +2,8 @@ import 'package:evlve/app/theme/theme_extensions.dart';
 import 'package:evlve/app/views/shimmer_widget.dart';
 import 'package:evlve/modules/booking/booking.dart';
 import 'package:evlve/modules/schedule/schedule.dart';
+import 'package:evlve/modules/schedule_filter/controllers/schedule_filter_controller.dart';
+import 'package:evlve/modules/schedule_filter/schedule_filter.dart';
 import 'package:evlve/utils/ref_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -29,7 +31,12 @@ class ScheduleListView extends ConsumerWidget {
       itemBuilder: (context, index) {
         return scheduleValue.when(
           data: (scheduleList) {
-            final schedules = scheduleList.schedules;
+            final filter = ref.watch(scheduleFilterControllerProvider);
+            final schedules = [...scheduleList.schedules]..removeWhere((s) {
+                if (filter == const ScheduleFilter()) return false;
+                return !filter.levelFilters
+                    .contains(s.event.classDetails.level);
+              });
             if (index >= schedules.length) return null;
             final schedule = scheduleList.schedules[index];
 

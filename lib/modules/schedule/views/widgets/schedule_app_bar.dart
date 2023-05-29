@@ -2,6 +2,7 @@ import 'package:evlve/app/theme/theme_extensions.dart';
 import 'package:evlve/l10n/l10n.dart';
 import 'package:evlve/modules/qr/qr.dart';
 import 'package:evlve/modules/schedule/schedule.dart';
+import 'package:evlve/modules/schedule_filter/controllers/schedule_filter_controller.dart';
 import 'package:evlve/modules/schedule_filter/schedule_filter.dart';
 import 'package:evlve/modules/user/user.dart';
 import 'package:flutter/material.dart';
@@ -51,16 +52,23 @@ class _AppBarBottom extends ConsumerWidget implements PreferredSizeWidget {
   Size get preferredSize => const Size.fromHeight(92 + kToolbarHeight);
 }
 
-class _FilterIconButton extends StatelessWidget {
+class _FilterIconButton extends ConsumerWidget {
   const _FilterIconButton();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final filter = ref.watch(scheduleFilterControllerProvider);
+    final isFiltered = filter != const ScheduleFilter();
     return IconButton(
       onPressed: () async {
-        await ScheduleFilterDialog.show(context);
+        final filter = await ScheduleFilterDialog.show(context);
+        if (filter == null) return;
+        ref.read(scheduleFilterControllerProvider.notifier).filter(filter);
       },
-      icon: const Icon(Icons.tune),
+      icon: Badge(
+        backgroundColor: isFiltered ? null : Colors.transparent,
+        child: const Icon(Icons.tune),
+      ),
     );
   }
 }
