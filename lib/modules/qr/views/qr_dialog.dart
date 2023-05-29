@@ -26,7 +26,10 @@ class QRDialog extends StatelessWidget {
           color: context.colorScheme.onSurface,
         ),
         embeddedImage: const CachedNetworkImageProvider(
-          'https://yt3.googleusercontent.com/ytc/AGIKgqPmxDPeoyBRQEQzjURVgiSH8mA942AA_UL4ndx4=s900-c-k-c0x00ffffff-no-rj',
+          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQs_VVgajqAz15gS4Pt8drb59szsee8MZTjtcpQU9Woh9gRpMf7',
+        ),
+        embeddedImageStyle: const QrEmbeddedImageStyle(
+          size: Size.square(40),
         ),
       ),
     );
