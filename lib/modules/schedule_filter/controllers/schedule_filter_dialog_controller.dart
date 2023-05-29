@@ -17,4 +17,14 @@ class ScheduleFilterDialogController extends _$ScheduleFilterDialogController {
     filter.contains(level) ? filter.remove(level) : filter.add(level);
     state = state.copyWith(levelFilters: filter);
   }
+
+  // ignore: avoid_positional_boolean_parameters
+  void onBookingFilterSelected(bool? value) {
+    if (value == null) return;
+    state = state.copyWith(filterBooked: value);
+  }
+
+  void reset() {
+    state = const ScheduleFilter();
+  }
 }
