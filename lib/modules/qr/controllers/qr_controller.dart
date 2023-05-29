@@ -1,7 +1,6 @@
 import 'package:evlve/modules/qr/qr.dart';
 import 'package:evlve/modules/user/user.dart';
 import 'package:flutter/widgets.dart';
-import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'qr_controller.g.dart';
@@ -13,10 +12,7 @@ class QRController extends _$QRController {
     final user = ref.watch(userProvider);
 
     void onPhoneShake() {
-      if (ModalRoute.of(context)?.isCurrent != true) {
-        context.pop();
-        return;
-      }
+      if (ModalRoute.of(context)?.isCurrent != true) return;
       QRDialog.show(context, id: user.id);
     }
 
