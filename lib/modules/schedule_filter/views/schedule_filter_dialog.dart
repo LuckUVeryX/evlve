@@ -100,7 +100,7 @@ class _ResetButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      onPressed: context.pop,
+      onPressed: () => context.pop(const ScheduleFilter()),
       child: Text(context.l10n.scheduleFilterResetButton),
     );
   }
