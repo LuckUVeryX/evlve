@@ -6,12 +6,11 @@ class ThemeConfig {
   const ThemeConfig._();
 
   static const _useM3 = true;
-  static final _textTheme = GoogleFonts.notoSansMonoTextTheme();
 
   static ThemeData get light {
     return ThemeData.from(
       useMaterial3: _useM3,
-      textTheme: _textTheme,
+      textTheme: GoogleFonts.notoSansMonoTextTheme(ThemeData.light().textTheme),
       colorScheme: Palette.light,
     );
   }
@@ -19,7 +18,7 @@ class ThemeConfig {
   static ThemeData get dark {
     return ThemeData.from(
       useMaterial3: _useM3,
-      textTheme: _textTheme,
+      textTheme: GoogleFonts.notoSansMonoTextTheme(ThemeData.dark().textTheme),
       colorScheme: Palette.dark,
     );
   }

@@ -19,14 +19,9 @@ class LateBookingConfirmDialog extends StatelessWidget {
       iconColor: context.colorScheme.error,
       title: Text(
         context.l10n.lateBookingDialogTitle,
-        style: context.textTheme.headlineSmall?.copyWith(
-          color: context.colorScheme.onSurface,
-        ),
       ),
       content: Text(
         context.l10n.lateBookingDialogContent,
-        style: context.textTheme.bodyMedium
-            ?.copyWith(color: context.colorScheme.onSurface),
       ),
       actions: [
         TextButton(
