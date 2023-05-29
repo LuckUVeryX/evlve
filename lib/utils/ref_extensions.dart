@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:dio/dio.dart';
 import 'package:evlve/app/app.dart';
+import 'package:evlve/modules/auth/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -44,6 +45,13 @@ extension AutoDisposeRefX<T> on AutoDisposeRef<T> {
     onDispose(() {
       timer?.cancel();
       cancelToken?.cancel();
+    });
+
+    /// Invalidate all caches when user is logged out
+    listen(authControllerProvider, (_, auth) {
+      auth.whenData(
+        (value) => value.maybeMap(orElse: link.close, loggedIn: (_) {}),
+      );
     });
   }
 }
