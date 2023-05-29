@@ -17,14 +17,13 @@ class QRDialog extends StatelessWidget {
     return Dialog(
       child: QrImageView(
         data: id,
-        backgroundColor: Colors.black,
         eyeStyle: QrEyeStyle(
           eyeShape: QrEyeShape.circle,
-          color: context.colorScheme.onBackground,
+          color: context.colorScheme.onSurface,
         ),
         dataModuleStyle: QrDataModuleStyle(
           dataModuleShape: QrDataModuleShape.circle,
-          color: context.colorScheme.onBackground,
+          color: context.colorScheme.onSurface,
         ),
         embeddedImage: const CachedNetworkImageProvider(
           'https://yt3.googleusercontent.com/ytc/AGIKgqPmxDPeoyBRQEQzjURVgiSH8mA942AA_UL4ndx4=s900-c-k-c0x00ffffff-no-rj',
