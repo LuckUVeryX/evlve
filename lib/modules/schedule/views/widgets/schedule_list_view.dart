@@ -63,6 +63,8 @@ class ScheduleListView extends ConsumerWidget {
                     );
 
                   return CheckboxListTile(
+                    dense: true,
+                    visualDensity: VisualDensity.compact,
                     tristate: true,
                     value: value,
                     onChanged: !canBook
@@ -81,14 +83,10 @@ class ScheduleListView extends ConsumerWidget {
                           },
                     title: Text(
                       schedule.title,
-                      style: context.textTheme.bodyLarge
-                          ?.copyWith(color: context.colorScheme.onSurface),
                     ),
                     subtitle: Text(
-                      DateFormat.Hms().format(schedule.start),
-                      style: context.textTheme.bodyMedium?.copyWith(
-                        color: context.colorScheme.onSurfaceVariant,
-                      ),
+                      '''
+${DateFormat.Hm().format(schedule.start)}|${schedule.end.difference(schedule.start).inMinutes}m''',
                     ),
                   );
                 },
