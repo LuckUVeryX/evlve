@@ -6,8 +6,10 @@ part 'user_provider.g.dart';
 
 @riverpod
 User user(UserRef ref) {
+  // `read` instead of `watch` as we
+  // dont want to get null check errors when user logs out
   return ref
-      .watch(authControllerProvider)
+      .read(authControllerProvider)
       .requireValue
       .whenOrNull(loggedIn: (user) => user)!;
 }
