@@ -1,4 +1,3 @@
-import 'package:evlve/app/app.dart';
 import 'package:evlve/app/views/shimmer_widget.dart';
 import 'package:evlve/modules/booking/booking.dart';
 import 'package:evlve/modules/schedule/schedule.dart';
@@ -114,29 +113,22 @@ class _ScheduleLoadingShimmer extends StatelessWidget {
       child: CheckboxListTile(
         value: false,
         onChanged: null,
+        dense: true,
+        visualDensity: VisualDensity.compact,
         title: Row(
           children: [
             Expanded(
-              flex: 2,
-              child: Container(
-                color: Colors.white,
-                width: 120,
-                height: context.textTheme.bodyLarge?.fontSize,
-              ),
+              child: Container(color: Colors.white, height: 13),
             ),
-            const Spacer(flex: 3),
+            const Spacer(flex: 2),
           ],
         ),
         subtitle: Row(
           children: [
             Expanded(
-              child: Container(
-                color: Colors.white,
-                width: 80,
-                height: context.textTheme.bodyMedium?.fontSize,
-              ),
+              child: Container(color: Colors.white, height: 12),
             ),
-            const Spacer(flex: 2)
+            const Spacer(flex: 3)
           ],
         ),
       ),
