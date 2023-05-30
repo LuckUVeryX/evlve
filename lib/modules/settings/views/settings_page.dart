@@ -1,6 +1,7 @@
+import 'package:evlve/app/app.dart';
 import 'package:evlve/l10n/l10n.dart';
 import 'package:evlve/modules/auth/auth.dart';
-import 'package:evlve/theme/theme_extensions.dart';
+import 'package:evlve/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -33,7 +34,7 @@ class SettingsPage extends StatelessWidget {
           _SettingsListTile(
             leadingIcon: Icons.light_mode_outlined,
             label: context.l10n.settingsApperance,
-            onTap: showWIPSnackBar,
+            onTap: () => const ThemeSettingsRoute().go(context),
           ),
           _SettingsListTile(
             leadingIcon: Icons.qr_code_outlined,

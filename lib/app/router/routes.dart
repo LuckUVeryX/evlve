@@ -2,6 +2,7 @@ import 'package:evlve/app/app.dart';
 import 'package:evlve/modules/auth/auth.dart';
 import 'package:evlve/modules/schedule/schedule.dart';
 import 'package:evlve/modules/settings/settings.dart';
+import 'package:evlve/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -59,12 +60,26 @@ class HomeRoute extends GoRouteData {
   }
 }
 
-@TypedGoRoute<SettingsRoute>(path: SettingsRoute.path)
+@TypedGoRoute<SettingsRoute>(
+  path: SettingsRoute.path,
+  routes: [
+    TypedGoRoute<ThemeSettingsRoute>(path: ThemeSettingsRoute.path),
+  ],
+)
 class SettingsRoute extends GoRouteData {
   const SettingsRoute();
   static const path = '/settings';
   @override
   Page<void> buildPage(BuildContext context, GoRouterState state) {
     return const NoTransitionPage(child: SettingsPage());
+  }
+}
+
+class ThemeSettingsRoute extends GoRouteData {
+  const ThemeSettingsRoute();
+  static const path = 'theme';
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return const ThemeSettingsPage();
   }
 }
