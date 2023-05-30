@@ -44,158 +44,162 @@ class _QRSettings extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final qrSetting = ref.watch(qRSettingControllerProvider);
 
-    return SliderTheme(
-      data: const SliderThemeData(
-        showValueIndicator: ShowValueIndicator.always,
-      ),
-      child: Column(
-        children: [
-          Expanded(
-            child: ListView(
-              children: [
-                const Center(
-                  child: SizedBox.square(
-                    dimension: 200,
-                    child: QRCode(imageDimension: 24),
-                  ),
+    return Column(
+      children: [
+        Expanded(
+          child: ListView(
+            children: [
+              const Center(
+                child: SizedBox.square(
+                  dimension: 200,
+                  child: QRCode(imageDimension: 24),
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Text(context.l10n.settingsQREyeShape),
-                ),
-                for (final eyeShape in QrEyeShape.values)
-                  RadioListTile(
-                    dense: true,
-                    visualDensity: VisualDensity.compact,
-                    value: eyeShape,
-                    groupValue: qrSetting.eyeShape,
-                    title: Text(
-                      eyeShape.name[0].toUpperCase() +
-                          eyeShape.name.substring(1),
-                    ),
-                    onChanged: ref
-                        .read(qRSettingControllerProvider.notifier)
-                        .onEyeShapeChanged,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Text(context.l10n.settingsQREyeShape),
+              ),
+              for (final eyeShape in QrEyeShape.values)
+                RadioListTile(
+                  dense: true,
+                  visualDensity: VisualDensity.compact,
+                  value: eyeShape,
+                  groupValue: qrSetting.eyeShape,
+                  title: Text(
+                    eyeShape.name[0].toUpperCase() + eyeShape.name.substring(1),
                   ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Text(context.l10n.settingsQRDataShape),
-                ),
-                for (final dataShape in QrDataModuleShape.values)
-                  RadioListTile(
-                    dense: true,
-                    visualDensity: VisualDensity.compact,
-                    value: dataShape,
-                    groupValue: qrSetting.dataModuleShape,
-                    title: Text(
-                      dataShape.name[0].toUpperCase() +
-                          dataShape.name.substring(1),
-                    ),
-                    onChanged: ref
-                        .read(qRSettingControllerProvider.notifier)
-                        .onDataShapeChanged,
-                  ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(context.l10n.settingsShakeCount),
-                      Text('${qrSetting.shakeCount}')
-                    ],
-                  ),
-                ),
-                Slider(
-                  min: QRModel.minShakeCount.toDouble(),
-                  max: QRModel.maxShakeCount.toDouble(),
-                  divisions: QRModel.maxShakeCount - QRModel.minShakeCount,
-                  label: qrSetting.shakeCount.toString(),
-                  value: qrSetting.shakeCount.toDouble(),
                   onChanged: ref
                       .read(qRSettingControllerProvider.notifier)
-                      .onShakeCountChanged,
+                      .onEyeShapeChanged,
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(context.l10n.settingsQRShakeThreshold),
-                      Text(qrSetting.shakeThresholdForce.toStringAsFixed(1))
-                    ],
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Text(context.l10n.settingsQRDataShape),
+              ),
+              for (final dataShape in QrDataModuleShape.values)
+                RadioListTile(
+                  dense: true,
+                  visualDensity: VisualDensity.compact,
+                  value: dataShape,
+                  groupValue: qrSetting.dataModuleShape,
+                  title: Text(
+                    dataShape.name[0].toUpperCase() +
+                        dataShape.name.substring(1),
                   ),
-                ),
-                Slider(
-                  min: QRModel.minShakeThresholdForce,
-                  max: QRModel.maxShakeThresholdForce,
-                  label: qrSetting.shakeThresholdForce.toStringAsFixed(1),
-                  value: qrSetting.shakeThresholdForce,
                   onChanged: ref
                       .read(qRSettingControllerProvider.notifier)
-                      .onShakeThresholdForceChange,
+                      .onDataShapeChanged,
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(context.l10n.settingsQRDebounceDuration),
-                      Text('${qrSetting.debounce.inMilliseconds}ms')
-                    ],
-                  ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(context.l10n.settingsShakeCount),
+                    Text('${qrSetting.shakeCount}')
+                  ],
                 ),
-                Slider(
-                  min: QRModel.minDebounce.inMilliseconds.toDouble(),
-                  max: QRModel.maxDebounce.inMilliseconds.toDouble(),
-                  label: '${qrSetting.debounce.inMilliseconds}ms',
-                  value: qrSetting.debounce.inMilliseconds.toDouble(),
-                  onChanged: ref
-                      .read(qRSettingControllerProvider.notifier)
-                      .onDebounceChanged,
+              ),
+              Slider(
+                min: QRModel.minShakeCount.toDouble(),
+                max: QRModel.maxShakeCount.toDouble(),
+                divisions: QRModel.maxShakeCount - QRModel.minShakeCount,
+                label: qrSetting.shakeCount.toString(),
+                value: qrSetting.shakeCount.toDouble(),
+                onChanged: ref
+                    .read(qRSettingControllerProvider.notifier)
+                    .onShakeCountChanged,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(context.l10n.settingsQRShakeThreshold),
+                    Text(qrSetting.shakeThresholdForce.toStringAsFixed(1))
+                  ],
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(context.l10n.settingsShakeCountResetDuration),
-                      Text(
-                        '''
+              ),
+              Slider(
+                min: QRModel.minShakeThresholdForce,
+                max: QRModel.maxShakeThresholdForce,
+                divisions: (QRModel.maxShakeThresholdForce -
+                        QRModel.minShakeThresholdForce) ~/
+                    0.1,
+                label: qrSetting.shakeThresholdForce.toStringAsFixed(1),
+                value: qrSetting.shakeThresholdForce,
+                onChanged: ref
+                    .read(qRSettingControllerProvider.notifier)
+                    .onShakeThresholdForceChange,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(context.l10n.settingsQRDebounceDuration),
+                    Text('${qrSetting.debounce.inMilliseconds}ms')
+                  ],
+                ),
+              ),
+              Slider(
+                min: QRModel.minDebounce.inMilliseconds.toDouble(),
+                max: QRModel.maxDebounce.inMilliseconds.toDouble(),
+                divisions: (QRModel.maxDebounce - QRModel.minDebounce)
+                        .inMilliseconds ~/
+                    const Duration(milliseconds: 50).inMilliseconds,
+                label: '${qrSetting.debounce.inMilliseconds}ms',
+                value: qrSetting.debounce.inMilliseconds.toDouble(),
+                onChanged: ref
+                    .read(qRSettingControllerProvider.notifier)
+                    .onDebounceChanged,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(context.l10n.settingsShakeCountResetDuration),
+                    Text(
+                      '''
 ${(qrSetting.shakeCountReset.inMilliseconds / 1000).toStringAsFixed(2)}s''',
-                      )
-                    ],
-                  ),
+                    )
+                  ],
                 ),
-                Slider(
-                  min: QRModel.minShakeCountReset.inMilliseconds.toDouble(),
-                  max: QRModel.maxShakeCountReset.inMilliseconds.toDouble(),
-                  label: '''
+              ),
+              Slider(
+                min: QRModel.minShakeCountReset.inMilliseconds.toDouble(),
+                max: QRModel.maxShakeCountReset.inMilliseconds.toDouble(),
+                divisions:
+                    (QRModel.maxShakeCountReset - QRModel.minShakeCountReset)
+                            .inMilliseconds ~/
+                        const Duration(milliseconds: 500).inMilliseconds,
+                label: '''
 ${(qrSetting.shakeCountReset.inMilliseconds / 1000).toStringAsFixed(2)}s''',
-                  value: qrSetting.shakeCountReset.inMilliseconds.toDouble(),
-                  onChanged: ref
-                      .read(qRSettingControllerProvider.notifier)
-                      .onShakeCountResetChanged,
-                ),
-              ],
-            ),
+                value: qrSetting.shakeCountReset.inMilliseconds.toDouble(),
+                onChanged: ref
+                    .read(qRSettingControllerProvider.notifier)
+                    .onShakeCountResetChanged,
+              ),
+            ],
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            child: Row(
-              children: [
-                Expanded(
-                  child: OutlinedButton(
-                    onPressed: context.pop,
-                    child: Text(context.l10n.settingsQRCancel),
-                  ),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          child: Row(
+            children: [
+              Expanded(
+                child: OutlinedButton(
+                  onPressed: context.pop,
+                  child: Text(context.l10n.settingsQRCancel),
                 ),
-                const SizedBox(width: 16),
-                const Expanded(child: _SaveButton()),
-              ],
-            ),
-          )
-        ],
-      ),
+              ),
+              const SizedBox(width: 16),
+              const Expanded(child: _SaveButton()),
+            ],
+          ),
+        )
+      ],
     );
   }
 }
