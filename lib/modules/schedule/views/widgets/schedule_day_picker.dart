@@ -1,6 +1,6 @@
 import 'package:calendar_timeline/calendar_timeline.dart';
-import 'package:evlve/app/app.dart';
 import 'package:evlve/modules/schedule/schedule.dart';
+import 'package:evlve/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
