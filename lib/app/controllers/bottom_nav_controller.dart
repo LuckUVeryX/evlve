@@ -5,7 +5,7 @@ part 'bottom_nav_controller.g.dart';
 
 @riverpod
 class BottomNavController extends _$BottomNavController {
-  final _routes = <String>[HomeRoute.path, SettingsRoute.path];
+  final _routes = <String>[ScheduleRoute.path, SettingsRoute.path];
 
   @override
   int build() {

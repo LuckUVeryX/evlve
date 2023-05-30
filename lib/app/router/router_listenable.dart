@@ -32,7 +32,7 @@ class RouterListenable extends _$RouterListenable implements Listenable {
     final isAuth = authPaths.contains(state.location);
 
     return _authState?.map(
-      loggedIn: (_) => isAuth ? HomeRoute.path : null,
+      loggedIn: (_) => isAuth ? ScheduleRoute.path : null,
       loggedOut: (_) => SignInRoute.path,
       requireOtp: (_) => otpPath,
     );

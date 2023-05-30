@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 part 'qr_model.freezed.dart';
 part 'qr_model.g.dart';
@@ -6,6 +7,8 @@ part 'qr_model.g.dart';
 @freezed
 class QRModel with _$QRModel {
   const factory QRModel({
+    @Default(QrEyeShape.circle) QrEyeShape eyeShape,
+    @Default(QrDataModuleShape.circle) QrDataModuleShape dataModuleShape,
     @Default(2.5) double shakeThresholdForce,
     @Default(Duration(milliseconds: 250)) Duration debounce,
     @Default(Duration(seconds: 3)) Duration shakeCountReset,

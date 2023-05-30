@@ -1,5 +1,5 @@
+import 'package:evlve/app/app.dart';
 import 'package:evlve/modules/qr/qr.dart';
-import 'package:evlve/modules/user/user.dart';
 import 'package:flutter/widgets.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -8,13 +8,16 @@ part 'qr_controller.g.dart';
 @Riverpod(dependencies: [qrPrefRepo])
 class QRController extends _$QRController {
   @override
-  void build(BuildContext context) {
-    final user = ref.watch(userProvider);
+  QRModel build(BuildContext context) {
     final qrPref = ref.watch(qrPrefRepoProvider).qrPref;
 
     void onPhoneShake() {
       if (ModalRoute.of(context)?.isCurrent != true) return;
-      QRDialog.show(context, id: user.id);
+      // Disable shake feature when adjusting QR code settings
+      final router = ref.read(routerProvider);
+      if (router.location == const QRSettingsRoute().location) return;
+
+      QRDialog.show(context);
     }
 
     ref.watch(
@@ -26,5 +29,6 @@ class QRController extends _$QRController {
         shakeThresholdForce: qrPref.shakeThresholdForce,
       ),
     );
+    return qrPref;
   }
 }
