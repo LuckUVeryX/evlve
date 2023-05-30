@@ -1,5 +1,6 @@
 import 'package:evlve/app/app.dart';
 import 'package:evlve/modules/auth/auth.dart';
+import 'package:evlve/modules/qr/qr.dart';
 import 'package:evlve/modules/schedule/schedule.dart';
 import 'package:evlve/modules/settings/settings.dart';
 import 'package:evlve/theme/theme.dart';
@@ -64,6 +65,7 @@ class HomeRoute extends GoRouteData {
   path: SettingsRoute.path,
   routes: [
     TypedGoRoute<ThemeSettingsRoute>(path: ThemeSettingsRoute.path),
+    TypedGoRoute<QRSettingsRoute>(path: QRSettingsRoute.path),
   ],
 )
 class SettingsRoute extends GoRouteData {
@@ -81,5 +83,14 @@ class ThemeSettingsRoute extends GoRouteData {
   @override
   Widget build(BuildContext context, GoRouterState state) {
     return const ThemeSettingsPage();
+  }
+}
+
+class QRSettingsRoute extends GoRouteData {
+  const QRSettingsRoute();
+  static const path = 'qr';
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return const QRSettingsPage();
   }
 }

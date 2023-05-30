@@ -10,11 +10,11 @@ part 'shake_repo.g.dart';
 @riverpod
 ShakeRepo shakeRepo(
   ShakeRepoRef ref, {
+  required double shakeThresholdForce,
+  required Duration debounce,
+  required Duration shakeCountReset,
+  required int minShakeCount,
   VoidCallback? onPhoneShake,
-  double shakeThresholdForce = 2.5,
-  Duration debounce = const Duration(milliseconds: 250),
-  Duration shakeCountReset = const Duration(seconds: 3),
-  int minShakeCount = 1,
 }) {
   final repo = ShakeRepo(
     onPhoneShake: onPhoneShake,
