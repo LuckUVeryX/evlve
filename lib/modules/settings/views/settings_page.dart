@@ -39,7 +39,7 @@ class SettingsPage extends StatelessWidget {
           _SettingsListTile(
             leadingIcon: Icons.qr_code_outlined,
             label: context.l10n.settingsQRCode,
-            onTap: showWIPSnackBar,
+            onTap: () => const QRSettingsRoute().go(context),
           ),
           Consumer(
             builder: (context, ref, child) {
