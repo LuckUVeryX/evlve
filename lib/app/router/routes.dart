@@ -46,14 +46,14 @@ final rootRoute = StatefulShellRoute.indexedStack(
     return RootPage(navigationShell: navigationShell);
   },
   branches: [
-    StatefulShellBranch(routes: [$homeRoute]),
+    StatefulShellBranch(routes: [$scheduleRoute]),
     StatefulShellBranch(routes: [$settingsRoute]),
   ],
 );
 
-@TypedGoRoute<HomeRoute>(path: HomeRoute.path)
-class HomeRoute extends GoRouteData {
-  const HomeRoute();
+@TypedGoRoute<ScheduleRoute>(path: ScheduleRoute.path)
+class ScheduleRoute extends GoRouteData {
+  const ScheduleRoute();
   static const path = '/';
   @override
   Page<void> buildPage(BuildContext context, GoRouterState state) {

@@ -78,10 +78,9 @@ class _QRIconButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final user = ref.watch(userProvider);
     return IconButton(
       onPressed: () async {
-        await QRDialog.show(context, id: user.id);
+        await QRDialog.show(context);
         if (context.mounted) {
           ScaffoldMessenger.of(context)
             ..hideCurrentSnackBar()
