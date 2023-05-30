@@ -36,5 +36,6 @@
     "settingsQRDebounceDuration": "Debounce Duration",
     "settingsShakeCountResetDuration": "Shake Count Reset Duration",
     "settingsQRCancel": "Cancel",
-    "settingsQRApply": "Apply"
+    "settingsQRSave": "Save",
+    "settingsQRSaveSnackBar": "QR Settings saved successfully"
 }
