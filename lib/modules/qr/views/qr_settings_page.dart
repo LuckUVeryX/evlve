@@ -128,10 +128,6 @@ class _QRSettings extends ConsumerWidget {
                 Slider(
                   min: QRModel.minShakeThresholdForce,
                   max: QRModel.maxShakeThresholdForce,
-                  divisions: (QRModel.maxShakeThresholdForce -
-                              QRModel.minShakeThresholdForce)
-                          .toInt() *
-                      10,
                   label: qrSetting.shakeThresholdForce.toStringAsFixed(1),
                   value: qrSetting.shakeThresholdForce,
                   onChanged: ref
@@ -194,23 +190,55 @@ ${(qrSetting.shakeCountReset.inMilliseconds / 1000).toStringAsFixed(2)}s''',
                   ),
                 ),
                 const SizedBox(width: 16),
-                Expanded(
-                  child: FilledButton(
-                    onPressed: () async {
-                      context.pop();
-                      await ref
-                          .read(qRSettingControllerProvider.notifier)
-                          .applySettings();
-                      ref.invalidate(qRControllerProvider);
-                    },
-                    child: Text(context.l10n.settingsQRApply),
-                  ),
-                ),
+                const Expanded(child: _SaveButton()),
               ],
             ),
           )
         ],
       ),
+    );
+  }
+}
+
+class _SaveButton extends ConsumerStatefulWidget {
+  const _SaveButton();
+
+  @override
+  ConsumerState<_SaveButton> createState() => _SaveButtonState();
+}
+
+class _SaveButtonState extends ConsumerState<_SaveButton> {
+  bool _debounce = false;
+  @override
+  Widget build(BuildContext context) {
+    return FilledButton(
+      onPressed: _debounce
+          ? null
+          : () async {
+              setState(() => _debounce = true);
+              await ref
+                  .read(qRSettingControllerProvider.notifier)
+                  .applySettings();
+              ref.invalidate(qRControllerProvider);
+              setState(() => _debounce = false);
+
+              if (context.mounted) {
+                context.pop();
+                ScaffoldMessenger.of(context)
+                  ..hideCurrentSnackBar()
+                  ..showSnackBar(
+                    SnackBar(
+                      content: Text(context.l10n.settingsQRSaveSnackBar),
+                    ),
+                  );
+              }
+            },
+      child: _debounce
+          ? const SizedBox.square(
+              dimension: 16,
+              child: CircularProgressIndicator(),
+            )
+          : Text(context.l10n.settingsQRSave),
     );
   }
 }
