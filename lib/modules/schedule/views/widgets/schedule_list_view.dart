@@ -1,4 +1,5 @@
 import 'package:evlve/app/views/shimmer_widget.dart';
+import 'package:evlve/l10n/l10n.dart';
 import 'package:evlve/modules/booking/booking.dart';
 import 'package:evlve/modules/schedule/schedule.dart';
 import 'package:evlve/modules/schedule_filter/controllers/schedule_filter_controller.dart';
@@ -111,7 +112,10 @@ ${DateFormat.Hm().format(schedule.start)}|${schedule.end.difference(schedule.sta
               if (index != 0) return null;
 
               return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 12),
+                padding: const EdgeInsets.symmetric(
+                  vertical: 12,
+                  horizontal: 16,
+                ),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -122,7 +126,8 @@ ${DateFormat.Hm().format(schedule.start)}|${schedule.end.difference(schedule.sta
                           ..invalidate(bookingControllerProvider);
                       },
                       icon: const Icon(Icons.refresh),
-                      label: const Text('Retry'),
+                      label:
+                          Text(context.l10n.scheduleListViewErrorRetryButton),
                     ),
                     Text(
                       e.toString(),
