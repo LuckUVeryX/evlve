@@ -17,7 +17,7 @@ class ThemeSettingsPage extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 16),
         children: const [
           _ThemeModeButton(),
-          Expanded(child: _ColorPicker()),
+          _ColorPicker(),
         ],
       ),
     );
