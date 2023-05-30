@@ -11,7 +11,14 @@ extension WidgetRefX on WidgetRef {
     for (final provider in providers) {
       listen(
         provider,
-        (_, value) => value.whenOrNull(error: _showErrorSnackbar),
+        (prev, next) {
+          next.whenOrNull(
+            error: (error, stackTrace) {
+              if (prev?.error == error) return;
+              _showErrorSnackbar(error, stackTrace);
+            },
+          );
+        },
         onError: _showErrorSnackbar,
       );
     }
