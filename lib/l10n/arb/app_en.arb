@@ -22,5 +22,10 @@
     "scheduleFilterSectionBJJ": "BJJ",
     "scheduleFilterSectionOthers": "Others",
     "scheduleFilterCancel": "Cancel",
-    "scheduleFilterApply": "Apply"
+    "scheduleFilterApply": "Apply",
+    "settingsAccount": "Account",
+    "settingsNotifications": "Notifications",
+    "settingsApperance": "Appearance",
+    "settingsQRCode": "QRCode",
+    "settingsLogout": "Logout"
 }
