@@ -7,7 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 part 'theme_repo.g.dart';
 
-@riverpod
+@Riverpod(dependencies: [sharedPreferences])
 ThemeRepo themeRepo(ThemeRepoRef ref) {
   return ThemeRepo(ref.watch(sharedPreferencesProvider));
 }

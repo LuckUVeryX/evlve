@@ -1,14 +1,25 @@
 import 'package:evlve/l10n/l10n.dart';
+import 'package:evlve/providers/providers.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 extension PumpApp on WidgetTester {
-  Future<void> pumpApp(Widget widget) {
+  Future<void> pumpApp(
+    Widget widget, {
+    Map<String, Object> mockPrefValues = const {},
+  }) async {
+    SharedPreferences.setMockInitialValues(mockPrefValues);
+    final pref = await SharedPreferences.getInstance();
     return pumpWidget(
-      MaterialApp(
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
-        supportedLocales: AppLocalizations.supportedLocales,
-        home: widget,
+      ProviderScope(
+        overrides: [sharedPreferencesProvider.overrideWithValue(pref)],
+        child: MaterialApp(
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          home: widget,
+        ),
       ),
     );
   }
