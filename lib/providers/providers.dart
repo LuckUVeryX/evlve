@@ -9,7 +9,7 @@ FlutterSecureStorage secureStorage(SecureStorageRef ref) {
   return const FlutterSecureStorage();
 }
 
-@riverpod
+@Riverpod(dependencies: [])
 SharedPreferences sharedPreferences(SharedPreferencesRef ref) {
   throw UnimplementedError();
 }
