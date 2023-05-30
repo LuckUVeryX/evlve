@@ -1,8 +1,8 @@
 import 'package:evlve/app/app.dart';
 import 'package:evlve/modules/auth/auth.dart';
 import 'package:evlve/modules/schedule/schedule.dart';
+import 'package:evlve/modules/settings/settings.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 part 'routes.g.dart';
@@ -65,31 +65,6 @@ class SettingsRoute extends GoRouteData {
   static const path = '/settings';
   @override
   Page<void> buildPage(BuildContext context, GoRouterState state) {
-    return NoTransitionPage(
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Settings'),
-          actions: [
-            Consumer(
-              builder: (context, ref, child) {
-                final auth = ref.watch(authControllerProvider);
-                return auth.maybeWhen(
-                  loading: null,
-                  orElse: () => IconButton(
-                    onPressed: () {
-                      ref.read(authControllerProvider.notifier).logout();
-                    },
-                    icon: auth.maybeWhen(
-                      loading: () => const CircularProgressIndicator(),
-                      orElse: () => const Icon(Icons.logout),
-                    ),
-                  ),
-                );
-              },
-            ),
-          ],
-        ),
-      ),
-    );
+    return const NoTransitionPage(child: SettingsPage());
   }
 }
