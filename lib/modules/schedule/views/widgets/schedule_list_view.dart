@@ -1,9 +1,9 @@
-import 'package:evlve/app/theme/theme_extensions.dart';
 import 'package:evlve/app/views/shimmer_widget.dart';
 import 'package:evlve/modules/booking/booking.dart';
 import 'package:evlve/modules/schedule/schedule.dart';
 import 'package:evlve/modules/schedule_filter/controllers/schedule_filter_controller.dart';
 import 'package:evlve/modules/schedule_filter/schedule_filter.dart';
+import 'package:evlve/theme/theme_extensions.dart';
 import 'package:evlve/utils/ref_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

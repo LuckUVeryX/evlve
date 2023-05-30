@@ -1,4 +1,4 @@
-import 'package:evlve/app/app.dart';
+import 'package:evlve/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
