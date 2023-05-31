@@ -1,29 +1,18 @@
+import 'dart:async';
+
 import 'package:evlve/l10n/l10n.dart';
 import 'package:evlve/modules/auth/controllers/controllers.dart';
-import 'package:evlve/utils/ref_extensions.dart';
+import 'package:evlve/theme/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pinput/pinput.dart';
 
-class OTPPage extends StatefulWidget {
+class OTPPage extends ConsumerWidget {
   const OTPPage({super.key});
 
   @override
-  State<OTPPage> createState() => _OTPPageState();
-}
-
-class _OTPPageState extends State<OTPPage> {
-  final _formKey = GlobalKey<FormState>();
-  final _controller = TextEditingController();
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
@@ -32,43 +21,16 @@ class _OTPPageState extends State<OTPPage> {
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Form(
-                  key: _formKey,
-                  child: TextFormField(
-                    maxLength: 6,
-                    autofocus: true,
-                    controller: _controller,
-                    textAlign: TextAlign.center,
-                    keyboardType: TextInputType.number,
-                    autofillHints: const [AutofillHints.oneTimeCode],
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                    decoration: const InputDecoration(
-                      labelText: 'OTP',
-                      floatingLabelAlignment: FloatingLabelAlignment.center,
-                      prefixIcon: Icon(Icons.key_outlined),
-                    ),
-                    validator: (value) {
-                      if (value?.length != 6) return '';
-                      return null;
-                    },
-                  ),
+                Text(
+                  context.l10n.otpPageTitle,
+                  style: context.textTheme.titleLarge,
                 ),
-                Row(
-                  children: [
-                    const Spacer(),
-                    Expanded(
-                      flex: 2,
-                      child: _OTPButton(
-                        formKey: _formKey,
-                        controller: _controller,
-                      ),
-                    ),
-                    const Spacer(),
-                  ],
-                )
+                const SizedBox(height: 48),
+                _Pinput(),
+                const SizedBox(height: 32),
+                Text(context.l10n.otpDidntReceive),
+                const _ResendButton()
               ],
             ),
           ),
@@ -78,31 +40,88 @@ class _OTPPageState extends State<OTPPage> {
   }
 }
 
-class _OTPButton extends ConsumerWidget {
-  const _OTPButton({
-    required this.formKey,
-    required this.controller,
-  });
-
-  final GlobalKey<FormState> formKey;
-  final TextEditingController controller;
+class _ResendButton extends ConsumerStatefulWidget {
+  const _ResendButton();
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final auth = ref.watch(authControllerProvider);
-    ref.listenErrors([authControllerProvider]);
+  ConsumerState<_ResendButton> createState() => _ResendButtonState();
+}
 
-    return FilledButton(
-      onPressed: auth.isLoading
-          ? null
-          : () {
-              final isValid = formKey.currentState?.validate() ?? false;
-              if (!isValid) return;
-              ref
-                  .read(authControllerProvider.notifier)
-                  .signInOtp(controller.text);
-            },
-      child: Text(context.l10n.signInPageButton),
+class _ResendButtonState extends ConsumerState<_ResendButton> {
+  Timer? _timer;
+
+  static const _maxTick = 30;
+
+  Future<void> _onPressed() async {
+    _timer?.cancel();
+    _timer = Timer.periodic(
+      const Duration(seconds: 1),
+      (timer) {
+        if (timer.tick >= _maxTick) {
+          timer.cancel();
+          _timer = null;
+        }
+        setState(() {});
+      },
+    );
+    setState(() {});
+
+    await ref.read(authControllerProvider.notifier).resendOtp();
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (_timer != null) {
+      return Text('${_maxTick - _timer!.tick}');
+    }
+    return TextButton(
+      onPressed: _timer == null ? _onPressed : null,
+      child: Text(
+        _timer == null ? context.l10n.otpResend : '${_maxTick - _timer!.tick}',
+      ),
+    );
+  }
+}
+
+class _Pinput extends ConsumerWidget {
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final defaultPinTheme = PinTheme(
+      width: 56,
+      height: 60,
+      decoration: BoxDecoration(
+        color: context.colorScheme.primaryContainer.withOpacity(0.5),
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: Colors.transparent),
+      ),
+    );
+
+    return Pinput(
+      length: 6,
+      autofocus: true,
+      defaultPinTheme: defaultPinTheme,
+      androidSmsAutofillMethod: AndroidSmsAutofillMethod.smsUserConsentApi,
+      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+      onCompleted: ref.read(authControllerProvider.notifier).signInOtp,
+      focusedPinTheme: defaultPinTheme.copyWith(
+        height: 68,
+        width: 64,
+        decoration: defaultPinTheme.decoration!.copyWith(
+          border: Border.all(color: context.colorScheme.primary),
+        ),
+      ),
+      errorPinTheme: defaultPinTheme.copyWith(
+        decoration: BoxDecoration(
+          color: context.colorScheme.errorContainer.withOpacity(0.5),
+          borderRadius: BorderRadius.circular(8),
+        ),
+      ),
     );
   }
 }
