@@ -1,5 +1,6 @@
 import 'package:evlve/app/app.dart';
 import 'package:evlve/modules/auth/auth.dart';
+import 'package:evlve/modules/notifications/notifications.dart';
 import 'package:evlve/modules/qr/qr.dart';
 import 'package:evlve/modules/schedule/schedule.dart';
 import 'package:evlve/modules/settings/settings.dart';
@@ -66,6 +67,9 @@ class ScheduleRoute extends GoRouteData {
   routes: [
     TypedGoRoute<ThemeSettingsRoute>(path: ThemeSettingsRoute.path),
     TypedGoRoute<QRSettingsRoute>(path: QRSettingsRoute.path),
+    TypedGoRoute<NotificationsSettingsRoute>(
+      path: NotificationsSettingsRoute.path,
+    ),
   ],
 )
 class SettingsRoute extends GoRouteData {
@@ -74,6 +78,15 @@ class SettingsRoute extends GoRouteData {
   @override
   Page<void> buildPage(BuildContext context, GoRouterState state) {
     return const NoTransitionPage(child: SettingsPage());
+  }
+}
+
+class NotificationsSettingsRoute extends GoRouteData {
+  const NotificationsSettingsRoute();
+  static const path = 'notifications';
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return const NotificationSettingsPage();
   }
 }
 

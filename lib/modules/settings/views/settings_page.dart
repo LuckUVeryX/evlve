@@ -29,7 +29,7 @@ class SettingsPage extends StatelessWidget {
           _SettingsListTile(
             leadingIcon: Icons.notifications_outlined,
             label: context.l10n.settingsNotifications,
-            onTap: showWIPSnackBar,
+            onTap: () => const NotificationsSettingsRoute().go(context),
           ),
           _SettingsListTile(
             leadingIcon: Icons.light_mode_outlined,
