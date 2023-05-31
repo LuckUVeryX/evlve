@@ -1,18 +1,26 @@
 import 'package:evlve/modules/booking/booking.dart';
+import 'package:evlve/modules/notifications/notifications.dart';
 import 'package:evlve/modules/schedule/models/models.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'booking_controller.g.dart';
 
-@riverpod
+@Riverpod(dependencies: [scheduleNotification, cancelSchedule])
 class BookingController extends _$BookingController {
   @override
   FutureOr<BookingResponse> build({required Schedule schedule}) async {
     return BookingResponse(schedule: schedule, message: null);
   }
 
-  Future<void> book() async => _optimisticUpdate(true);
-  Future<void> cancel() async => _optimisticUpdate(false);
+  Future<void> book() async {
+    await _optimisticUpdate(true);
+    await ref.read(scheduleNotificationProvider(schedule: schedule).future);
+  }
+
+  Future<void> cancel() async {
+    await _optimisticUpdate(false);
+    await ref.read(cancelScheduleProvider(schedule: schedule).future);
+  }
 
   Future<void> _optimisticUpdate(bool toBook) async {
     final repo = ref.read(bookingRepoProvider);
@@ -31,6 +39,7 @@ class BookingController extends _$BookingController {
 
     if (state.hasError && value != null) {
       state = AsyncData(value).copyWithPrevious(state);
+      return;
     }
   }
 }

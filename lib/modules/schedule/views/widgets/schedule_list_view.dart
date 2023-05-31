@@ -67,18 +67,17 @@ class ScheduleListView extends ConsumerWidget {
                 builder: (context, ref, child) {
                   ref
                     ..listenErrors([bookingProvider])
-                    ..listen(
-                      bookingProvider,
-                      (prev, next) {
-                        if (next.hasError) return;
-                        final msg = next.value?.message;
-                        if (msg == null) return;
-                        if (prev?.value?.message == msg) return;
-                        ScaffoldMessenger.of(context)
-                          ..hideCurrentSnackBar()
-                          ..showSnackBar(SnackBar(content: Text(msg)));
-                      },
-                    );
+                    // Error Booking
+                    ..listen(bookingProvider, (prev, next) {
+                      if (next.hasError) return;
+                      final msg = next.value?.message;
+                      if (msg == null) return;
+                      if (prev?.value?.message == msg) return;
+                      ScaffoldMessenger.of(context)
+                        ..hideCurrentSnackBar()
+                        ..showSnackBar(SnackBar(content: Text(msg)));
+                    });
+
                   return CheckboxListTile(
                     tristate: true,
                     value: value,

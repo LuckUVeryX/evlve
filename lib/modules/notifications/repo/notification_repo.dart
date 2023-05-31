@@ -1,14 +1,15 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:evlve/modules/notifications/notifications.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'notification_repo.g.dart';
 
 @riverpod
 NotificationRepo notificationRepo(NotificationRepoRef ref) {
-  return NotificationRepo(ref.watch(awesomeNotificationsProvider));
+  final repo = NotificationRepo(ref.watch(awesomeNotificationsProvider));
+  ref.onDispose(repo.dispose);
+  return repo;
 }
 
 class NotificationRepo {
@@ -21,17 +22,10 @@ class NotificationRepo {
       null,
       [
         NotificationChannel(
-          channelGroupKey: NotificationConst.bookingChannelGroupKey,
           channelKey: NotificationConst.bookingChannelKey,
           channelName: NotificationConst.bookingChannelName,
           channelDescription: NotificationConst.bookingChannelDescription,
-          ledColor: Colors.white,
-        ),
-      ],
-      channelGroups: [
-        NotificationChannelGroup(
-          channelGroupKey: NotificationConst.bookingChannelGroupKey,
-          channelGroupName: NotificationConst.bookingChannelGroupName,
+          channelShowBadge: true,
         ),
       ],
       debug: kDebugMode,
@@ -69,8 +63,20 @@ class NotificationRepo {
         body: body,
         wakeUpScreen: true,
       ),
-      schedule: NotificationCalendar.fromDate(date: dt),
+      schedule: NotificationCalendar.fromDate(date: dt, preciseAlarm: true),
     );
+  }
+
+  Future<void> cancel(String id) {
+    return _notifications.cancel(id.hashCode);
+  }
+
+  Future<List<NotificationModel>> listScheduledNotifications() {
+    return _notifications.listScheduledNotifications();
+  }
+
+  void dispose() {
+    _notifications.dispose();
   }
 
   /// Use this method to detect when a new notification or a schedule is created

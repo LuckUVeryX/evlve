@@ -42,5 +42,6 @@
     "settingsQRSave": "Save",
     "settingsQRSaveSnackBar": "QR Settings saved successfully",
     "settingsNotification": "Notification",
-    "settingsNotificationUpcomingClasses": "Upcoming classes"
+    "settingsNotificationNotifyMeBeforeClass": "Notify me before class",
+    "settingsNotificationUpcomingNotifications": "Upcoming Notifications"
 }
