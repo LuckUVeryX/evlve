@@ -6,6 +6,7 @@ part 'upcoming_notification.freezed.dart';
 @freezed
 class UpcomingNotification with _$UpcomingNotification {
   const factory UpcomingNotification({
+    required int id,
     required String title,
     required String body,
     required DateTime dt,
@@ -14,10 +15,12 @@ class UpcomingNotification with _$UpcomingNotification {
   const UpcomingNotification._();
 
   static UpcomingNotification? fromModel(NotificationModel model) {
+    final id = model.content?.id;
     final title = model.content?.title;
     final body = model.content?.body;
     final schedule = model.schedule;
-    if (title == null ||
+    if (id == null ||
+        title == null ||
         body == null ||
         schedule == null ||
         schedule is! NotificationCalendar) return null;
@@ -30,6 +33,7 @@ class UpcomingNotification with _$UpcomingNotification {
         schedule.second == null) return null;
 
     return UpcomingNotification(
+      id: id,
       title: title,
       body: body,
       dt: DateTime(

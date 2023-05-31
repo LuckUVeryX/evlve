@@ -67,8 +67,8 @@ class NotificationRepo {
     );
   }
 
-  Future<void> cancel(String id) {
-    return _notifications.cancel(id.hashCode);
+  Future<void> cancel(int id) {
+    return _notifications.cancel(id);
   }
 
   Future<List<NotificationModel>> listScheduledNotifications() {

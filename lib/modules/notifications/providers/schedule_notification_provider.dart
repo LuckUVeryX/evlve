@@ -18,14 +18,14 @@ Future<void> scheduleNotification(
         title: schedule.title,
         body: schedule.event.classDetails.area.key,
       );
-  ref.invalidate(upcomingNotificationsProvider);
+  ref.invalidate(upcomingNotificationsControllerProvider);
 }
 
 @riverpod
 Future<void> cancelSchedule(
   CancelScheduleRef ref, {
-  required Schedule schedule,
+  required int scheduleId,
 }) async {
-  await ref.read(notificationRepoProvider).cancel(schedule.event.id);
-  ref.invalidate(upcomingNotificationsProvider);
+  await ref.read(notificationRepoProvider).cancel(scheduleId);
+  ref.invalidate(upcomingNotificationsControllerProvider);
 }
