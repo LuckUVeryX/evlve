@@ -15,7 +15,9 @@ class QRController extends _$QRController {
       if (ModalRoute.of(context)?.isCurrent != true) return;
       // Disable shake feature when adjusting QR code settings
       final router = ref.read(routerProvider);
-      if (router.location == const QRSettingsRoute().location) return;
+      if (router.location.contains('${const SettingsRoute().location}/')) {
+        return;
+      }
 
       QRDialog.show(context);
     }
