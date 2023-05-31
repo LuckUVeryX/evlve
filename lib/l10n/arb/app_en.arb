@@ -40,5 +40,7 @@
     "settingsShakeCountResetDuration": "Shake Count Reset Duration",
     "settingsQRCancel": "Cancel",
     "settingsQRSave": "Save",
-    "settingsQRSaveSnackBar": "QR Settings saved successfully"
+    "settingsQRSaveSnackBar": "QR Settings saved successfully",
+    "settingsNotification": "Notification",
+    "settingsNotificationUpcomingClasses": "Upcoming classes"
 }
