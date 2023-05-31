@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:evlve/modules/logs/logs.dart';
+import 'package:evlve/modules/notifications/notifications.dart';
 import 'package:evlve/providers/providers.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -14,13 +15,21 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
 
   WidgetsFlutterBinding.ensureInitialized();
   final pref = await SharedPreferences.getInstance();
+  final container = ProviderContainer(
+    observers: [AsyncErrorObserver()],
+    overrides: [
+      sharedPreferencesProvider.overrideWithValue(pref),
+    ],
+  );
+
+  await Future.wait([
+    container.read(notificationRepoProvider).init(),
+    container.read(notificationRepoProvider).setListeners(),
+  ]);
 
   runApp(
-    ProviderScope(
-      observers: [AsyncErrorObserver()],
-      overrides: [
-        sharedPreferencesProvider.overrideWithValue(pref),
-      ],
+    UncontrolledProviderScope(
+      container: container,
       child: await builder(),
     ),
   );
