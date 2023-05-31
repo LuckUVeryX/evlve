@@ -43,5 +43,11 @@
     "settingsQRSaveSnackBar": "QR Settings saved successfully",
     "settingsNotification": "Notification",
     "settingsNotificationNotifyMeBeforeClass": "Notify me before class",
-    "settingsNotificationUpcomingNotifications": "Upcoming Notifications"
+    "settingsNotificationUpcomingNotifications": "Upcoming Notifications",
+    "settingsNotificationUpcomingNotificationsSlideableDelete": "Delete",
+    "settingsNotificationConfirmDeleteDialogTitle": "Delete?",
+    "settingsNotificationConfirmDeleteDialogContent": "You wont be notified before this particular class starts.",
+    "settingsNotificationConfirmDeleteDialogDelete": "Delete",
+    "settingsNotificationConfirmDeleteDialogCancel": "Cancel"
+    
 }

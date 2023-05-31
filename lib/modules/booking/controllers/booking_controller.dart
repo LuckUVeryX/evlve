@@ -5,7 +5,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'booking_controller.g.dart';
 
-@Riverpod(dependencies: [scheduleNotification, cancelSchedule])
+@Riverpod(dependencies: [scheduleNotification])
 class BookingController extends _$BookingController {
   @override
   FutureOr<BookingResponse> build({required Schedule schedule}) async {
@@ -19,7 +19,9 @@ class BookingController extends _$BookingController {
 
   Future<void> cancel() async {
     await _optimisticUpdate(false);
-    await ref.read(cancelScheduleProvider(schedule: schedule).future);
+    await ref.read(
+      cancelScheduleProvider(scheduleId: schedule.event.id.hashCode).future,
+    );
   }
 
   Future<void> _optimisticUpdate(bool toBook) async {
