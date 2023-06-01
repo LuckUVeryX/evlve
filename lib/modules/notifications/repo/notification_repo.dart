@@ -17,7 +17,15 @@ class NotificationRepo {
 
   final AwesomeNotifications _notifications;
 
-  Future<bool> init() async {
+  Future<void> init() async {
+    await Future.wait([
+      _init(),
+      _setListeners(),
+      resetBadgeCount(),
+    ]);
+  }
+
+  Future<void> _init() {
     return _notifications.initialize(
       null,
       [
@@ -32,7 +40,7 @@ class NotificationRepo {
     );
   }
 
-  Future<bool> setListeners() {
+  Future<bool> _setListeners() {
     return _notifications.setListeners(
       onActionReceivedMethod: onActionReceivedMethod,
       onNotificationCreatedMethod: onNotificationCreatedMethod,
@@ -75,6 +83,10 @@ class NotificationRepo {
     return _notifications.listScheduledNotifications();
   }
 
+  Future<void> resetBadgeCount() {
+    return _notifications.resetGlobalBadge();
+  }
+
   void dispose() {
     _notifications.dispose();
   }
@@ -95,15 +107,11 @@ class NotificationRepo {
   @pragma('vm:entry-point')
   static Future<void> onDismissActionReceivedMethod(
     ReceivedAction receivedAction,
-  ) async {
-    await AwesomeNotifications().decrementGlobalBadgeCounter();
-  }
+  ) async {}
 
   /// Use this method to detect when the user taps on a notification
   @pragma('vm:entry-point')
   static Future<void> onActionReceivedMethod(
     ReceivedAction receivedAction,
-  ) async {
-    await AwesomeNotifications().decrementGlobalBadgeCounter();
-  }
+  ) async {}
 }

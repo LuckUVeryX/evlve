@@ -22,10 +22,7 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
     ],
   );
 
-  await Future.wait([
-    container.read(notificationRepoProvider).init(),
-    container.read(notificationRepoProvider).setListeners(),
-  ]);
+  await container.read(notificationRepoProvider).init();
 
   runApp(
     UncontrolledProviderScope(
