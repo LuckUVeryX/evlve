@@ -1,11 +1,12 @@
 import 'package:evlve/l10n/l10n.dart';
+import 'package:evlve/modules/notifications/notifications.dart';
 import 'package:evlve/modules/qr/qr.dart';
 import 'package:evlve/modules/schedule/controllers/schedule_date_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-class RootPage extends ConsumerWidget {
+class RootPage extends ConsumerStatefulWidget {
   const RootPage({
     required this.navigationShell,
     super.key,
@@ -14,20 +15,46 @@ class RootPage extends ConsumerWidget {
   final StatefulNavigationShell navigationShell;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<RootPage> createState() => _RootPageState();
+}
+
+class _RootPageState extends ConsumerState<RootPage>
+    with WidgetsBindingObserver {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  Future<void> didChangeAppLifecycleState(AppLifecycleState state) async {
+    if (state == AppLifecycleState.resumed) {
+      await ref.read(resetBadgeCountProvider.future);
+    }
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final qrController = qRControllerProvider(context);
     ref.watch(qrController);
 
     return Scaffold(
-      body: navigationShell,
+      body: widget.navigationShell,
       bottomNavigationBar: NavigationBar(
-        selectedIndex: navigationShell.currentIndex,
+        selectedIndex: widget.navigationShell.currentIndex,
         onDestinationSelected: (index) {
-          final tapCurrentIndex = navigationShell.currentIndex == index;
+          final tapCurrentIndex = widget.navigationShell.currentIndex == index;
 
-          navigationShell.goBranch(index, initialLocation: tapCurrentIndex);
+          widget.navigationShell
+              .goBranch(index, initialLocation: tapCurrentIndex);
 
-          if (navigationShell.currentIndex == 0 && tapCurrentIndex) {
+          if (widget.navigationShell.currentIndex == 0 && tapCurrentIndex) {
             ref.read(scheduleDateControllerProvider.notifier).resetDate();
           }
         },
