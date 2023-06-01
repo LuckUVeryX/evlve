@@ -41,6 +41,7 @@ dev_dependencies:
   build_runner: ^2.4.4
   build_verify: ^3.1.0
   custom_lint: ^0.4.0
+  flutter_native_splash: ^2.3.0
   flutter_test:
     sdk: flutter
   freezed: ^2.3.4
@@ -55,3 +56,16 @@ flutter:
   uses-material-design: true
   generate: true
 
+flutter_native_splash:
+  color: "#fefbff"
+  image: assets/launch-image.png
+  color_dark: "#1b1b1f"
+  image_dark: assets/launch-image-dark.png
+
+  android_12:
+    image: assets/launch-image.png
+    icon_background_color: "#fefbff"
+    image_dark: assets/launch-image-dark.png
+    icon_background_color_dark: "#1b1b1f"
+
+  web: false
