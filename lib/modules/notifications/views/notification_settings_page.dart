@@ -22,6 +22,7 @@ class NotificationSettingsPage extends StatelessWidget {
           _UpcomingClassesSwitchListTile(),
           SizedBox(height: 16),
           _DurationPicker(),
+          SizedBox(height: 24),
           Expanded(
             child: _UpcomingNotificationsListView(),
           ),
