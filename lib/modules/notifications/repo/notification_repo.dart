@@ -95,11 +95,15 @@ class NotificationRepo {
   @pragma('vm:entry-point')
   static Future<void> onDismissActionReceivedMethod(
     ReceivedAction receivedAction,
-  ) async {}
+  ) async {
+    await AwesomeNotifications().decrementGlobalBadgeCounter();
+  }
 
   /// Use this method to detect when the user taps on a notification
   @pragma('vm:entry-point')
   static Future<void> onActionReceivedMethod(
     ReceivedAction receivedAction,
-  ) async {}
+  ) async {
+    await AwesomeNotifications().decrementGlobalBadgeCounter();
+  }
 }
