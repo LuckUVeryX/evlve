@@ -3,7 +3,6 @@ import 'package:evlve/modules/qr/qr.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:qr_flutter/qr_flutter.dart';
 
 class QRSettingsPage extends StatelessWidget {
   const QRSettingsPage({super.key});
@@ -55,41 +54,6 @@ class _QRSettings extends ConsumerWidget {
                   child: QRCode(imageDimension: 24),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Text(context.l10n.settingsQREyeShape),
-              ),
-              for (final eyeShape in QrEyeShape.values)
-                RadioListTile(
-                  dense: true,
-                  visualDensity: VisualDensity.compact,
-                  value: eyeShape,
-                  groupValue: qrSetting.eyeShape,
-                  title: Text(
-                    eyeShape.name[0].toUpperCase() + eyeShape.name.substring(1),
-                  ),
-                  onChanged: ref
-                      .read(qRSettingControllerProvider.notifier)
-                      .onEyeShapeChanged,
-                ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Text(context.l10n.settingsQRDataShape),
-              ),
-              for (final dataShape in QrDataModuleShape.values)
-                RadioListTile(
-                  dense: true,
-                  visualDensity: VisualDensity.compact,
-                  value: dataShape,
-                  groupValue: qrSetting.dataModuleShape,
-                  title: Text(
-                    dataShape.name[0].toUpperCase() +
-                        dataShape.name.substring(1),
-                  ),
-                  onChanged: ref
-                      .read(qRSettingControllerProvider.notifier)
-                      .onDataShapeChanged,
-                ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Row(

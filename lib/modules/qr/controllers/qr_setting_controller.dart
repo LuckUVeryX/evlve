@@ -1,5 +1,4 @@
 import 'package:evlve/modules/qr/qr.dart';
-import 'package:qr_flutter/qr_flutter.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'qr_setting_controller.g.dart';
@@ -13,16 +12,6 @@ class QRSettingController extends _$QRSettingController {
 
   void reset() {
     state = const QRModel();
-  }
-
-  void onEyeShapeChanged(QrEyeShape? shape) {
-    if (shape == null) return;
-    state = state.copyWith(eyeShape: shape);
-  }
-
-  void onDataShapeChanged(QrDataModuleShape? shape) {
-    if (shape == null) return;
-    state = state.copyWith(dataModuleShape: shape);
   }
 
   void onShakeCountChanged(double value) {

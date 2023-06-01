@@ -1,4 +1,3 @@
-import 'package:evlve/modules/qr/qr.dart';
 import 'package:evlve/modules/user/user.dart';
 import 'package:evlve/theme/theme.dart';
 import 'package:flutter/material.dart';
@@ -31,15 +30,14 @@ class QRCode extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final id = ref.watch(userProvider).id;
-    final qr = ref.watch(qRSettingControllerProvider);
     return QrImageView(
       data: id,
       eyeStyle: QrEyeStyle(
-        eyeShape: qr.eyeShape,
+        eyeShape: QrEyeShape.square,
         color: context.colorScheme.onSurface,
       ),
       dataModuleStyle: QrDataModuleStyle(
-        dataModuleShape: qr.dataModuleShape,
+        dataModuleShape: QrDataModuleShape.square,
         color: context.colorScheme.onSurface,
       ),
     );

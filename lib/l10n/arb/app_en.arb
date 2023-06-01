@@ -32,8 +32,6 @@
     "settingsQRCode": "QRCode",
     "settingsLogout": "Logout",
     "settingsQRReset": "Reset",
-    "settingsQREyeShape": "QR Eye Shape",
-    "settingsQRDataShape": "QR Data Shape",
     "settingsShakeCount": "Shake Count",
     "settingsQRShakeThreshold": "Shake Force Threshold",
     "settingsQRDebounceDuration": "Shake Cooldown",
