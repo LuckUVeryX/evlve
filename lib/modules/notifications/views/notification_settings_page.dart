@@ -1,8 +1,12 @@
+import 'dart:math';
+
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:duration_picker/duration_picker.dart';
 import 'package:evlve/l10n/l10n.dart';
 import 'package:evlve/modules/notifications/notifications.dart';
 import 'package:evlve/theme/utils/utils.dart';
 import 'package:evlve/utils/ref_extensions.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -16,6 +20,7 @@ class NotificationSettingsPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(context.l10n.settingsNotifications),
+        actions: const [if (kDebugMode) _DebugNotificationIconButton()],
       ),
       body: const Column(
         children: [
@@ -28,6 +33,30 @@ class NotificationSettingsPage extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class _DebugNotificationIconButton extends StatelessWidget {
+  const _DebugNotificationIconButton();
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      onPressed: () {
+        AwesomeNotifications().createNotification(
+          content: NotificationContent(
+            id: Random().nextInt(2 ^ 32),
+            channelKey: NotificationConst.bookingChannelKey,
+            title: 'Title',
+            body: 'Body',
+          ),
+          schedule: NotificationCalendar.fromDate(
+            date: DateTime.now().add(const Duration(seconds: 5)),
+          ),
+        );
+      },
+      icon: const Icon(Icons.notification_add),
     );
   }
 }
