@@ -1,4 +1,3 @@
-import 'package:evlve/app/controllers/controllers.dart';
 import 'package:evlve/l10n/l10n.dart';
 import 'package:evlve/modules/qr/qr.dart';
 import 'package:evlve/modules/schedule/controllers/schedule_date_controller.dart';
@@ -21,39 +20,28 @@ class RootPage extends ConsumerWidget {
 
     return Scaffold(
       body: navigationShell,
-      bottomNavigationBar: const _BottomNavigationBar(),
-    );
-  }
-}
+      bottomNavigationBar: NavigationBar(
+        selectedIndex: navigationShell.currentIndex,
+        onDestinationSelected: (index) {
+          final tapCurrentIndex = navigationShell.currentIndex == index;
 
-class _BottomNavigationBar extends ConsumerWidget {
-  const _BottomNavigationBar();
+          navigationShell.goBranch(index, initialLocation: tapCurrentIndex);
 
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final selectedIndex = ref.watch(bottomNavControllerProvider);
-
-    return NavigationBar(
-      selectedIndex: selectedIndex,
-      onDestinationSelected: (value) {
-        ref
-            .read(bottomNavControllerProvider.notifier)
-            .onDestinationSelected(value);
-
-        if (selectedIndex == 0 && selectedIndex == value) {
-          ref.read(scheduleDateControllerProvider.notifier).resetDate();
-        }
-      },
-      destinations: [
-        NavigationDestination(
-          icon: const Icon(Icons.calendar_month),
-          label: context.l10n.bottomNavSchedule,
-        ),
-        NavigationDestination(
-          icon: const Icon(Icons.settings),
-          label: context.l10n.bottomNavSettings,
-        ),
-      ],
+          if (navigationShell.currentIndex == 0 && tapCurrentIndex) {
+            ref.read(scheduleDateControllerProvider.notifier).resetDate();
+          }
+        },
+        destinations: [
+          NavigationDestination(
+            icon: const Icon(Icons.calendar_month),
+            label: context.l10n.bottomNavSchedule,
+          ),
+          NavigationDestination(
+            icon: const Icon(Icons.settings),
+            label: context.l10n.bottomNavSettings,
+          ),
+        ],
+      ),
     );
   }
 }
