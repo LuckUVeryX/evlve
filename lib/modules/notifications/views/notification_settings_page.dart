@@ -156,24 +156,9 @@ class _UpcomingNotificationListTile extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final slideableAction = SlidableAction(
-      onPressed: null,
-      backgroundColor: context.colorScheme.error,
-      foregroundColor: context.colorScheme.onError,
-      icon: Icons.delete,
-      label:
-          context.l10n.settingsNotificationUpcomingNotificationsSlideableDelete,
-    );
-
-    // TODO(Ryan): Edit Notification
-
     return Slidable(
       groupTag: '_UpcomingNotificationListTile',
       key: ValueKey(notification.id),
-      startActionPane: ActionPane(
-        motion: const DrawerMotion(),
-        children: [slideableAction],
-      ),
       endActionPane: ActionPane(
         dismissible: DismissiblePane(
           closeOnCancel: true,
@@ -188,7 +173,16 @@ class _UpcomingNotificationListTile extends ConsumerWidget {
               .cancelUpcoming(notification.id),
         ),
         motion: const DrawerMotion(),
-        children: [slideableAction],
+        children: [
+          SlidableAction(
+            onPressed: null,
+            backgroundColor: context.colorScheme.error,
+            foregroundColor: context.colorScheme.onError,
+            icon: Icons.delete,
+            label: context
+                .l10n.settingsNotificationUpcomingNotificationsSlideableDelete,
+          )
+        ],
       ),
       child: ListTile(
         title: Text(notification.title),
