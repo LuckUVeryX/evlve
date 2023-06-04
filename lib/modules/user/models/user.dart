@@ -10,6 +10,22 @@ class User with _$User {
     @JsonKey(name: 'memberId') required String id,
     required Facility defaultLocation,
     required List<FacilityExtraData> facilities,
+    String? mfaMethod,
+    String? waitlistNotificationMethod,
+    String? program,
+    String? title,
+    String? firstName,
+    String? lastName,
+    String? email,
+    String? mobile,
+    bool? autoBook,
+    bool? addBuddy,
+    bool? isEmployee,
+    bool? accessToRegularClasses,
+    String? renewalType,
+    String? vaccinationStatus,
+    bool? hasActiveTEAP,
+    bool? isActiveGeneralMembership,
   }) = _User;
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
