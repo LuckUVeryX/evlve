@@ -10,21 +10,13 @@ class SettingsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    void showWIPSnackBar() {
-      ScaffoldMessenger.of(context)
-        ..hideCurrentSnackBar()
-        ..showSnackBar(
-          const SnackBar(content: Text('Work in progress')),
-        );
-    }
-
     return Scaffold(
       body: ListView(
         children: [
           _SettingsListTile(
             leadingIcon: Icons.person_outline,
             label: context.l10n.settingsAccount,
-            onTap: showWIPSnackBar,
+            onTap: () => const AccountSettingsRoute().go(context),
           ),
           _SettingsListTile(
             leadingIcon: Icons.notifications_outlined,

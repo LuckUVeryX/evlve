@@ -4,6 +4,7 @@ import 'package:evlve/modules/notifications/notifications.dart';
 import 'package:evlve/modules/qr/qr.dart';
 import 'package:evlve/modules/schedule/schedule.dart';
 import 'package:evlve/modules/settings/settings.dart';
+import 'package:evlve/modules/user/user.dart';
 import 'package:evlve/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -65,6 +66,7 @@ class ScheduleRoute extends GoRouteData {
 @TypedGoRoute<SettingsRoute>(
   path: SettingsRoute.path,
   routes: [
+    TypedGoRoute<AccountSettingsRoute>(path: AccountSettingsRoute.path),
     TypedGoRoute<ThemeSettingsRoute>(path: ThemeSettingsRoute.path),
     TypedGoRoute<QRSettingsRoute>(path: QRSettingsRoute.path),
     TypedGoRoute<NotificationsSettingsRoute>(
@@ -78,6 +80,15 @@ class SettingsRoute extends GoRouteData {
   @override
   Page<void> buildPage(BuildContext context, GoRouterState state) {
     return const NoTransitionPage(child: SettingsPage());
+  }
+}
+
+class AccountSettingsRoute extends GoRouteData {
+  const AccountSettingsRoute();
+  static const path = 'account';
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return const AccountSettingsPage();
   }
 }
 
