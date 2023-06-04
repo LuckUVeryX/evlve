@@ -46,6 +46,26 @@
     "settingsNotificationConfirmDeleteDialogTitle": "Delete?",
     "settingsNotificationConfirmDeleteDialogContent": "You wont be notified before this particular class starts.",
     "settingsNotificationConfirmDeleteDialogDelete": "Delete",
-    "settingsNotificationConfirmDeleteDialogCancel": "Cancel"
-    
+    "settingsNotificationConfirmDeleteDialogCancel": "Cancel",
+    "settingsAccount": "Account",
+    "settingsAccountId": "Id",
+    "settingsAccountTitle": "Title",
+    "settingsAccountFirstName": "FirstName",
+    "settingsAccountLastName": "LastName",
+    "settingsAccountEmail": "Email",
+    "settingsAccountMobile": "Mobile",
+    "settingsAccountDefaultLocation": "DefaultLocation",
+    "settingsAccountFacilities": "Facilities",
+    "settingsAccountProgram": "Program",
+    "settingsAccountRenewalType": "RenewalType",
+    "settingsAccountVaccinationStatus": "VaccinationStatus",
+    "settingsAccountMFAMethod": "MFAMethod",
+    "settingsAccountWaitlistNotificationMethod": "WaitlistNotificationMethod",
+    "settingsAccountWaitlistAutoBook": "WaitlistAutoBook",
+    "settingsAccountAutoBook": "AutoBook",
+    "settingsAccountAddBuddy": "AddBuddy",
+    "settingsAccountIsEmployee": "IsEmployee",
+    "settingsAccountAccessToRegularClasses": "AccessToRegularClasses",
+    "settingsAccountHasActiveTEAP": "HasActiveTEAP",
+    "settingsAccountIsActveGeneralMembership": "IsActveGeneralMembership"
 }
