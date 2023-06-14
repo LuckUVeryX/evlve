@@ -112,7 +112,7 @@ class AccountSettingsPage extends ConsumerWidget {
             CheckboxListTile(
               value: user.accessToRegularClasses,
               onChanged: (_) {},
-              // enabled: false,
+              enabled: false,
               title: Text(
                 context.l10n.settingsAccountAccessToRegularClasses,
                 style: context.textTheme.bodyLarge
@@ -122,7 +122,7 @@ class AccountSettingsPage extends ConsumerWidget {
             CheckboxListTile(
               value: user.hasActiveTEAP,
               onChanged: (_) {},
-              // enabled: false,
+              enabled: false,
               title: Text(
                 context.l10n.settingsAccountHasActiveTEAP,
                 style: context.textTheme.bodyLarge

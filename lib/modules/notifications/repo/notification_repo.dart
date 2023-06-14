@@ -8,7 +8,6 @@ part 'notification_repo.g.dart';
 @riverpod
 NotificationRepo notificationRepo(NotificationRepoRef ref) {
   final repo = NotificationRepo(ref.watch(awesomeNotificationsProvider));
-  ref.onDispose(repo.dispose);
   return repo;
 }
 
@@ -85,10 +84,6 @@ class NotificationRepo {
 
   Future<void> resetBadgeCount() {
     return _notifications.resetGlobalBadge();
-  }
-
-  void dispose() {
-    _notifications.dispose();
   }
 
   /// Use this method to detect when a new notification or a schedule is created
