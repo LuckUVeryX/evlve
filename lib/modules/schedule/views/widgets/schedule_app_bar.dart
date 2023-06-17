@@ -80,7 +80,9 @@ class _QRIconButton extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return IconButton(
       onPressed: () async {
+        ref.read(setMaxBrightnessProvider);
         await QRDialog.show(context);
+        ref.read(resetBrightnessProvider);
         if (context.mounted) {
           ScaffoldMessenger.of(context)
             ..hideCurrentSnackBar()
