@@ -22,18 +22,20 @@ dependencies:
   flutter_slidable: ^3.0.0
   freezed_annotation: ^2.2.0
   go_router: ^8.0.1
-  google_fonts: ^4.0.4
+  google_fonts: ^5.0.0
   intl: ^0.18.0
   json_annotation: ^4.8.1
   pinput: ^2.2.31
   qr_flutter: ^4.1.0
   riverpod_annotation: ^2.1.1
+  screen_brightness: ^0.2.2
   sensors_plus: ^3.0.1
   shared_preferences: ^2.1.1
   shimmer: ^3.0.0
 
 dependency_overrides:
-  # For compatability with Awesome Notifications
+  # https://github.com/Baseflow/flutter_cached_network_image/issues/843
+  http: ^1.0.0
   # https://github.com/rafaelsetragni/awesome_notifications/issues/774
   intl: ^0.18.1
 
