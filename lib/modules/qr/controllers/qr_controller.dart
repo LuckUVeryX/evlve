@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:evlve/app/app.dart';
 import 'package:evlve/modules/qr/qr.dart';
 import 'package:flutter/widgets.dart';
@@ -11,7 +13,7 @@ class QRController extends _$QRController {
   QRModel build(BuildContext context) {
     final qrPref = ref.watch(qrPrefRepoProvider).qrPref;
 
-    void onPhoneShake() {
+    Future<void> onPhoneShake() async {
       if (ModalRoute.of(context)?.isCurrent != true) return;
       // Disable shake feature when adjusting QR code settings
       final router = ref.read(routerProvider);
@@ -19,7 +21,9 @@ class QRController extends _$QRController {
         return;
       }
 
-      QRDialog.show(context);
+      ref.read(setMaxBrightnessProvider);
+      await QRDialog.show(context);
+      ref.read(resetBrightnessProvider);
     }
 
     ref.watch(

@@ -1,5 +1,6 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:screen_brightness/screen_brightness.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 part 'providers.g.dart';
@@ -12,4 +13,9 @@ FlutterSecureStorage secureStorage(SecureStorageRef ref) {
 @Riverpod(dependencies: [])
 SharedPreferences sharedPreferences(SharedPreferencesRef ref) {
   throw UnimplementedError();
+}
+
+@riverpod
+ScreenBrightness screenBrightness(ScreenBrightnessRef ref) {
+  return ScreenBrightness();
 }
