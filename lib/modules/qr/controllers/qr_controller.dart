@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:evlve/app/app.dart';
 import 'package:evlve/modules/qr/qr.dart';
 import 'package:flutter/widgets.dart';
+import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'qr_controller.g.dart';
@@ -16,7 +17,7 @@ class QRController extends _$QRController {
     Future<void> onPhoneShake() async {
       if (ModalRoute.of(context)?.isCurrent != true) return;
       // Disable shake feature when adjusting QR code settings
-      final router = ref.read(routerProvider);
+      final router = GoRouterState.of(context);
       if (router.location.contains('${const SettingsRoute().location}/')) {
         return;
       }
