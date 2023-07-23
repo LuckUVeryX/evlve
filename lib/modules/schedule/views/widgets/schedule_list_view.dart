@@ -10,10 +10,50 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
-class ScheduleListView extends ConsumerWidget {
+class ScheduleListView extends ConsumerStatefulWidget {
   const ScheduleListView({
     required this.area,
     super.key,
+  });
+  final Area area;
+
+  @override
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _ScheduleListViewState();
+}
+
+class _ScheduleListViewState extends ConsumerState<ScheduleListView>
+    with WidgetsBindingObserver {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+    if (state != AppLifecycleState.resumed) return;
+    ref.invalidate(scheduleProvider);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return _ScheduleListView(
+      area: widget.area,
+    );
+  }
+}
+
+class _ScheduleListView extends ConsumerWidget {
+  const _ScheduleListView({
+    required this.area,
   });
 
   final Area area;
