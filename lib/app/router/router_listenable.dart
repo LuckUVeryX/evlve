@@ -29,7 +29,7 @@ class RouterListenable extends _$RouterListenable implements Listenable {
 
     const otpPath = '${SignInRoute.path}/${OTPRoute.path}';
     final authPaths = {SplashRoute.path, SignInRoute.path, otpPath};
-    final isAuth = authPaths.contains(state.location);
+    final isAuth = authPaths.contains(state.uri.toString());
 
     return _authState?.map(
       loggedIn: (_) => isAuth ? ScheduleRoute.path : null,

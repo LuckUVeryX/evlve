@@ -10,7 +10,7 @@ final _key = GlobalKey<NavigatorState>(debugLabel: 'routerKey');
 @riverpod
 Raw<GoRouter> router(RouterRef ref) {
   final notifier = ref.watch(routerListenableProvider.notifier);
-  return GoRouter(
+  final router = GoRouter(
     // FIXME: Remove when StatefulShellRoute is supported by GoRouterBuilder
     routes: [rootRoute, $splashRoute, $signInRoute],
     navigatorKey: _key,
@@ -19,4 +19,6 @@ Raw<GoRouter> router(RouterRef ref) {
     refreshListenable: notifier,
     initialLocation: SplashRoute.path,
   );
+  ref.onDispose(router.dispose);
+  return router;
 }
