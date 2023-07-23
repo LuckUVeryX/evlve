@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:evlve/app/app.dart';
+import 'package:evlve/app/router/router.routes.dart';
 import 'package:evlve/modules/qr/qr.dart';
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
@@ -18,9 +18,10 @@ class QRController extends _$QRController {
       if (ModalRoute.of(context)?.isCurrent != true) return;
       // Disable shake feature when adjusting QR code settings
       final router = GoRouterState.of(context);
-      if (router.uri.toString().contains('${const SettingsRoute().location}/')) {
-        return;
-      }
+      final inSettingsPage = router.uri
+          .toString()
+          .contains(context.namedLocation(Routes.settings));
+      if (inSettingsPage) return;
 
       ref.read(setMaxBrightnessProvider);
       await QRDialog.show(context);

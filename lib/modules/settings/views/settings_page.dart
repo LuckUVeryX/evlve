@@ -1,9 +1,11 @@
-import 'package:evlve/app/app.dart';
+import 'package:evlve/app/router/router.routes.dart';
 import 'package:evlve/l10n/l10n.dart';
 import 'package:evlve/modules/auth/auth.dart';
 import 'package:evlve/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:path/path.dart' as p;
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
@@ -16,22 +18,30 @@ class SettingsPage extends StatelessWidget {
           _SettingsListTile(
             leadingIcon: Icons.person_outline,
             label: context.l10n.settingsAccount,
-            onTap: () => const AccountSettingsRoute().go(context),
+            onTap: () {
+              context.go(p.join(Routes.settings, Routes.accountSettings));
+            },
           ),
           _SettingsListTile(
             leadingIcon: Icons.notifications_outlined,
             label: context.l10n.settingsNotifications,
-            onTap: () => const NotificationsSettingsRoute().go(context),
+            onTap: () {
+              context.go(p.join(Routes.settings, Routes.notification));
+            },
           ),
           _SettingsListTile(
             leadingIcon: Icons.light_mode_outlined,
             label: context.l10n.settingsApperance,
-            onTap: () => const ThemeSettingsRoute().go(context),
+            onTap: () {
+              context.go(p.join(Routes.settings, Routes.theme));
+            },
           ),
           _SettingsListTile(
             leadingIcon: Icons.qr_code_outlined,
             label: context.l10n.settingsQRCode,
-            onTap: () => const QRSettingsRoute().go(context),
+            onTap: () {
+              context.go(p.join(Routes.settings, Routes.qr));
+            },
           ),
           Consumer(
             builder: (context, ref, child) {
