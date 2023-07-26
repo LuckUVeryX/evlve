@@ -7,8 +7,7 @@ part 'notification_repo.g.dart';
 
 @riverpod
 NotificationRepo notificationRepo(NotificationRepoRef ref) {
-  final repo = NotificationRepo(ref.watch(awesomeNotificationsProvider));
-  return repo;
+  throw UnimplementedError();
 }
 
 class NotificationRepo {

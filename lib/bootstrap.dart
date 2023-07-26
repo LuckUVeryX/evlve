@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:developer';
 
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:evlve/modules/logs/logs.dart';
 import 'package:evlve/modules/notifications/notifications.dart';
 import 'package:evlve/providers/providers.dart';
@@ -14,19 +15,19 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
   };
 
   WidgetsFlutterBinding.ensureInitialized();
-  final pref = await SharedPreferences.getInstance();
-  final container = ProviderContainer(
-    observers: [AsyncErrorObserver()],
-    overrides: [
-      sharedPreferencesProvider.overrideWithValue(pref),
-    ],
-  );
 
-  await container.read(notificationRepoProvider).init();
+  final pref = await SharedPreferences.getInstance();
+
+  final notificationRepo = NotificationRepo(AwesomeNotifications());
+  await notificationRepo.init();
 
   runApp(
-    UncontrolledProviderScope(
-      container: container,
+    ProviderScope(
+      observers: [AsyncErrorObserver()],
+      overrides: [
+        sharedPreferencesProvider.overrideWithValue(pref),
+        notificationRepoProvider.overrideWithValue(notificationRepo)
+      ],
       child: await builder(),
     ),
   );
