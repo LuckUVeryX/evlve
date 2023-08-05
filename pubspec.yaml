@@ -26,7 +26,7 @@ dependencies:
   intl: ^0.18.0
   json_annotation: ^4.8.1
   path: ^1.8.3
-  pinput: ^2.2.31
+  pinput: ^3.0.0
   qr_flutter: ^4.1.0
   riverpod_annotation: ^2.1.1
   screen_brightness: ^0.2.2
@@ -35,8 +35,6 @@ dependencies:
   shimmer: ^3.0.0
 
 dependency_overrides:
-  # https://github.com/Baseflow/flutter_cached_network_image/issues/843
-  http: ^1.0.0
   # https://github.com/rafaelsetragni/awesome_notifications/issues/774
   intl: ^0.18.1
 
@@ -48,7 +46,7 @@ dev_dependencies:
     sdk: flutter
   freezed: ^2.3.4
   json_serializable: ^6.7.0
-  mocktail: ^0.3.0
+  mocktail: ^1.0.0
   riverpod_generator: ^2.2.3
   riverpod_lint: ^1.3.2
   very_good_analysis: ^5.0.0
