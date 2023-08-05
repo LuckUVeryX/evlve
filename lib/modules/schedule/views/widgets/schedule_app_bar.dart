@@ -17,36 +17,13 @@ class ScheduleAppBar extends ConsumerWidget {
 
     return SliverAppBar(
       pinned: true,
-      floating: true,
-      titleSpacing: 0,
-      bottom: const _AppBarBottom(),
-      leading: const _LocationIconButton(),
-      title: Text(facility.key.key),
       centerTitle: false,
-      actions: const [
-        _QRIconButton(),
-      ],
+      title: Text(facility.key.key),
+      leading: const _LocationIconButton(),
+      actions: const [_QRIconButton()],
+      bottom: const _ScheduleAppBarBottom(),
     );
   }
-}
-
-class _AppBarBottom extends ConsumerWidget implements PreferredSizeWidget {
-  const _AppBarBottom();
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final facility = ref.watch(scheduleFacilityControllerProvider);
-    final areas = facility.areas;
-    return Column(
-      children: [
-        const ScheduleDayPicker(),
-        TabBar(tabs: [for (final area in areas) Tab(text: area.key.key)]),
-      ],
-    );
-  }
-
-  @override
-  Size get preferredSize => const Size.fromHeight(92 + kToolbarHeight);
 }
 
 class _QRIconButton extends ConsumerWidget {
@@ -63,9 +40,7 @@ class _QRIconButton extends ConsumerWidget {
           ScaffoldMessenger.of(context)
             ..hideCurrentSnackBar()
             ..showSnackBar(
-              SnackBar(
-                content: Text(context.l10n.qrDialogShakeSnackbar),
-              ),
+              SnackBar(content: Text(context.l10n.qrDialogShakeSnackbar)),
             );
         }
       },
@@ -97,4 +72,22 @@ class _LocationIconButton extends ConsumerWidget {
       ),
     );
   }
+}
+
+class _ScheduleAppBarBottom extends ConsumerWidget
+    implements PreferredSizeWidget {
+  const _ScheduleAppBarBottom();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final facility = ref.watch(scheduleFacilityControllerProvider);
+    final areas = facility.areas;
+
+    return TabBar(
+      tabs: [for (final area in areas) Tab(text: area.key.key)],
+    );
+  }
+
+  @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }

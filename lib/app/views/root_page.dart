@@ -2,7 +2,6 @@ import 'package:evlve/app/router/router.routes.dart';
 import 'package:evlve/l10n/l10n.dart';
 import 'package:evlve/modules/notifications/notifications.dart';
 import 'package:evlve/modules/qr/qr.dart';
-import 'package:evlve/modules/schedule/controllers/schedule_date_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -68,7 +67,7 @@ class _RootPageState extends ConsumerState<RootPage>
               .goBranch(index, initialLocation: tapCurrentIndex);
 
           if (widget.navigationShell.currentIndex == 0 && tapCurrentIndex) {
-            ref.read(scheduleDateControllerProvider.notifier).resetDate();
+            // TODO(Ryan): Scroll back to center
           }
         },
         destinations: [

@@ -15,11 +15,7 @@ class SchedulePage extends ConsumerWidget {
       child: Scaffold(
         body: NestedScrollView(
           headerSliverBuilder: (_, __) => [const ScheduleAppBar()],
-          body: TabBarView(
-            children: [
-              for (final area in areas) ScheduleListView(area: area.key)
-            ],
-          ),
+          body: const ScheduleInfiniteList(),
         ),
       ),
     );
