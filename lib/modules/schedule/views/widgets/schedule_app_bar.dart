@@ -20,6 +20,7 @@ class ScheduleAppBar extends ConsumerWidget {
 
     return SliverAppBar(
       pinned: true,
+      titleSpacing: 0,
       centerTitle: false,
       title: Text(facility.key.key),
       leading: const _LocationIconButton(),
