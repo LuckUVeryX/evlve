@@ -14,7 +14,7 @@ class Routes {
   static final routes = [
     _splashRoute,
     _authRoute,
-    _rootRoute,
+    _scheduleRoute,
   ];
 
   static const splash = '/splash';
@@ -24,7 +24,7 @@ class Routes {
 
   static const schedule = '/';
 
-  static const settings = '/settings';
+  static const settings = 'settings';
   static const accountSettings = 'account';
   static const notification = 'notification';
   static const theme = 'theme';
@@ -46,28 +46,15 @@ class Routes {
     builder: (context, state) => const OTPPage(),
   );
 
-  static final _rootRoute = StatefulShellRoute.indexedStack(
-    builder: (context, state, navigationShell) {
-      return RootPage(navigationShell: navigationShell);
-    },
-    branches: [
-      StatefulShellBranch(routes: [_scheduleRoute]),
-      StatefulShellBranch(routes: [_settingsRoute]),
-    ],
-  );
-
   static final _scheduleRoute = GoRoute(
     path: Routes.schedule,
-    pageBuilder: (context, state) => const NoTransitionPage(
-      child: SchedulePage(),
-    ),
+    builder: (context, state) => const SchedulePage(),
+    routes: [_settingsRoute],
   );
 
   static final _settingsRoute = GoRoute(
     path: Routes.settings,
-    pageBuilder: (context, state) => const NoTransitionPage(
-      child: SettingsPage(),
-    ),
+    builder: (context, state) => const SettingsPage(),
     routes: [
       _accountsSettingsRoute,
       _notificationSettingsRoute,
