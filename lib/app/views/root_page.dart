@@ -1,3 +1,4 @@
+import 'package:evlve/app/router/router.routes.dart';
 import 'package:evlve/l10n/l10n.dart';
 import 'package:evlve/modules/notifications/notifications.dart';
 import 'package:evlve/modules/qr/qr.dart';
@@ -41,8 +42,20 @@ class _RootPageState extends ConsumerState<RootPage>
 
   @override
   Widget build(BuildContext context) {
-    final qrController = qRControllerProvider(context);
-    ref.watch(qrController);
+    ref.listen(
+      shakeEventProvider,
+      (_, __) async {
+        if (ModalRoute.of(context)?.isCurrent != true) return;
+        // Disable shake feature when adjusting QR code settings
+        final router = GoRouterState.of(context);
+        final inSettingsPage = router.matchedLocation.contains(Routes.settings);
+        if (inSettingsPage) return;
+
+        ref.read(setMaxBrightnessProvider);
+        await QRDialog.show(context);
+        ref.read(resetBrightnessProvider);
+      },
+    );
 
     return Scaffold(
       body: widget.navigationShell,

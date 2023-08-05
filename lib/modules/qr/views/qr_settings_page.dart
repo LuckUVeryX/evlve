@@ -187,7 +187,9 @@ class _SaveButtonState extends ConsumerState<_SaveButton> {
               await ref
                   .read(qRSettingControllerProvider.notifier)
                   .applySettings();
-              ref.invalidate(qRControllerProvider);
+              ref
+                  .read(qRControllerProvider.notifier)
+                  .onQrChanged(ref.read(qRSettingControllerProvider));
               setState(() => _debounce = false);
 
               if (context.mounted) {
