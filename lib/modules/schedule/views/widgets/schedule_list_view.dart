@@ -2,8 +2,6 @@ import 'package:evlve/app/views/shimmer_widget.dart';
 import 'package:evlve/l10n/l10n.dart';
 import 'package:evlve/modules/booking/booking.dart';
 import 'package:evlve/modules/schedule/schedule.dart';
-import 'package:evlve/modules/schedule_filter/controllers/schedule_filter_controller.dart';
-import 'package:evlve/modules/schedule_filter/schedule_filter.dart';
 import 'package:evlve/theme/theme.dart';
 import 'package:evlve/utils/ref_extensions.dart';
 import 'package:flutter/material.dart';
@@ -74,21 +72,7 @@ class _ScheduleListView extends ConsumerWidget {
         itemBuilder: (context, index) {
           return scheduleValue.when(
             data: (scheduleList) {
-              final filter = ref.watch(scheduleFilterControllerProvider);
-              final schedules = [...scheduleList.schedules]..retainWhere((s) {
-                  if (filter == const ScheduleFilter()) return true;
-
-                  var bookFilter = true;
-                  if (filter.filterBooked) {
-                    bookFilter = s.event.classDetails.isBookedByMe;
-                  }
-                  var levelFilter = true;
-                  if (filter.levelFilters.isNotEmpty) {
-                    levelFilter = filter.levelFilters
-                        .contains(s.event.classDetails.level);
-                  }
-                  return bookFilter && levelFilter;
-                });
+              final schedules = scheduleList.schedules;
 
               if (index >= schedules.length) return null;
               final schedule = schedules[index];
