@@ -4,7 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 part 'notification_settings_repo.g.dart';
 
-@Riverpod(dependencies: [sharedPreferences])
+@riverpod
 NotificationSettingsRepo notificationSettingsRepo(
   NotificationSettingsRepoRef ref,
 ) {

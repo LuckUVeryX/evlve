@@ -5,7 +5,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'booking_controller.g.dart';
 
-@Riverpod(dependencies: [scheduleNotification])
+@riverpod
 class BookingController extends _$BookingController {
   @override
   FutureOr<BookingResponse> build({required Schedule schedule}) async {

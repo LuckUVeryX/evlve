@@ -10,9 +10,12 @@ void main() {
     testWidgets('renders MaterialApp', (tester) async {
       SharedPreferences.setMockInitialValues({});
       final pref = await SharedPreferences.getInstance();
+      final container = ProviderContainer(
+        overrides: [sharedPreferencesProvider.overrideWithValue(pref)],
+      );
       await tester.pumpWidget(
-        ProviderScope(
-          overrides: [sharedPreferencesProvider.overrideWithValue(pref)],
+        UncontrolledProviderScope(
+          container: container,
           child: const App(),
         ),
       );

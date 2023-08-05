@@ -3,7 +3,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'notfication_settings_controller.g.dart';
 
-@Riverpod(dependencies: [notificationSettingsRepo])
+@riverpod
 class NotificationSettingsController extends _$NotificationSettingsController {
   @override
   FutureOr<NotificationSettingsState> build() {

@@ -7,7 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 part 'qr_pref_repo.g.dart';
 
-@Riverpod(dependencies: [sharedPreferences])
+@riverpod
 QRPrefRepo qrPrefRepo(QrPrefRepoRef ref) {
   return QRPrefRepo(ref.watch(sharedPreferencesProvider));
 }

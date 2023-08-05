@@ -4,7 +4,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'schedule_notification_provider.g.dart';
 
-@Riverpod(dependencies: [notificationSettingsRepo])
+@riverpod
 Future<void> scheduleNotification(
   ScheduleNotificationRef ref, {
   required Schedule schedule,

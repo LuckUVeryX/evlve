@@ -3,7 +3,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'qr_controller.g.dart';
 
-@Riverpod(dependencies: [qrPrefRepo])
+@riverpod
 class QRController extends _$QRController {
   @override
   QRModel build() {
