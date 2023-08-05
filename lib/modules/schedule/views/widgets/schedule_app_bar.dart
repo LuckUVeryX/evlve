@@ -22,7 +22,10 @@ class ScheduleAppBar extends ConsumerWidget {
       pinned: true,
       titleSpacing: 0,
       centerTitle: false,
-      title: Text(facility.key.key),
+      title: GestureDetector(
+        onTap: ref.read(resetDateControllerProvider.notifier).resetDate,
+        child: Text(facility.key.key),
+      ),
       leading: const _LocationIconButton(),
       actions: const [_QRIconButton(), _SettingsIconButton()],
       bottom: const _ScheduleAppBarBottom(),
