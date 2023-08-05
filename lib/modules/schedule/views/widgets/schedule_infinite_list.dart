@@ -1,5 +1,6 @@
 import 'package:evlve/l10n/l10n.dart';
 import 'package:evlve/modules/booking/booking.dart';
+import 'package:evlve/modules/facility/facility.dart';
 import 'package:evlve/modules/schedule/schedule.dart';
 import 'package:evlve/theme/utils/utils.dart';
 import 'package:evlve/utils/date_utils.dart';
@@ -28,7 +29,7 @@ class _ScheduleInfiniteListState extends ConsumerState<ScheduleInfiniteList> {
   @override
   Widget build(BuildContext context) {
     final forwardListKey = UniqueKey();
-    final areas = ref.watch(scheduleFacilityControllerProvider).areas;
+    final areas = ref.watch(facilityContollerProvider).areas;
 
     ref.listen(
       resetDateControllerProvider,

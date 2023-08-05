@@ -1,3 +1,4 @@
+import 'package:evlve/modules/facility/facility.dart';
 import 'package:evlve/modules/schedule/models/models.dart';
 import 'package:evlve/utils/date_utils.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';

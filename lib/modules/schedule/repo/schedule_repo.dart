@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:evlve/api/api.dart';
+import 'package:evlve/modules/facility/facility.dart';
 import 'package:evlve/modules/schedule/models/models.dart';
 import 'package:evlve/modules/user/user.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';

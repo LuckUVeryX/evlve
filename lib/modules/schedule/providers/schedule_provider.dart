@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:evlve/modules/facility/facility.dart';
 import 'package:evlve/modules/schedule/models/models.dart';
 import 'package:evlve/modules/schedule/repo/repo.dart';
 import 'package:evlve/utils/ref_extensions.dart';
