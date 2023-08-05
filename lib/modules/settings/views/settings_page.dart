@@ -10,38 +10,37 @@ import 'package:path/path.dart' as p;
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
 
+  String _buildRoute(String route) {
+    return p.join(Routes.schedule, Routes.settings, route);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text(context.l10n.settings),
+      ),
       body: ListView(
         children: [
           _SettingsListTile(
             leadingIcon: Icons.person_outline,
             label: context.l10n.settingsAccount,
-            onTap: () {
-              context.go(p.join(Routes.settings, Routes.accountSettings));
-            },
+            onTap: () => context.go(_buildRoute(Routes.accountSettings)),
           ),
           _SettingsListTile(
             leadingIcon: Icons.notifications_outlined,
             label: context.l10n.settingsNotifications,
-            onTap: () {
-              context.go(p.join(Routes.settings, Routes.notification));
-            },
+            onTap: () => context.go(_buildRoute(Routes.notification)),
           ),
           _SettingsListTile(
             leadingIcon: Icons.light_mode_outlined,
             label: context.l10n.settingsApperance,
-            onTap: () {
-              context.go(p.join(Routes.settings, Routes.theme));
-            },
+            onTap: () => context.go(_buildRoute(Routes.theme)),
           ),
           _SettingsListTile(
             leadingIcon: Icons.qr_code_outlined,
             label: context.l10n.settingsQRCode,
-            onTap: () {
-              context.go(p.join(Routes.settings, Routes.qr));
-            },
+            onTap: () => context.go(_buildRoute(Routes.qr)),
           ),
           Consumer(
             builder: (context, ref, child) {

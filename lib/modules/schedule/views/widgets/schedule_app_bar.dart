@@ -1,3 +1,4 @@
+import 'package:evlve/app/router/router.routes.dart';
 import 'package:evlve/l10n/l10n.dart';
 import 'package:evlve/modules/qr/qr.dart';
 import 'package:evlve/modules/schedule/schedule.dart';
@@ -5,6 +6,8 @@ import 'package:evlve/modules/user/user.dart';
 import 'package:evlve/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:path/path.dart' as p;
 
 class ScheduleAppBar extends ConsumerWidget {
   const ScheduleAppBar({
@@ -20,7 +23,7 @@ class ScheduleAppBar extends ConsumerWidget {
       centerTitle: false,
       title: Text(facility.key.key),
       leading: const _LocationIconButton(),
-      actions: const [_QRIconButton()],
+      actions: const [_QRIconButton(), _SettingsIconButton()],
       bottom: const _ScheduleAppBarBottom(),
     );
   }
@@ -45,6 +48,20 @@ class _QRIconButton extends ConsumerWidget {
         }
       },
       icon: const Icon(Icons.qr_code_rounded),
+    );
+  }
+}
+
+class _SettingsIconButton extends StatelessWidget {
+  const _SettingsIconButton();
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      onPressed: () {
+        context.go(p.join(Routes.schedule, Routes.settings));
+      },
+      icon: const Icon(Icons.settings_outlined),
     );
   }
 }
