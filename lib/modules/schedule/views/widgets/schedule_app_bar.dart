@@ -23,6 +23,7 @@ class ScheduleAppBar extends ConsumerWidget {
       pinned: true,
       titleSpacing: 0,
       centerTitle: false,
+      scrolledUnderElevation: 0,
       title: GestureDetector(
         onTap: ref.read(resetDateControllerProvider.notifier).resetDate,
         child: Text(facility.key.key),
