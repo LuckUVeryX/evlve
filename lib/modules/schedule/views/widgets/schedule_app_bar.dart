@@ -84,6 +84,12 @@ class _ScheduleAppBarBottom extends ConsumerWidget
     final areas = facility.areas;
 
     return TabBar(
+      onTap: (_) {
+        final indexIsChanging =
+            DefaultTabController.of(context).indexIsChanging;
+        if (indexIsChanging) return;
+        ref.read(resetDateControllerProvider.notifier).resetDate();
+      },
       tabs: [for (final area in areas) Tab(text: area.key.key)],
     );
   }
