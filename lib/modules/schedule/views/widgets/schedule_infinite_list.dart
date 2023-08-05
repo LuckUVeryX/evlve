@@ -6,17 +6,41 @@ import 'package:evlve/utils/date_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ScheduleInfiniteList extends ConsumerWidget {
+class ScheduleInfiniteList extends ConsumerStatefulWidget {
   const ScheduleInfiniteList({
     super.key,
   });
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ScheduleInfiniteList> createState() =>
+      _ScheduleInfiniteListState();
+}
+
+class _ScheduleInfiniteListState extends ConsumerState<ScheduleInfiniteList> {
+  final _controller = ScrollController();
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final forwardListKey = UniqueKey();
     final areas = ref.watch(scheduleFacilityControllerProvider).areas;
 
+    ref.listen(
+      resetDateControllerProvider,
+      (_, __) => _controller.animateTo(
+        0,
+        curve: Curves.easeInOut,
+        duration: const Duration(milliseconds: 250),
+      ),
+    );
+
     return Scrollable(
+      controller: _controller,
       viewportBuilder: (context, position) {
         return TabBarView(
           children: [

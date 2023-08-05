@@ -62,13 +62,8 @@ class _RootPageState extends ConsumerState<RootPage>
         selectedIndex: widget.navigationShell.currentIndex,
         onDestinationSelected: (index) {
           final tapCurrentIndex = widget.navigationShell.currentIndex == index;
-
           widget.navigationShell
               .goBranch(index, initialLocation: tapCurrentIndex);
-
-          if (widget.navigationShell.currentIndex == 0 && tapCurrentIndex) {
-            // TODO(Ryan): Scroll back to center
-          }
         },
         destinations: [
           NavigationDestination(
