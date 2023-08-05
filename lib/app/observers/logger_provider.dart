@@ -30,7 +30,12 @@ class AppPrinter extends LogPrinter {
     final prefix = SimplePrinter.levelPrefixes[event.level]!;
     final color = SimplePrinter.levelColors[event.level]!;
 
-    return [color('$prefix $timeStr $messageStr$errorStr')];
+    final stackTrace = event.stackTrace;
+
+    return [
+      color('$prefix $timeStr $messageStr$errorStr'),
+      if (stackTrace != null) color('$stackTrace'),
+    ];
   }
 }
 

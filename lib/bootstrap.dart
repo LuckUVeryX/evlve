@@ -13,7 +13,7 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
   WidgetsFlutterBinding.ensureInitialized();
 
   final log = Logger(
-    level: Level.trace,
+    level: Level.debug,
     printer: AppPrinter(),
     output: ConsoleLogOutput(),
   );
