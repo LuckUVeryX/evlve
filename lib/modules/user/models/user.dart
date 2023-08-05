@@ -1,4 +1,4 @@
-import 'package:evlve/modules/schedule/schedule.dart';
+import 'package:evlve/modules/facility/facility.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'user.freezed.dart';

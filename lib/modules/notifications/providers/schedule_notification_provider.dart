@@ -1,3 +1,4 @@
+import 'package:evlve/modules/facility/facility.dart';
 import 'package:evlve/modules/notifications/notifications.dart';
 import 'package:evlve/modules/schedule/schedule.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';

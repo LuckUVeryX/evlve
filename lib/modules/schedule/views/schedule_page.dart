@@ -1,3 +1,4 @@
+import 'package:evlve/modules/facility/facility.dart';
 import 'package:evlve/modules/qr/qr.dart';
 import 'package:evlve/modules/schedule/schedule.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +9,7 @@ class SchedulePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final facility = ref.watch(scheduleFacilityControllerProvider);
+    final facility = ref.watch(facilityContollerProvider);
     final areas = facility.areas;
 
     ref.listen(

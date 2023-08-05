@@ -1,7 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'areas.freezed.dart';
-part 'areas.g.dart';
+part 'facility.freezed.dart';
+part 'facility.g.dart';
 
 @JsonEnum(fieldRename: FieldRename.screamingSnake)
 enum Facility {

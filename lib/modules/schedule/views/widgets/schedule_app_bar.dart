@@ -1,5 +1,6 @@
 import 'package:evlve/app/router/router.routes.dart';
 import 'package:evlve/l10n/l10n.dart';
+import 'package:evlve/modules/facility/facility.dart';
 import 'package:evlve/modules/qr/qr.dart';
 import 'package:evlve/modules/schedule/schedule.dart';
 import 'package:evlve/modules/user/user.dart';
@@ -16,7 +17,7 @@ class ScheduleAppBar extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final facility = ref.watch(scheduleFacilityControllerProvider);
+    final facility = ref.watch(facilityContollerProvider);
 
     return SliverAppBar(
       pinned: true,
@@ -84,7 +85,7 @@ class _LocationIconButton extends ConsumerWidget {
               final newFacility = await ScheduleFacilityDialog.show(context);
               if (newFacility == null) return;
               ref
-                  .read(scheduleFacilityControllerProvider.notifier)
+                  .read(facilityContollerProvider.notifier)
                   .onFacilityChanged(newFacility);
             },
       icon: Icon(
@@ -101,7 +102,7 @@ class _ScheduleAppBarBottom extends ConsumerWidget
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final facility = ref.watch(scheduleFacilityControllerProvider);
+    final facility = ref.watch(facilityContollerProvider);
     final areas = facility.areas;
 
     return TabBar(

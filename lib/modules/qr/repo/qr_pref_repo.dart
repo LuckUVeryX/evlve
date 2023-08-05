@@ -24,7 +24,7 @@ class QRPrefRepo {
     return QRModel.fromJson(jsonDecode(json) as Map<String, dynamic>);
   }
 
-  Future<void> saveQRPref(QRModel value) async {
-    await _pref.setString(_qrKey, jsonEncode(value.toJson()));
+  Future<void> saveQRPref(QRModel value) {
+    return _pref.setString(_qrKey, jsonEncode(value.toJson()));
   }
 }
