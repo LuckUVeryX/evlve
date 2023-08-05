@@ -1,7 +1,5 @@
 import 'package:evlve/app/router/router.routes.dart';
-import 'package:evlve/l10n/l10n.dart';
 import 'package:evlve/modules/facility/facility.dart';
-import 'package:evlve/modules/qr/qr.dart';
 import 'package:evlve/modules/schedule/schedule.dart';
 import 'package:evlve/modules/user/user.dart';
 import 'package:evlve/theme/theme.dart';
@@ -29,31 +27,8 @@ class ScheduleAppBar extends ConsumerWidget {
         child: Text(facility.key.key),
       ),
       leading: const _LocationIconButton(),
-      actions: const [_QRIconButton(), _SettingsIconButton()],
+      actions: const [_SettingsIconButton()],
       bottom: const _ScheduleAppBarBottom(),
-    );
-  }
-}
-
-class _QRIconButton extends ConsumerWidget {
-  const _QRIconButton();
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return IconButton(
-      onPressed: () async {
-        ref.read(setMaxBrightnessProvider);
-        await QRDialog.show(context);
-        ref.read(resetBrightnessProvider);
-        if (context.mounted) {
-          ScaffoldMessenger.of(context)
-            ..hideCurrentSnackBar()
-            ..showSnackBar(
-              SnackBar(content: Text(context.l10n.qrDialogShakeSnackbar)),
-            );
-        }
-      },
-      icon: const Icon(Icons.qr_code_rounded),
     );
   }
 }

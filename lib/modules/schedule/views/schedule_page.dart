@@ -29,6 +29,7 @@ class SchedulePage extends ConsumerWidget {
           headerSliverBuilder: (_, __) => [const ScheduleAppBar()],
           body: const ScheduleInfiniteList(),
         ),
+        floatingActionButton: const QRFloatingActionButton(),
       ),
     );
   }
