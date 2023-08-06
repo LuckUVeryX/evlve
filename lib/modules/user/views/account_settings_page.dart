@@ -14,9 +14,6 @@ class AccountSettingsPage extends ConsumerWidget {
     final user = ref.watch(userProvider);
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(context.l10n.settingsAccount),
-      ),
       body: CheckboxTheme(
         data: CheckboxThemeData(
           fillColor: MaterialStateColor.resolveWith((states) {
@@ -26,8 +23,11 @@ class AccountSettingsPage extends ConsumerWidget {
             return context.colorScheme.onBackground;
           }),
         ),
-        child: ListView(
-          children: [
+        child: CustomScrollView(
+          slivers: [
+            SliverAppBar.large(
+              title: Text(context.l10n.settingsAccount),
+            ),
             _AccountTextField(
               initialValue: user.id,
               labelText: context.l10n.settingsAccountId,
@@ -80,60 +80,48 @@ class AccountSettingsPage extends ConsumerWidget {
               initialValue: user.waitlistNotificationMethod,
               labelText: context.l10n.settingsAccountWaitlistNotificationMethod,
             ),
-            CheckboxListTile(
+            _AccountCheckboxListTile(
               value: user.autoBook,
-              onChanged: (_) {},
-              enabled: false,
               title: Text(
                 context.l10n.settingsAccountAutoBook,
                 style: context.textTheme.bodyLarge
                     ?.copyWith(color: context.colorScheme.onBackground),
               ),
             ),
-            CheckboxListTile(
+            _AccountCheckboxListTile(
               value: user.addBuddy,
-              onChanged: (_) {},
-              enabled: false,
               title: Text(
                 context.l10n.settingsAccountAddBuddy,
                 style: context.textTheme.bodyLarge
                     ?.copyWith(color: context.colorScheme.onBackground),
               ),
             ),
-            CheckboxListTile(
+            _AccountCheckboxListTile(
               value: user.isEmployee,
-              onChanged: (_) {},
-              enabled: false,
               title: Text(
                 context.l10n.settingsAccountIsEmployee,
                 style: context.textTheme.bodyLarge
                     ?.copyWith(color: context.colorScheme.onBackground),
               ),
             ),
-            CheckboxListTile(
+            _AccountCheckboxListTile(
               value: user.accessToRegularClasses,
-              onChanged: (_) {},
-              enabled: false,
               title: Text(
                 context.l10n.settingsAccountAccessToRegularClasses,
                 style: context.textTheme.bodyLarge
                     ?.copyWith(color: context.colorScheme.onBackground),
               ),
             ),
-            CheckboxListTile(
+            _AccountCheckboxListTile(
               value: user.hasActiveTEAP,
-              onChanged: (_) {},
-              enabled: false,
               title: Text(
                 context.l10n.settingsAccountHasActiveTEAP,
                 style: context.textTheme.bodyLarge
                     ?.copyWith(color: context.colorScheme.onBackground),
               ),
             ),
-            CheckboxListTile(
+            _AccountCheckboxListTile(
               value: user.isActiveGeneralMembership,
-              onChanged: (_) {},
-              enabled: false,
               title: Text(
                 context.l10n.settingsAccountIsActveGeneralMembership,
                 style: context.textTheme.bodyLarge
@@ -141,6 +129,32 @@ class AccountSettingsPage extends ConsumerWidget {
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class _AccountCheckboxListTile extends StatelessWidget {
+  const _AccountCheckboxListTile({
+    this.value,
+    this.title,
+  });
+
+  final bool? value;
+  final Widget? title;
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverToBoxAdapter(
+      child: NeuContainer(
+        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        color: context.colorScheme.surfaceVariant,
+        child: CheckboxListTile(
+          value: value,
+          onChanged: (_) {},
+          enabled: false,
+          title: title,
         ),
       ),
     );
@@ -157,14 +171,16 @@ class _AccountTextField extends StatelessWidget {
   final String? labelText;
   @override
   Widget build(BuildContext context) {
-    return NeuContainer(
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      child: TextFormField(
-        readOnly: true,
-        initialValue: initialValue,
-        decoration: InputDecoration(
-          filled: true,
-          labelText: labelText,
+    return SliverToBoxAdapter(
+      child: NeuContainer(
+        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        child: TextFormField(
+          readOnly: true,
+          initialValue: initialValue,
+          decoration: InputDecoration(
+            filled: true,
+            labelText: labelText,
+          ),
         ),
       ),
     );
