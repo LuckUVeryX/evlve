@@ -1,5 +1,7 @@
+import 'package:evlve/app/app.dart';
 import 'package:evlve/l10n/l10n.dart';
 import 'package:evlve/modules/qr/qr.dart';
+import 'package:evlve/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -10,11 +12,15 @@ class QRSettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(context.l10n.settingsQRCode),
-        actions: const [_ResetButton()],
+      body: NestedScrollView(
+        headerSliverBuilder: (context, innerBoxIsScrolled) => [
+          SliverAppBar.large(
+            title: Text(context.l10n.settingsQRCode),
+            actions: const [_ResetButton()],
+          )
+        ],
+        body: const SafeArea(child: _QRSettings()),
       ),
-      body: const _QRSettings(),
     );
   }
 }
@@ -49,11 +55,13 @@ class _QRSettings extends ConsumerWidget {
           child: ListView(
             children: [
               const Center(
-                child: SizedBox.square(
-                  dimension: 200,
+                child: NeuContainer(
+                  height: 200,
+                  width: 200,
                   child: QRCode(imageDimension: 24),
                 ),
               ),
+              const SizedBox.square(dimension: 24),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Row(
@@ -153,9 +161,19 @@ ${(qrSetting.shakeCountReset.inMilliseconds / 1000).toStringAsFixed(2)}s''',
           child: Row(
             children: [
               Expanded(
-                child: OutlinedButton(
+                child: NeuButton(
+                  color: context.colorScheme.background,
                   onPressed: context.pop,
-                  child: Text(context.l10n.settingsQRCancel),
+                  child: Container(
+                    alignment: Alignment.center,
+                    padding: const EdgeInsets.all(8),
+                    child: Text(
+                      context.l10n.settingsQRCancel,
+                      style: context.textTheme.labelLarge?.copyWith(
+                        color: context.colorScheme.onBackground,
+                      ),
+                    ),
+                  ),
                 ),
               ),
               const SizedBox(width: 16),
@@ -179,7 +197,7 @@ class _SaveButtonState extends ConsumerState<_SaveButton> {
   bool _debounce = false;
   @override
   Widget build(BuildContext context) {
-    return FilledButton(
+    return NeuButton(
       onPressed: _debounce
           ? null
           : () async {
@@ -203,12 +221,22 @@ class _SaveButtonState extends ConsumerState<_SaveButton> {
                   );
               }
             },
-      child: _debounce
-          ? const SizedBox.square(
-              dimension: 16,
-              child: CircularProgressIndicator(),
-            )
-          : Text(context.l10n.settingsQRSave),
+      child: Container(
+        alignment: Alignment.center,
+        padding: const EdgeInsets.all(8),
+        child: _debounce
+            ? SizedBox.square(
+                dimension: 20,
+                child: CircularProgressIndicator(
+                  color: context.colorScheme.onPrimary,
+                ),
+              )
+            : Text(
+                context.l10n.settingsQRSave,
+                style: context.textTheme.labelLarge
+                    ?.copyWith(color: context.colorScheme.onPrimary),
+              ),
+      ),
     );
   }
 }
