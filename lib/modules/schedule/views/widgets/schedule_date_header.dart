@@ -14,8 +14,10 @@ class ScheduleDateHeader extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 16).copyWith(top: 24),
         child: Text(
           DateFormat.MMMEd().format(dt),
-          style: context.textTheme.headlineLarge
-              ?.copyWith(color: context.colorScheme.onBackground),
+          style: context.textTheme.headlineLarge?.copyWith(
+            color: context.colorScheme.onBackground,
+            fontWeight: FontWeight.bold,
+          ),
         ),
       ),
     );
