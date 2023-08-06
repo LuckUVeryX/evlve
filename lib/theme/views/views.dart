@@ -1,1 +1,1 @@
-export 'theme_settings_page.dart';
+export 'theme_mode_button.dart';

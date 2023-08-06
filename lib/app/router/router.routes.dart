@@ -5,7 +5,6 @@ import 'package:evlve/modules/qr/qr.dart';
 import 'package:evlve/modules/schedule/schedule.dart';
 import 'package:evlve/modules/settings/settings.dart';
 import 'package:evlve/modules/user/user.dart';
-import 'package:evlve/theme/theme.dart';
 import 'package:go_router/go_router.dart';
 
 class Routes {
@@ -27,7 +26,6 @@ class Routes {
   static const settings = 'settings';
   static const accountSettings = 'account';
   static const notification = 'notification';
-  static const theme = 'theme';
   static const qr = 'qr';
 
   static final _splashRoute = GoRoute(
@@ -58,7 +56,6 @@ class Routes {
     routes: [
       _accountsSettingsRoute,
       _notificationSettingsRoute,
-      _themeSettingsRoute,
       _qrSettingsRoute,
     ],
   );
@@ -71,11 +68,6 @@ class Routes {
   static final _notificationSettingsRoute = GoRoute(
     path: Routes.notification,
     builder: (context, state) => const NotificationSettingsPage(),
-  );
-
-  static final _themeSettingsRoute = GoRoute(
-    path: Routes.theme,
-    builder: (context, state) => const ThemeSettingsPage(),
   );
 
   static final _qrSettingsRoute = GoRoute(

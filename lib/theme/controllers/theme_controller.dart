@@ -7,17 +7,12 @@ part 'theme_controller.g.dart';
 @riverpod
 class ThemeController extends _$ThemeController {
   @override
-  ThemeModel build() {
-    return ref.watch(themeRepoProvider).theme;
+  ThemeMode build() {
+    return ref.watch(themeRepoProvider).mode;
   }
 
   void onThemeModeChanged(Set<ThemeMode> mode) {
-    state = state.copyWith(mode: mode.first);
-    ref.read(themeRepoProvider).saveTheme(state);
-  }
-
-  void onSeedColorChanged(Color seedColor) {
-    state = state.copyWith(seedColor: seedColor);
+    state = mode.first;
     ref.read(themeRepoProvider).saveTheme(state);
   }
 }
