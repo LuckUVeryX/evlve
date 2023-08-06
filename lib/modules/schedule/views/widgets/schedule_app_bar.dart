@@ -17,6 +17,7 @@ class ScheduleAppBar extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return const SliverAppBar(
+      bottom: ScheduleTabBar(),
       leading: _LocationIconButton(),
       actions: [_SettingsIconButton()],
     );

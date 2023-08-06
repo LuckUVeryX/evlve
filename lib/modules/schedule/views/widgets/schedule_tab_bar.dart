@@ -5,7 +5,7 @@ import 'package:evlve/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ScheduleTabBar extends ConsumerWidget {
+class ScheduleTabBar extends ConsumerWidget implements PreferredSizeWidget {
   const ScheduleTabBar({super.key});
 
   @override
@@ -16,7 +16,7 @@ class ScheduleTabBar extends ConsumerWidget {
     return NeuContainer(
       color: context.colorScheme.background,
       padding: const EdgeInsets.all(2),
-      margin: const EdgeInsets.all(4),
+      margin: const EdgeInsets.all(4).copyWith(right: 8),
       child: TabBar(
         onTap: (_) {
           final indexIsChanging =
@@ -37,4 +37,7 @@ class ScheduleTabBar extends ConsumerWidget {
       ),
     );
   }
+
+  @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight + 12);
 }

@@ -1,4 +1,4 @@
-import 'package:evlve/app/views/shimmer_widget.dart';
+import 'package:evlve/app/views/views.dart';
 import 'package:evlve/modules/booking/booking.dart';
 import 'package:evlve/modules/schedule/schedule.dart';
 import 'package:evlve/theme/theme.dart';
@@ -25,29 +25,34 @@ class ScheduleListItem extends ConsumerWidget {
     final canBook = details.canBook && !booking.isLoading;
     final value = details.isCP ? null : details.isBookedByMe;
 
-    return CheckboxListTile(
-      tristate: true,
-      value: value,
-      onChanged: !canBook
-          ? null
-          : (_) async {
-              final notifier = ref.read(bookingProvider.notifier);
+    return NeuButton(
+      margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+      onPressed: canBook ? () {} : null,
+      color: context.colorScheme.primaryContainer,
+      child: CheckboxListTile(
+        value: value,
+        tristate: true,
+        onChanged: !canBook
+            ? null
+            : (_) async {
+                final notifier = ref.read(bookingProvider.notifier);
 
-              if (schedule.isLateBooking) {
-                final confirm = await LateBookingConfirmDialog.show(context);
-                if (confirm != true) return;
-              }
+                if (schedule.isLateBooking) {
+                  final confirm = await LateBookingConfirmDialog.show(context);
+                  if (confirm != true) return;
+                }
 
-              details.isBookedByMe
-                  ? await notifier.cancel()
-                  : await notifier.book();
-            },
-      title: Text(
-        schedule.event.classDetails.level.key,
-      ),
-      subtitle: Text(
-        '''
-${DateFormat.Hm().format(schedule.start)}|${schedule.end.difference(schedule.start).inMinutes}m''',
+                details.isBookedByMe
+                    ? await notifier.cancel()
+                    : await notifier.book();
+              },
+        title: Text(
+          schedule.event.classDetails.level.key,
+        ),
+        subtitle: Text(
+          '''
+      ${DateFormat.Hm().format(schedule.start)}|${schedule.end.difference(schedule.start).inMinutes}m''',
+        ),
       ),
     );
   }
