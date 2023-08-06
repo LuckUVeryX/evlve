@@ -13,26 +13,23 @@ class OTPPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return GestureDetector(
-      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
-      child: Scaffold(
-        appBar: AppBar(),
-        body: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              children: [
-                Text(
-                  context.l10n.otpPageTitle,
-                  style: context.textTheme.titleLarge,
-                ),
-                const SizedBox(height: 48),
-                _Pinput(),
-                const SizedBox(height: 32),
-                Text(context.l10n.otpDidntReceive),
-                const _ResendButton()
-              ],
-            ),
+    return Scaffold(
+      appBar: AppBar(),
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            children: [
+              Text(
+                context.l10n.otpPageTitle,
+                style: context.textTheme.titleLarge,
+              ),
+              const SizedBox(height: 48),
+              _Pinput(),
+              const SizedBox(height: 32),
+              Text(context.l10n.otpDidntReceive),
+              const _ResendButton()
+            ],
           ),
         ),
       ),
@@ -106,6 +103,7 @@ class _Pinput extends ConsumerWidget {
       length: 6,
       autofocus: true,
       defaultPinTheme: defaultPinTheme,
+      onTapOutside: (_) => FocusManager.instance.primaryFocus?.unfocus(),
       androidSmsAutofillMethod: AndroidSmsAutofillMethod.smsUserConsentApi,
       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
       onCompleted: ref.read(authControllerProvider.notifier).signInOtp,
