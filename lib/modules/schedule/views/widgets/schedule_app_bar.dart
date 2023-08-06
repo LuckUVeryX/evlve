@@ -16,10 +16,15 @@ class ScheduleAppBar extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return const SliverAppBar(
-      bottom: ScheduleTabBar(),
-      leading: _LocationIconButton(),
-      actions: [_SettingsIconButton()],
+    final facility = ref.watch(facilityContollerProvider);
+    return SliverAppBar(
+      snap: true,
+      pinned: true,
+      floating: true,
+      title: Text(facility.title.toUpperCase()),
+      bottom: const ScheduleTabBar(),
+      leading: const _LocationIconButton(),
+      actions: const [_SettingsIconButton()],
     );
   }
 }
@@ -59,7 +64,7 @@ class _LocationIconButton extends ConsumerWidget {
       child: NeuButton(
         color: context.colorScheme.background,
         onPressed: () async {
-          final newFacility = await ScheduleFacilityDialog.show(context);
+          final newFacility = await FacilityDialog.show(context);
           if (newFacility == null) return;
           ref
               .read(facilityContollerProvider.notifier)
