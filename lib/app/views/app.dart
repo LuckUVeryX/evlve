@@ -49,6 +49,7 @@ class _AppState extends ConsumerState<App> with WidgetsBindingObserver {
         ),
         textTheme: GoogleFonts.dmSansTextTheme(
           ThemeData.light().textTheme.copyWith(
+                headlineMedium: const TextStyle(fontWeight: FontWeight.bold),
                 titleLarge: const TextStyle(fontWeight: FontWeight.bold),
                 bodyLarge: const TextStyle(fontWeight: FontWeight.bold),
                 labelLarge: const TextStyle(fontWeight: FontWeight.bold),
@@ -63,6 +64,7 @@ class _AppState extends ConsumerState<App> with WidgetsBindingObserver {
         ),
         textTheme: GoogleFonts.dmSansTextTheme(
           ThemeData.dark().textTheme.copyWith(
+                headlineMedium: const TextStyle(fontWeight: FontWeight.bold),
                 titleLarge: const TextStyle(fontWeight: FontWeight.bold),
                 bodyLarge: const TextStyle(fontWeight: FontWeight.bold),
                 labelLarge: const TextStyle(fontWeight: FontWeight.bold),
