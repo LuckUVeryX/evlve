@@ -1,3 +1,4 @@
+import 'package:evlve/app/app.dart';
 import 'package:evlve/app/router/router.routes.dart';
 import 'package:evlve/modules/facility/facility.dart';
 import 'package:evlve/modules/schedule/schedule.dart';
@@ -17,18 +18,13 @@ class ScheduleAppBar extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final facility = ref.watch(facilityContollerProvider);
 
-    return SliverAppBar(
-      pinned: true,
-      titleSpacing: 0,
-      centerTitle: false,
-      scrolledUnderElevation: 0,
+    return SliverAppBar.large(
       title: GestureDetector(
         onTap: ref.read(resetDateControllerProvider.notifier).resetDate,
         child: Text(facility.key.key),
       ),
       leading: const _LocationIconButton(),
       actions: const [_SettingsIconButton()],
-      bottom: const _ScheduleAppBarBottom(),
     );
   }
 }
@@ -38,11 +34,19 @@ class _SettingsIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return IconButton(
-      onPressed: () {
-        context.go(p.join(Routes.schedule, Routes.settings));
-      },
-      icon: const Icon(Icons.settings_outlined),
+    return Padding(
+      padding: const EdgeInsets.only(right: 8),
+      child: NeuButton(
+        color: context.colorScheme.primary,
+        onPressed: () => context.go(p.join(Routes.schedule, Routes.settings)),
+        child: Padding(
+          padding: const EdgeInsets.all(8),
+          child: Icon(
+            Icons.settings_outlined,
+            color: context.colorScheme.onPrimary,
+          ),
+        ),
+      ),
     );
   }
 }
@@ -54,44 +58,26 @@ class _LocationIconButton extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final user = ref.watch(userProvider);
 
-    return IconButton(
-      onPressed: !user.isBlackCard
-          ? null
-          : () async {
-              final newFacility = await ScheduleFacilityDialog.show(context);
-              if (newFacility == null) return;
-              ref
-                  .read(facilityContollerProvider.notifier)
-                  .onFacilityChanged(newFacility);
-            },
-      icon: Icon(
-        Icons.place_outlined,
-        color: context.colorScheme.onBackground,
+    if (!user.isBlackCard) return const Offstage();
+
+    return Center(
+      child: NeuButton(
+        color: context.colorScheme.background,
+        onPressed: () async {
+          final newFacility = await ScheduleFacilityDialog.show(context);
+          if (newFacility == null) return;
+          ref
+              .read(facilityContollerProvider.notifier)
+              .onFacilityChanged(newFacility);
+        },
+        child: Padding(
+          padding: const EdgeInsets.all(8),
+          child: Icon(
+            Icons.place_outlined,
+            color: context.colorScheme.onBackground,
+          ),
+        ),
       ),
     );
   }
-}
-
-class _ScheduleAppBarBottom extends ConsumerWidget
-    implements PreferredSizeWidget {
-  const _ScheduleAppBarBottom();
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final facility = ref.watch(facilityContollerProvider);
-    final areas = facility.areas;
-
-    return TabBar(
-      onTap: (_) {
-        final indexIsChanging =
-            DefaultTabController.of(context).indexIsChanging;
-        if (indexIsChanging) return;
-        ref.read(resetDateControllerProvider.notifier).resetDate();
-      },
-      tabs: [for (final area in areas) Tab(text: area.key.key)],
-    );
-  }
-
-  @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
