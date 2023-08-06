@@ -18,12 +18,26 @@ class ScheduleInfiniteList extends ConsumerStatefulWidget {
       _ScheduleInfiniteListState();
 }
 
-class _ScheduleInfiniteListState extends ConsumerState<ScheduleInfiniteList> {
+class _ScheduleInfiniteListState extends ConsumerState<ScheduleInfiniteList>
+    with WidgetsBindingObserver {
   final _controller = ScrollController();
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+    if (state != AppLifecycleState.resumed) return;
+    ref.invalidate(scheduleProvider);
+  }
 
   @override
   void dispose() {
     _controller.dispose();
+    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
 

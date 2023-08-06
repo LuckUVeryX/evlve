@@ -49,9 +49,13 @@ class _SigninPageState extends State<SigninPage> {
                   const SizedBox.square(dimension: 12),
                   NeuContainer(
                     child: TextFormField(
+                      textInputAction: TextInputAction.next,
                       controller: _emailController,
                       keyboardType: TextInputType.emailAddress,
-                      autofillHints: const [AutofillHints.email],
+                      autofillHints: const [
+                        AutofillHints.email,
+                        AutofillHints.username,
+                      ],
                       style: context.textTheme.bodyMedium,
                       validator: (value) {
                         return (value?.trim().isEmpty ?? true) ? '' : null;
