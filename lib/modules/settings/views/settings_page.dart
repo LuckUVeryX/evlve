@@ -1,3 +1,4 @@
+import 'package:evlve/app/app.dart';
 import 'package:evlve/app/router/router.routes.dart';
 import 'package:evlve/l10n/l10n.dart';
 import 'package:evlve/modules/auth/auth.dart';
@@ -26,17 +27,18 @@ class SettingsPage extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: 8),
             child: ThemeModeButton(),
           ),
-          _SettingsListTile(
+          const SizedBox.square(dimension: 8),
+          _SettingsItem(
             leadingIcon: Icons.person_outline,
             label: context.l10n.settingsAccount,
             onTap: () => context.go(_buildRoute(Routes.accountSettings)),
           ),
-          _SettingsListTile(
+          _SettingsItem(
             leadingIcon: Icons.notifications_outlined,
             label: context.l10n.settingsNotifications,
             onTap: () => context.go(_buildRoute(Routes.notification)),
           ),
-          _SettingsListTile(
+          _SettingsItem(
             leadingIcon: Icons.qr_code_outlined,
             label: context.l10n.settingsQRCode,
             onTap: () => context.go(_buildRoute(Routes.qr)),
@@ -45,10 +47,11 @@ class SettingsPage extends StatelessWidget {
             builder: (context, ref, child) {
               final auth = ref.watch(authControllerProvider);
               return auth.maybeWhen(
-                orElse: () => _SettingsListTile(
+                orElse: () => _SettingsItem(
                   leadingIcon: Icons.logout_outlined,
                   label: context.l10n.settingsLogout,
-                  foregroundColor: context.colorScheme.error,
+                  backgroundColor: context.colorScheme.error,
+                  foregroundColor: context.colorScheme.onError,
                   onTap: ref.read(authControllerProvider.notifier).logout,
                 ),
                 loading: () => const Padding(
@@ -64,11 +67,12 @@ class SettingsPage extends StatelessWidget {
   }
 }
 
-class _SettingsListTile extends StatelessWidget {
-  const _SettingsListTile({
+class _SettingsItem extends StatelessWidget {
+  const _SettingsItem({
     required this.leadingIcon,
     required this.label,
     this.foregroundColor,
+    this.backgroundColor,
     this.onTap,
   });
 
@@ -76,16 +80,22 @@ class _SettingsListTile extends StatelessWidget {
   final String label;
   final VoidCallback? onTap;
   final Color? foregroundColor;
+  final Color? backgroundColor;
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      leading: Icon(leadingIcon),
-      title: Text(label),
-      onTap: onTap,
-      iconColor: foregroundColor,
-      textColor: foregroundColor,
-      trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+    return NeuButton(
+      onPressed: onTap == null ? null : () {},
+      margin: const EdgeInsets.all(8),
+      color: backgroundColor ?? context.colorScheme.surfaceVariant,
+      child: ListTile(
+        leading: Icon(leadingIcon),
+        title: Text(label),
+        onTap: onTap,
+        iconColor: foregroundColor ?? context.colorScheme.onSurfaceVariant,
+        textColor: foregroundColor ?? context.colorScheme.onSurfaceVariant,
+        trailing: const Icon(Icons.arrow_forward_ios),
+      ),
     );
   }
 }
