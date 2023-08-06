@@ -16,7 +16,7 @@ class ScheduleTabBar extends ConsumerWidget {
     return NeuContainer(
       color: context.colorScheme.background,
       padding: const EdgeInsets.all(2),
-      margin: const EdgeInsets.only(bottom: 4, left: 8, right: 8),
+      margin: const EdgeInsets.all(4),
       child: TabBar(
         onTap: (_) {
           final indexIsChanging =
