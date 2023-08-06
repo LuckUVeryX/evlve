@@ -18,20 +18,24 @@ class NotificationSettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(context.l10n.settingsNotifications),
-        actions: const [if (kDebugMode) _DebugNotificationIconButton()],
-      ),
-      body: const Column(
-        children: [
-          _UpcomingClassesSwitchListTile(),
-          SizedBox(height: 16),
-          _DurationPicker(),
-          SizedBox(height: 24),
-          Expanded(
-            child: _UpcomingNotificationsListView(),
+      body: NestedScrollView(
+        headerSliverBuilder: (context, innerBoxIsScrolled) => [
+          SliverAppBar.large(
+            title: Text(context.l10n.settingsNotifications),
+            actions: const [if (kDebugMode) _DebugNotificationIconButton()],
           ),
         ],
+        body: const Column(
+          children: [
+            _UpcomingClassesSwitchListTile(),
+            SizedBox(height: 16),
+            _DurationPicker(),
+            SizedBox(height: 24),
+            Expanded(
+              child: _UpcomingNotificationsListView(),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -150,6 +154,7 @@ class _UpcomingNotificationsListView extends ConsumerWidget {
                           child: Text(
                             context
                                 .l10n.settingsNotificationUpcomingNotifications,
+                            style: context.textTheme.bodyLarge,
                           ),
                         );
                       }
