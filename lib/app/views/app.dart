@@ -55,6 +55,8 @@ class _AppState extends ConsumerState<App> with WidgetsBindingObserver {
                 labelLarge: const TextStyle(fontWeight: FontWeight.bold),
               ),
         ),
+      ).copyWith(
+        inputDecorationTheme: const InputDecorationTheme(filled: true),
       ),
       darkTheme: ThemeData.from(
         useMaterial3: true,
@@ -70,6 +72,8 @@ class _AppState extends ConsumerState<App> with WidgetsBindingObserver {
                 labelLarge: const TextStyle(fontWeight: FontWeight.bold),
               ),
         ),
+      ).copyWith(
+        inputDecorationTheme: const InputDecorationTheme(filled: true),
       ),
       routerConfig: router,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
