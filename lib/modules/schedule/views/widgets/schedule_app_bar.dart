@@ -25,6 +25,7 @@ class ScheduleAppBar extends ConsumerWidget {
       bottom: const ScheduleTabBar(),
       leading: const _LocationIconButton(),
       actions: const [_SettingsIconButton()],
+      foregroundColor: context.colorScheme.onBackground,
     );
   }
 }
@@ -34,19 +35,9 @@ class _SettingsIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(right: 4),
-      child: NeuButton(
-        color: context.colorScheme.primary,
-        onPressed: () => context.go(p.join(Routes.schedule, Routes.settings)),
-        child: Padding(
-          padding: const EdgeInsets.all(8),
-          child: Icon(
-            Icons.settings_outlined,
-            color: context.colorScheme.onPrimary,
-          ),
-        ),
-      ),
+    return IconButton(
+      onPressed: () => context.go(p.join(Routes.schedule, Routes.settings)),
+      icon: const Icon(Icons.settings_outlined),
     );
   }
 }
