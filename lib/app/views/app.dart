@@ -47,7 +47,11 @@ class _AppState extends ConsumerState<App> with WidgetsBindingObserver {
         colorScheme: ColorScheme.fromSeed(
           seedColor: seedColor,
         ),
-        textTheme: GoogleFonts.dmSansTextTheme(ThemeData.light().textTheme),
+        textTheme: GoogleFonts.dmSansTextTheme(
+          ThemeData.light().textTheme.copyWith(
+                bodyLarge: const TextStyle(fontWeight: FontWeight.bold),
+              ),
+        ),
       ),
       darkTheme: ThemeData.from(
         useMaterial3: true,
@@ -55,7 +59,11 @@ class _AppState extends ConsumerState<App> with WidgetsBindingObserver {
           seedColor: seedColor,
           brightness: Brightness.dark,
         ),
-        textTheme: GoogleFonts.dmSansTextTheme(ThemeData.dark().textTheme),
+        textTheme: GoogleFonts.dmSansTextTheme(
+          ThemeData.dark().textTheme.copyWith(
+                bodyLarge: const TextStyle(fontWeight: FontWeight.bold),
+              ),
+        ),
       ),
       routerConfig: router,
       localizationsDelegates: AppLocalizations.localizationsDelegates,

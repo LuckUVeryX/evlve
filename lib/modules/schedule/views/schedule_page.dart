@@ -26,10 +26,7 @@ class SchedulePage extends ConsumerWidget {
       length: areas.length,
       child: Scaffold(
         body: NestedScrollView(
-          headerSliverBuilder: (_, __) => [
-            const ScheduleAppBar(),
-            const SliverToBoxAdapter(child: ScheduleTabBar()),
-          ],
+          headerSliverBuilder: (_, __) => [const ScheduleAppBar()],
           body: const ScheduleInfiniteList(),
         ),
         floatingActionButton: const QRFloatingActionButton(),
