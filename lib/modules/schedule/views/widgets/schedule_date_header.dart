@@ -1,4 +1,4 @@
-import 'package:evlve/theme/utils/utils.dart';
+import 'package:evlve/utils/theme_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 

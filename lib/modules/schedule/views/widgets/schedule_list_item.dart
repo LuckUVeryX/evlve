@@ -1,7 +1,7 @@
 import 'package:evlve/app/views/views.dart';
 import 'package:evlve/modules/booking/booking.dart';
 import 'package:evlve/modules/schedule/schedule.dart';
-import 'package:evlve/theme/theme.dart';
+import 'package:evlve/utils/theme_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';

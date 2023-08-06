@@ -2,7 +2,7 @@ import 'package:evlve/app/app.dart';
 import 'package:evlve/l10n/l10n.dart';
 import 'package:evlve/modules/facility/facility.dart';
 import 'package:evlve/modules/user/user.dart';
-import 'package:evlve/theme/theme.dart';
+import 'package:evlve/utils/theme_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';

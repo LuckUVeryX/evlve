@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:evlve/l10n/l10n.dart';
 import 'package:evlve/modules/auth/controllers/controllers.dart';
-import 'package:evlve/theme/utils/utils.dart';
+import 'package:evlve/utils/theme_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
