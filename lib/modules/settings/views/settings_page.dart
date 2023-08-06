@@ -18,50 +18,54 @@ class SettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(context.l10n.settings),
-      ),
-      body: ListView(
-        children: [
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 8),
-            child: ThemeModeButton(),
-          ),
-          const SizedBox.square(dimension: 8),
-          _SettingsItem(
-            leadingIcon: Icons.person_outline,
-            label: context.l10n.settingsAccount,
-            onTap: () => context.go(_buildRoute(Routes.accountSettings)),
-          ),
-          _SettingsItem(
-            leadingIcon: Icons.notifications_outlined,
-            label: context.l10n.settingsNotifications,
-            onTap: () => context.go(_buildRoute(Routes.notification)),
-          ),
-          _SettingsItem(
-            leadingIcon: Icons.qr_code_outlined,
-            label: context.l10n.settingsQRCode,
-            onTap: () => context.go(_buildRoute(Routes.qr)),
-          ),
-          Consumer(
-            builder: (context, ref, child) {
-              final auth = ref.watch(authControllerProvider);
-              return auth.maybeWhen(
-                orElse: () => _SettingsItem(
-                  leadingIcon: Icons.logout_outlined,
-                  label: context.l10n.settingsLogout,
-                  backgroundColor: context.colorScheme.error,
-                  foregroundColor: context.colorScheme.onError,
-                  onTap: ref.read(authControllerProvider.notifier).logout,
-                ),
-                loading: () => const Padding(
-                  padding: EdgeInsets.all(16),
-                  child: LinearProgressIndicator(),
-                ),
-              );
-            },
-          ),
+      body: NestedScrollView(
+        headerSliverBuilder: (context, innerBoxIsScrolled) => [
+          SliverAppBar.large(
+            title: Text(context.l10n.settings),
+          )
         ],
+        body: ListView(
+          children: [
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 8),
+              child: ThemeModeButton(),
+            ),
+            const SizedBox.square(dimension: 8),
+            _SettingsItem(
+              leadingIcon: Icons.person_outline,
+              label: context.l10n.settingsAccount,
+              onTap: () => context.go(_buildRoute(Routes.accountSettings)),
+            ),
+            _SettingsItem(
+              leadingIcon: Icons.notifications_outlined,
+              label: context.l10n.settingsNotifications,
+              onTap: () => context.go(_buildRoute(Routes.notification)),
+            ),
+            _SettingsItem(
+              leadingIcon: Icons.qr_code_outlined,
+              label: context.l10n.settingsQRCode,
+              onTap: () => context.go(_buildRoute(Routes.qr)),
+            ),
+            Consumer(
+              builder: (context, ref, child) {
+                final auth = ref.watch(authControllerProvider);
+                return auth.maybeWhen(
+                  orElse: () => _SettingsItem(
+                    leadingIcon: Icons.logout_outlined,
+                    label: context.l10n.settingsLogout,
+                    backgroundColor: context.colorScheme.error,
+                    foregroundColor: context.colorScheme.onError,
+                    onTap: ref.read(authControllerProvider.notifier).logout,
+                  ),
+                  loading: () => const Padding(
+                    padding: EdgeInsets.all(16),
+                    child: LinearProgressIndicator(),
+                  ),
+                );
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
