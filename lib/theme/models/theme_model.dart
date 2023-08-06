@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 part 'theme_model.freezed.dart';
 part 'theme_model.g.dart';
@@ -16,25 +15,6 @@ class ThemeModel with _$ThemeModel {
       _$ThemeModelFromJson(json);
 
   const ThemeModel._();
-
-  ThemeData get light {
-    return ThemeData.from(
-      useMaterial3: true,
-      textTheme: GoogleFonts.notoSansMonoTextTheme(ThemeData.light().textTheme),
-      colorScheme: ColorScheme.fromSeed(seedColor: seedColor),
-    );
-  }
-
-  ThemeData get dark {
-    return ThemeData.from(
-      useMaterial3: true,
-      textTheme: GoogleFonts.notoSansMonoTextTheme(ThemeData.dark().textTheme),
-      colorScheme: ColorScheme.fromSeed(
-        seedColor: seedColor,
-        brightness: Brightness.dark,
-      ),
-    );
-  }
 }
 
 class _ColorConverter extends JsonConverter<Color, Map<String, dynamic>> {
