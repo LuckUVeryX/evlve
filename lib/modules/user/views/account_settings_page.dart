@@ -1,3 +1,4 @@
+import 'package:evlve/app/app.dart';
 import 'package:evlve/l10n/l10n.dart';
 import 'package:evlve/modules/facility/facility.dart';
 import 'package:evlve/modules/user/user.dart';
@@ -156,12 +157,15 @@ class _AccountTextField extends StatelessWidget {
   final String? labelText;
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+    return NeuContainer(
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: TextFormField(
         readOnly: true,
         initialValue: initialValue,
-        decoration: InputDecoration(labelText: labelText),
+        decoration: InputDecoration(
+          filled: true,
+          labelText: labelText,
+        ),
       ),
     );
   }
