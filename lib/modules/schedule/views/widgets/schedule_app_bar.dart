@@ -16,15 +16,9 @@ class ScheduleAppBar extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final facility = ref.watch(facilityContollerProvider);
-
-    return SliverAppBar.large(
-      title: GestureDetector(
-        onTap: ref.read(resetDateControllerProvider.notifier).resetDate,
-        child: Text(facility.key.key),
-      ),
-      leading: const _LocationIconButton(),
-      actions: const [_SettingsIconButton()],
+    return const SliverAppBar(
+      leading: _LocationIconButton(),
+      actions: [_SettingsIconButton()],
     );
   }
 }
@@ -35,7 +29,7 @@ class _SettingsIconButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(right: 8),
+      padding: const EdgeInsets.only(right: 4),
       child: NeuButton(
         color: context.colorScheme.primary,
         onPressed: () => context.go(p.join(Routes.schedule, Routes.settings)),
