@@ -22,6 +22,10 @@ class SettingsPage extends StatelessWidget {
       ),
       body: ListView(
         children: [
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 8),
+            child: ThemeModeButton(),
+          ),
           _SettingsListTile(
             leadingIcon: Icons.person_outline,
             label: context.l10n.settingsAccount,
@@ -31,11 +35,6 @@ class SettingsPage extends StatelessWidget {
             leadingIcon: Icons.notifications_outlined,
             label: context.l10n.settingsNotifications,
             onTap: () => context.go(_buildRoute(Routes.notification)),
-          ),
-          _SettingsListTile(
-            leadingIcon: Icons.light_mode_outlined,
-            label: context.l10n.settingsApperance,
-            onTap: () => context.go(_buildRoute(Routes.theme)),
           ),
           _SettingsListTile(
             leadingIcon: Icons.qr_code_outlined,

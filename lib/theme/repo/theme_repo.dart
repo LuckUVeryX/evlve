@@ -1,7 +1,6 @@
-import 'dart:convert';
-
+import 'package:collection/collection.dart';
 import 'package:evlve/providers/providers.dart';
-import 'package:evlve/theme/theme.dart';
+import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -17,15 +16,16 @@ class ThemeRepo {
 
   final SharedPreferences _pref;
 
-  static const _themeKey = 'kTheme';
+  static const _themeModeKey = 'kThemeMode';
 
-  ThemeModel get theme {
-    final json = _pref.getString(_themeKey);
-    if (json == null) return const ThemeModel();
-    return ThemeModel.fromJson(jsonDecode(json) as Map<String, dynamic>);
+  ThemeMode get mode {
+    final enumName = _pref.getString(_themeModeKey);
+    if (enumName == null) return ThemeMode.system;
+    return ThemeMode.values.firstWhereOrNull((e) => e.name == enumName) ??
+        ThemeMode.system;
   }
 
-  Future<void> saveTheme(ThemeModel theme) async {
-    await _pref.setString(_themeKey, jsonEncode(theme.toJson()));
+  Future<void> saveTheme(ThemeMode mode) async {
+    await _pref.setString(_themeModeKey, mode.name);
   }
 }
