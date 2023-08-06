@@ -1,3 +1,4 @@
+import 'package:evlve/app/app.dart';
 import 'package:evlve/l10n/l10n.dart';
 import 'package:evlve/modules/auth/controllers/controllers.dart';
 import 'package:evlve/theme/theme.dart';
@@ -27,26 +28,27 @@ class _SigninPageState extends State<SigninPage> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
-      child: Scaffold(
-        body: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Form(
-              key: _formKey,
-              child: AutofillGroup(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Align(
-                      alignment: Alignment.topLeft,
-                      child: Text(
-                        context.l10n.signInPageTitle,
-                        style: context.textTheme.titleLarge,
-                      ),
+    return Scaffold(
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Form(
+            key: _formKey,
+            child: AutofillGroup(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Spacer(),
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: Text(
+                      context.l10n.signInPageTitle,
+                      style: context.textTheme.titleLarge,
                     ),
-                    TextFormField(
+                  ),
+                  const SizedBox.square(dimension: 12),
+                  NeuContainer(
+                    child: TextFormField(
                       controller: _emailController,
                       keyboardType: TextInputType.emailAddress,
                       autofillHints: const [AutofillHints.email],
@@ -55,31 +57,27 @@ class _SigninPageState extends State<SigninPage> {
                         return (value?.trim().isEmpty ?? true) ? '' : null;
                       },
                       autovalidateMode: AutovalidateMode.onUserInteraction,
+                      onTapOutside: (_) =>
+                          FocusManager.instance.primaryFocus?.unfocus(),
                       decoration: InputDecoration(
                         prefixIcon: const Icon(Icons.email_outlined),
                         labelText: context.l10n.signInPageEmail,
                       ),
                     ),
-                    _PasswordTextField(controller: _passwordController),
-                    const SizedBox(height: 12),
-                    Row(
-                      children: [
-                        const Spacer(),
-                        Expanded(
-                          flex: 2,
-                          child: _SignInButton(
-                            formKey: _formKey,
-                            controllers: (
-                              _emailController,
-                              _passwordController
-                            ),
-                          ),
-                        ),
-                        const Spacer(),
-                      ],
+                  ),
+                  const SizedBox.square(dimension: 12),
+                  _PasswordTextField(controller: _passwordController),
+                  const SizedBox(height: 12),
+                  const Spacer(),
+                  SizedBox(
+                    width: double.infinity,
+                    child: _SignInButton(
+                      formKey: _formKey,
+                      controllers: (_emailController, _passwordController),
                     ),
-                  ],
-                ),
+                  ),
+                  const SizedBox(height: 12),
+                ],
               ),
             ),
           ),
@@ -109,27 +107,30 @@ class _PasswordTextFieldState extends State<_PasswordTextField> {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      obscureText: _obscureText,
-      controller: widget.controller,
-      keyboardType: TextInputType.visiblePassword,
-      autofillHints: const [AutofillHints.password],
-      autovalidateMode: AutovalidateMode.onUserInteraction,
-      decoration: InputDecoration(
-        prefixIcon: const Icon(Icons.key_outlined),
-        labelText: context.l10n.signInPagePassword,
-        suffixIcon: IconButton(
-          icon: Icon(
-            _obscureText
-                ? Icons.visibility_outlined
-                : Icons.visibility_off_outlined,
+    return NeuContainer(
+      child: TextFormField(
+        onTapOutside: (_) => FocusManager.instance.primaryFocus?.unfocus(),
+        obscureText: _obscureText,
+        controller: widget.controller,
+        keyboardType: TextInputType.visiblePassword,
+        autofillHints: const [AutofillHints.password],
+        autovalidateMode: AutovalidateMode.onUserInteraction,
+        decoration: InputDecoration(
+          prefixIcon: const Icon(Icons.key_outlined),
+          labelText: context.l10n.signInPagePassword,
+          suffixIcon: IconButton(
+            icon: Icon(
+              _obscureText
+                  ? Icons.visibility_outlined
+                  : Icons.visibility_off_outlined,
+            ),
+            onPressed: _toggleVisibility,
           ),
-          onPressed: _toggleVisibility,
         ),
+        validator: (value) {
+          return (value?.trim().isEmpty ?? true) ? '' : null;
+        },
       ),
-      validator: (value) {
-        return (value?.trim().isEmpty ?? true) ? '' : null;
-      },
     );
   }
 }
@@ -152,18 +153,20 @@ class _SignInButton extends ConsumerWidget {
 
     ref.listenErrors([authControllerProvider]);
 
-    return FilledButton(
-      onPressed: auth.isLoading
-          ? null
-          : () {
-              final isValid = formKey.currentState?.validate() ?? false;
-              if (!isValid) return;
-              final (email, password) = controllers;
-              ref
-                  .read(authControllerProvider.notifier)
-                  .signIn(email: email.text, password: password.text);
-            },
-      child: Text(context.l10n.signInPageButton),
+    return NeuButton(
+      child: FilledButton(
+        onPressed: auth.isLoading
+            ? null
+            : () {
+                final isValid = formKey.currentState?.validate() ?? false;
+                if (!isValid) return;
+                final (email, password) = controllers;
+                ref
+                    .read(authControllerProvider.notifier)
+                    .signIn(email: email.text, password: password.text);
+              },
+        child: Text(context.l10n.signInPageButton),
+      ),
     );
   }
 }
