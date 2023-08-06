@@ -178,7 +178,6 @@ class _AccountTextField extends StatelessWidget {
           readOnly: true,
           initialValue: initialValue,
           decoration: InputDecoration(
-            filled: true,
             labelText: labelText,
           ),
         ),
