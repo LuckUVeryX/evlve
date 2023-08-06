@@ -8,14 +8,15 @@ class ScheduleDateHeader extends StatelessWidget {
   final DateTime dt;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 16),
-      color: context.colorScheme.primary,
-      width: double.infinity,
-      child: Text(
-        DateFormat.MMMEd().format(dt),
-        style: context.textTheme.bodyLarge
-            ?.copyWith(color: context.colorScheme.onPrimary),
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        child: Text(
+          DateFormat.MMMEd().format(dt),
+          style: context.textTheme.headlineLarge
+              ?.copyWith(color: context.colorScheme.onBackground),
+        ),
       ),
     );
   }
