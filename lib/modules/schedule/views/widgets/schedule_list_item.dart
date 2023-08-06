@@ -25,34 +25,59 @@ class ScheduleListItem extends ConsumerWidget {
     final canBook = details.canBook && !booking.isLoading;
     final value = details.isCP ? null : details.isBookedByMe;
 
-    return NeuButton(
-      margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-      onPressed: canBook ? () {} : null,
-      color: context.colorScheme.primaryContainer,
-      child: CheckboxListTile(
-        value: value,
-        tristate: true,
-        onChanged: !canBook
-            ? null
-            : (_) async {
-                final notifier = ref.read(bookingProvider.notifier);
-
-                if (schedule.isLateBooking) {
-                  final confirm = await LateBookingConfirmDialog.show(context);
-                  if (confirm != true) return;
-                }
-
-                details.isBookedByMe
-                    ? await notifier.cancel()
-                    : await notifier.book();
-              },
-        title: Text(
-          schedule.event.classDetails.level.key,
+    return Theme(
+      data: ThemeData.from(
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: schedule.event.classDetails.level.color,
+          brightness: context.theme.brightness,
         ),
-        subtitle: Text(
-          '''
-      ${DateFormat.Hm().format(schedule.start)}|${schedule.end.difference(schedule.start).inMinutes}m''',
-        ),
+        useMaterial3: true,
+        textTheme: context.textTheme,
+      ),
+      child: Builder(
+        builder: (context) {
+          return NeuButton(
+            margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+            onPressed: canBook ? () {} : null,
+            color: context.colorScheme.primary,
+            child: CheckboxListTile(
+              value: value,
+              tristate: true,
+              onChanged: !canBook
+                  ? null
+                  : (_) async {
+                      final notifier = ref.read(bookingProvider.notifier);
+
+                      if (schedule.isLateBooking) {
+                        final confirm =
+                            await LateBookingConfirmDialog.show(context);
+                        if (confirm != true) return;
+                      }
+
+                      details.isBookedByMe
+                          ? await notifier.cancel()
+                          : await notifier.book();
+                    },
+              title: Text(
+                schedule.event.classDetails.level.key,
+                style: context.textTheme.bodyLarge?.copyWith(
+                  color: canBook
+                      ? context.colorScheme.onPrimary
+                      : context.theme.disabledColor,
+                ),
+              ),
+              subtitle: Text(
+                '''
+            ${DateFormat.Hm().format(schedule.start)}|${schedule.end.difference(schedule.start).inMinutes}m''',
+                style: context.textTheme.labelLarge?.copyWith(
+                  color: canBook
+                      ? context.colorScheme.onPrimary
+                      : context.theme.disabledColor,
+                ),
+              ),
+            ),
+          );
+        },
       ),
     );
   }
@@ -63,30 +88,17 @@ class ScheduleListItemShimmer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ShimmerWidget(
-      child: CheckboxListTile(
-        value: false,
-        onChanged: null,
-        title: Row(
-          children: [
-            Expanded(
-              child: Container(
-                color: Colors.white,
-                height: context.textTheme.bodyLarge?.fontSize,
-              ),
-            ),
-            const Spacer(flex: 2),
-          ],
-        ),
-        subtitle: Row(
-          children: [
-            Expanded(
-              child: Container(
-                color: Colors.white,
-                height: context.textTheme.bodyMedium?.fontSize,
-              ),
-            ),
-            const Spacer(flex: 3)
-          ],
+      child: NeuButton(
+        margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+        child: CheckboxListTile(
+          value: false,
+          onChanged: null,
+          title: SizedBox(
+            height: context.textTheme.bodyLarge?.fontSize,
+          ),
+          subtitle: SizedBox(
+            height: context.textTheme.bodyMedium?.fontSize,
+          ),
         ),
       ),
     );

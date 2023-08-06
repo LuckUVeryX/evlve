@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'levels.g.dart';
@@ -98,6 +99,34 @@ extension LevelX on Level {
     return switch (this) {
       Level.bjjPurple => 'BJJ_PURPLE',
       _ => _$LevelEnumMap[this]!
+    };
+  }
+
+  Color get color {
+    return switch (this) {
+      Level.mtLevel1 => Colors.grey,
+      Level.mtLevel2 || Level.mtSparring || Level.mtClinching => Colors.red,
+      Level.mtLevel3 => Colors.lime,
+      Level.mtWomen => Colors.pink,
+      Level.mtConditioning => Colors.blueGrey,
+      Level.mtKids => Colors.orange,
+      Level.mtPreteen => Colors.brown,
+      Level.mtLittleWarrior => Colors.orange.shade100,
+      Level.boxingLevel1 => Colors.green,
+      Level.boxingLevel2 ||
+      Level.boxingLevel3 ||
+      Level.boxing2Sparring =>
+        Colors.brown,
+      Level.warriorFit => Colors.yellow,
+      Level.warriorFit2 => Colors.orange,
+      Level.bjjBlue || Level.bjjBlueNogi => Colors.blue,
+      Level.bjjPurple || Level.bjjNogi || Level.bjjRandori => Colors.purple,
+      Level.bjjCompetitorsProgram => Colors.blueGrey,
+      Level.bjjPreteen || Level.bjjPreteenRandori => Colors.green,
+      Level.bjjKids || Level.bjjKidsCompetitorsProgram => Colors.orange,
+      Level.bjjLittleSamurai => Colors.blue.shade100,
+      Level.mma => Colors.blue.shade900,
+      Level.wrestling => Colors.brown.shade900,
     };
   }
 }
