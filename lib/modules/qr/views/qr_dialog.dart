@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:evlve/app/views/views.dart';
 import 'package:evlve/modules/user/user.dart';
 import 'package:evlve/theme/theme.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +16,9 @@ class QRDialog extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return const Dialog(
-      child: QRCode(),
+      child: NeuContainer(
+        child: QRCode(),
+      ),
     );
   }
 }
@@ -32,14 +35,15 @@ class QRCode extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final id = ref.watch(userProvider).id;
     return QrImageView(
+      backgroundColor: context.colorScheme.background,
       data: id,
       eyeStyle: QrEyeStyle(
         eyeShape: QrEyeShape.square,
-        color: context.colorScheme.onSurface,
+        color: context.colorScheme.onBackground,
       ),
       dataModuleStyle: QrDataModuleStyle(
         dataModuleShape: QrDataModuleShape.square,
-        color: context.colorScheme.onSurface,
+        color: context.colorScheme.onBackground,
       ),
       embeddedImage: const CachedNetworkImageProvider(
         'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQs_VVgajqAz15gS4Pt8drb59szsee8MZTjtcpQU9Woh9gRpMf7',
