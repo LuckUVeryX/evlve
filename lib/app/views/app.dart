@@ -37,22 +37,27 @@ class _AppState extends ConsumerState<App> with WidgetsBindingObserver {
     final router = ref.watch(routerProvider);
 
     const seedColor = Color(0xFFEC1B23);
+    final colorScheme = ColorScheme.fromSeed(seedColor: seedColor);
+    final textTheme = GoogleFonts.dmSansTextTheme(
+      ThemeData.light().textTheme.copyWith(
+            headlineMedium: const TextStyle(fontWeight: FontWeight.bold),
+            titleLarge: const TextStyle(fontWeight: FontWeight.bold),
+            bodyLarge: const TextStyle(fontWeight: FontWeight.bold),
+            labelLarge: const TextStyle(fontWeight: FontWeight.bold),
+          ),
+    );
     return MaterialApp.router(
       theme: ThemeData.from(
         useMaterial3: true,
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: seedColor,
-        ),
-        textTheme: GoogleFonts.dmSansTextTheme(
-          ThemeData.light().textTheme.copyWith(
-                headlineMedium: const TextStyle(fontWeight: FontWeight.bold),
-                titleLarge: const TextStyle(fontWeight: FontWeight.bold),
-                bodyLarge: const TextStyle(fontWeight: FontWeight.bold),
-                labelLarge: const TextStyle(fontWeight: FontWeight.bold),
-              ),
-        ),
+        colorScheme: colorScheme,
+        textTheme: textTheme,
       ).copyWith(
-        inputDecorationTheme: const InputDecorationTheme(filled: true),
+        inputDecorationTheme: InputDecorationTheme(
+          filled: true,
+          errorStyle: textTheme.bodyMedium?.copyWith(
+            color: colorScheme.errorContainer,
+          ),
+        ),
       ),
       routerConfig: router,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
