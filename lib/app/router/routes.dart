@@ -42,7 +42,25 @@ class OtpRoute extends GoRouteData {
   }
 }
 
-@TypedGoRoute<ScheduleRoute>(path: ScheduleRoute.path)
+@TypedGoRoute<ScheduleRoute>(
+  path: ScheduleRoute.path,
+  routes: [
+    TypedGoRoute<SettingsRoute>(
+      path: SettingsRoute.path,
+      routes: [
+        TypedGoRoute<AccountSettingsRoute>(
+          path: AccountSettingsRoute.path,
+        ),
+        TypedGoRoute<NotificationSettingsRoute>(
+          path: NotificationSettingsRoute.path,
+        ),
+        TypedGoRoute<QrSettingsRoute>(
+          path: QrSettingsRoute.path,
+        ),
+      ],
+    )
+  ],
+)
 class ScheduleRoute extends GoRouteData {
   const ScheduleRoute();
   static const path = '/';
@@ -52,23 +70,9 @@ class ScheduleRoute extends GoRouteData {
   }
 }
 
-@TypedGoRoute<SettingsRoute>(
-  path: SettingsRoute.path,
-  routes: [
-    TypedGoRoute<AccountSettingsRoute>(
-      path: AccountSettingsRoute.path,
-    ),
-    TypedGoRoute<NotificationSettingsRoute>(
-      path: NotificationSettingsRoute.path,
-    ),
-    TypedGoRoute<QrSettingsRoute>(
-      path: QrSettingsRoute.path,
-    ),
-  ],
-)
 class SettingsRoute extends GoRouteData {
   const SettingsRoute();
-  static const path = '/settings';
+  static const path = 'settings';
   @override
   Widget build(BuildContext context, GoRouterState state) {
     return const SettingsPage();
