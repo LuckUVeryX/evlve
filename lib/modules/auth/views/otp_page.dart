@@ -8,8 +8,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pinput/pinput.dart';
 
-class OTPPage extends ConsumerWidget {
-  const OTPPage({super.key});
+class OtpPage extends ConsumerWidget {
+  const OtpPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

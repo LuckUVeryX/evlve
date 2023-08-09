@@ -1,11 +1,10 @@
-import 'package:evlve/app/router/router.routes.dart';
+import 'package:evlve/app/router/routes.dart';
 import 'package:evlve/modules/auth/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:path/path.dart' as p;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'router.listenable.g.dart';
+part 'router_listenable.g.dart';
 
 @riverpod
 class RouterListenable extends _$RouterListenable implements Listenable {
@@ -32,11 +31,12 @@ class RouterListenable extends _$RouterListenable implements Listenable {
       loggedIn: (_) {
         final currentRoute = state.uri.toString();
         final isLoggingIn =
-            currentRoute.contains(Routes.auth) || currentRoute == Routes.splash;
-        return isLoggingIn ? Routes.schedule : null;
+            currentRoute.contains(const LoginRoute().location) ||
+                currentRoute.contains(const SplashRoute().location);
+        return isLoggingIn ? const ScheduleRoute().location : null;
       },
-      loggedOut: (_) => Routes.auth,
-      requireOtp: (_) => p.join(Routes.auth, Routes.otp),
+      loggedOut: (_) => const LoginRoute().location,
+      requireOtp: (_) => const OtpRoute().location,
     );
   }
 
