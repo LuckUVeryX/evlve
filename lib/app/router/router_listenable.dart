@@ -14,7 +14,9 @@ class RouterListenable extends _$RouterListenable implements Listenable {
   @override
   Future<void> build() async {
     _authState = await ref.watch(
-      authControllerProvider.selectAsync((state) => _authState = state),
+      authControllerProvider.select((value) {
+        return value.whenOrNull(data: (state) => _authState = state);
+      }),
     );
 
     ref.listenSelf((_, __) {
