@@ -24,11 +24,11 @@ class ScheduleListItem extends ConsumerWidget {
     ref
       ..listenErrors([bookingProvider])
       ..listen(bookingProvider, (prev, next) {
-        HapticFeedback.mediumImpact();
         if (next.hasError) return;
         final msg = next.value?.message;
         if (msg == null) return;
         if (prev?.value?.message == msg) return;
+        HapticFeedback.mediumImpact();
         ScaffoldMessenger.of(context)
           ..hideCurrentSnackBar()
           ..showSnackBar(SnackBar(content: Text(msg)));
