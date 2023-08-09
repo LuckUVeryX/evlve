@@ -1,19 +1,13 @@
 import 'package:evlve/app/app.dart';
-import 'package:evlve/app/router/router.routes.dart';
+import 'package:evlve/app/router/routes.dart';
 import 'package:evlve/l10n/l10n.dart';
 import 'package:evlve/modules/auth/auth.dart';
 import 'package:evlve/utils/theme_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
-import 'package:path/path.dart' as p;
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
-
-  String _buildRoute(String route) {
-    return p.join(Routes.schedule, Routes.settings, route);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,17 +23,17 @@ class SettingsPage extends StatelessWidget {
             _SettingsItem(
               leadingIcon: Icons.person_outline,
               label: context.l10n.settingsAccount,
-              onTap: () => context.go(_buildRoute(Routes.accountSettings)),
+              onTap: () => const AccountSettingsRoute().go(context),
             ),
             _SettingsItem(
               leadingIcon: Icons.notifications_outlined,
               label: context.l10n.settingsNotifications,
-              onTap: () => context.go(_buildRoute(Routes.notification)),
+              onTap: () => const NotificationSettingsRoute().go(context),
             ),
             _SettingsItem(
               leadingIcon: Icons.qr_code_outlined,
               label: context.l10n.settingsQRCode,
-              onTap: () => context.go(_buildRoute(Routes.qr)),
+              onTap: () => const QrSettingsRoute().go(context),
             ),
             Consumer(
               builder: (context, ref, child) {

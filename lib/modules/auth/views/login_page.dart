@@ -6,14 +6,14 @@ import 'package:evlve/utils/theme_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class SigninPage extends StatefulWidget {
-  const SigninPage({super.key});
+class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
 
   @override
-  State<SigninPage> createState() => _SigninPageState();
+  State<LoginPage> createState() => _LoginPageState();
 }
 
-class _SigninPageState extends State<SigninPage> {
+class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
 
   final _emailController = TextEditingController();
@@ -167,7 +167,7 @@ class _SignInButton extends ConsumerWidget {
                 final (email, password) = controllers;
                 ref
                     .read(authControllerProvider.notifier)
-                    .signIn(email: email.text, password: password.text);
+                    .login(email: email.text, password: password.text);
               },
         child: Text(context.l10n.signInPageButton),
       ),

@@ -22,18 +22,18 @@ class AuthRepo {
 
   static const _tokenKey = 'auth_token';
 
-  Future<SignInResponse> signIn({
+  Future<LoginResponse> login({
     required String email,
     required String password,
     String? otp,
   }) async {
-    final data = SignInRequest(
+    final data = LoginRequest(
       login: email,
       password: password,
       verificationCode: otp,
     );
     final res = await _api.post(ApiPath.sessions, data: data.toJson());
-    final response = SignInResponse.fromJson(res.data as Map<String, dynamic>);
+    final response = LoginResponse.fromJson(res.data as Map<String, dynamic>);
 
     final token = response.token;
     if (token != null) unawaited(_saveAuthToken(token));

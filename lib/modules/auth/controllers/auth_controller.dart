@@ -30,7 +30,7 @@ class AuthController extends _$AuthController {
     }
   }
 
-  Future<void> signIn({
+  Future<void> login({
     required String email,
     required String password,
   }) async {
@@ -38,7 +38,7 @@ class AuthController extends _$AuthController {
     state = const AsyncLoading();
     state = await AsyncValue.guard(() async {
       final repo = ref.read(authRepoProvider);
-      final res = await repo.signIn(email: email, password: password);
+      final res = await repo.login(email: email, password: password);
       if (res.token != null) return AuthState.loggedIn(res.user);
       _cred = (email, password);
       return const AuthState.requireOtp();
@@ -55,7 +55,7 @@ class AuthController extends _$AuthController {
     state = const AsyncLoading();
     state = await AsyncValue.guard(() async {
       final repo = ref.read(authRepoProvider);
-      final res = await repo.signIn(
+      final res = await repo.login(
         email: email!,
         password: password!,
         otp: otp,
@@ -77,7 +77,7 @@ class AuthController extends _$AuthController {
     state = const AsyncLoading();
     state = await AsyncValue.guard(() async {
       final repo = ref.read(authRepoProvider);
-      await repo.signIn(email: email!, password: password!);
+      await repo.login(email: email!, password: password!);
       return const AuthState.requireOtp();
     });
   }

@@ -1,13 +1,11 @@
 import 'package:evlve/app/app.dart';
-import 'package:evlve/app/router/router.routes.dart';
+import 'package:evlve/app/router/routes.dart';
 import 'package:evlve/modules/facility/facility.dart';
 import 'package:evlve/modules/schedule/schedule.dart';
 import 'package:evlve/modules/user/user.dart';
 import 'package:evlve/utils/theme_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
-import 'package:path/path.dart' as p;
 
 class ScheduleAppBar extends ConsumerWidget {
   const ScheduleAppBar({
@@ -36,7 +34,7 @@ class _SettingsIconButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      onPressed: () => context.go(p.join(Routes.schedule, Routes.settings)),
+      onPressed: () => const SettingsRoute().go(context),
       icon: const Icon(Icons.settings_outlined),
     );
   }
