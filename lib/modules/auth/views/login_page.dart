@@ -42,7 +42,7 @@ class _LoginPageState extends State<LoginPage> {
                   Align(
                     alignment: Alignment.topLeft,
                     child: Text(
-                      context.l10n.signInPageTitle,
+                      context.l10n.login,
                       style: context.textTheme.titleLarge,
                     ),
                   ),
@@ -58,14 +58,17 @@ class _LoginPageState extends State<LoginPage> {
                       ],
                       style: context.textTheme.bodyMedium,
                       validator: (value) {
-                        return (value?.trim().isEmpty ?? true) ? '' : null;
+                        if (value?.trim().isEmpty ?? true) {
+                          return context.l10n.loginEmptyEmailErrorText;
+                        }
+                        return null;
                       },
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       onTapOutside: (_) =>
                           FocusManager.instance.primaryFocus?.unfocus(),
                       decoration: InputDecoration(
                         prefixIcon: const Icon(Icons.email_outlined),
-                        labelText: context.l10n.signInPageEmail,
+                        labelText: context.l10n.loginPageEmail,
                       ),
                     ),
                   ),
@@ -121,7 +124,7 @@ class _PasswordTextFieldState extends State<_PasswordTextField> {
         autovalidateMode: AutovalidateMode.onUserInteraction,
         decoration: InputDecoration(
           prefixIcon: const Icon(Icons.key_outlined),
-          labelText: context.l10n.signInPagePassword,
+          labelText: context.l10n.loginPagePassword,
           suffixIcon: IconButton(
             icon: Icon(
               _obscureText
@@ -132,7 +135,11 @@ class _PasswordTextFieldState extends State<_PasswordTextField> {
           ),
         ),
         validator: (value) {
-          return (value?.trim().isEmpty ?? true) ? '' : null;
+          if (value?.trim().isEmpty ?? true) {
+            return context.l10n.loginEmptyPasswordErrorText;
+          }
+
+          return null;
         },
       ),
     );
@@ -169,7 +176,7 @@ class _SignInButton extends ConsumerWidget {
                     .read(authControllerProvider.notifier)
                     .login(email: email.text, password: password.text);
               },
-        child: Text(context.l10n.signInPageButton),
+        child: Text(context.l10n.login),
       ),
     );
   }
