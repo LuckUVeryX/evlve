@@ -13,24 +13,44 @@ extension WidgetRefX on WidgetRef {
         provider,
         (prev, next) {
           next.whenOrNull(
-            error: (error, stackTrace) {
-              if (prev?.error == error) return;
-              _showErrorSnackbar(error, stackTrace);
+            error: (e, st) {
+              // Prevent duplicate errors
+              if (prev?.error == e) return;
+              _onError(e, st);
             },
           );
         },
-        onError: _showErrorSnackbar,
+        onError: _onError,
       );
     }
   }
 
-  void _showErrorSnackbar(Object e, StackTrace st) {
+  /// Parses different errors `e` to readable error snackbars.
+  void _onError(Object e, StackTrace st) {
+    String? errorMessage;
+
+    if (e is DioException) errorMessage = _parseDioExceptionMessage(e);
+
+    _showErrorSnackbar(errorMessage ?? e.toString());
+  }
+
+  String? _parseDioExceptionMessage(DioException e) {
+    final responseData = e.response?.data;
+    if (responseData is Map<String, dynamic>?) {
+      final responseMessage = responseData?['message'];
+      if (responseMessage is String) return responseMessage;
+    }
+
+    return e.message;
+  }
+
+  void _showErrorSnackbar(String errorMessage) {
     ScaffoldMessenger.of(context)
       ..hideCurrentSnackBar()
       ..showSnackBar(
         SnackBar(
           content: Text(
-            e.toString(),
+            errorMessage,
             style: context.textTheme.bodyMedium
                 ?.copyWith(color: context.colorScheme.onError),
           ),
