@@ -35,18 +35,9 @@ class LateBookingConfirmDialog extends StatelessWidget {
                 style: context.textTheme.labelLarge,
               ),
               const SizedBox.square(dimension: 16),
-              NeuButton(
+              NeuTextButton(
                 onPressed: () => context.pop(true),
-                child: Container(
-                  alignment: Alignment.center,
-                  padding: const EdgeInsets.all(8),
-                  child: Text(
-                    context.l10n.dialogContinue,
-                    style: context.textTheme.labelLarge?.copyWith(
-                      color: context.colorScheme.onPrimary,
-                    ),
-                  ),
-                ),
+                label: context.l10n.dialogContinue,
               ),
             ],
           ),

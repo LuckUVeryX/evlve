@@ -3,17 +3,13 @@ import 'package:flutter/material.dart';
 
 class NeuButton extends StatefulWidget {
   const NeuButton({
-    this.color,
-    this.padding,
-    this.margin,
+    super.key,
+    this.backgroundColor,
     this.onPressed,
     this.child,
-    super.key,
   });
 
-  final Color? color;
-  final EdgeInsets? padding;
-  final EdgeInsets? margin;
+  final Color? backgroundColor;
 
   final VoidCallback? onPressed;
   final Widget? child;
@@ -28,8 +24,6 @@ class _NeuButtonState extends State<NeuButton> {
   @override
   Widget build(BuildContext context) {
     return AnimatedContainer(
-      margin: widget.margin,
-      padding: widget.padding,
       transform: Matrix4.identity()
         ..translate(
           _pressed ? 4.0 : 0.0,
@@ -45,7 +39,7 @@ class _NeuButtonState extends State<NeuButton> {
         ],
       ),
       child: Material(
-        color: widget.color ?? context.colorScheme.primary,
+        color: widget.backgroundColor ?? context.colorScheme.primary,
         child: InkWell(
           onTap: widget.onPressed,
           onTapDown: widget.onPressed == null

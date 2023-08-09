@@ -12,8 +12,8 @@ class QRFloatingActionButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return NeuButton(
-      color: context.colorScheme.secondary,
+    return NeuIconButton(
+      backgroundColor: context.colorScheme.secondary,
       onPressed: () async {
         ref.read(setMaxBrightnessProvider);
         await QRDialog.show(context);
@@ -26,14 +26,8 @@ class QRFloatingActionButton extends ConsumerWidget {
             );
         }
       },
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Icon(
-          Icons.qr_code_rounded,
-          color: context.colorScheme.onSecondary,
-          size: 24,
-        ),
-      ),
+      iconSize: 48,
+      icon: Icons.qr_code_rounded,
     );
   }
 }

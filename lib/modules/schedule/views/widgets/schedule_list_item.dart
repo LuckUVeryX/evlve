@@ -51,43 +51,45 @@ class ScheduleListItem extends ConsumerWidget {
       ),
       child: Builder(
         builder: (context) {
-          return NeuButton(
-            margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-            onPressed: canBook ? () {} : null,
-            color: context.colorScheme.primary,
-            child: CheckboxListTile(
-              value: value,
-              tristate: true,
-              onChanged: (!canBook)
-                  ? null
-                  : (_) async {
-                      final notifier = ref.read(bookingProvider.notifier);
+          return Padding(
+            padding: const EdgeInsets.all(8),
+            child: NeuButton(
+              onPressed: canBook ? () {} : null,
+              backgroundColor: context.colorScheme.primary,
+              child: CheckboxListTile(
+                value: value,
+                tristate: true,
+                onChanged: (!canBook)
+                    ? null
+                    : (_) async {
+                        final notifier = ref.read(bookingProvider.notifier);
 
-                      if (schedule.isLateBooking) {
-                        final confirm =
-                            await LateBookingConfirmDialog.show(context);
-                        if (confirm != true) return;
-                      }
+                        if (schedule.isLateBooking) {
+                          final confirm =
+                              await LateBookingConfirmDialog.show(context);
+                          if (confirm != true) return;
+                        }
 
-                      details.isBookedByMe
-                          ? await notifier.cancel()
-                          : await notifier.book();
-                    },
-              title: Text(
-                schedule.event.classDetails.level.key,
-                style: context.textTheme.bodyLarge?.copyWith(
-                  color: canBook
-                      ? context.colorScheme.onPrimary
-                      : context.theme.disabledColor,
+                        details.isBookedByMe
+                            ? await notifier.cancel()
+                            : await notifier.book();
+                      },
+                title: Text(
+                  schedule.event.classDetails.level.key,
+                  style: context.textTheme.bodyLarge?.copyWith(
+                    color: canBook
+                        ? context.colorScheme.onPrimary
+                        : context.theme.disabledColor,
+                  ),
                 ),
-              ),
-              subtitle: Text(
-                '''
-            ${DateFormat.Hm().format(schedule.start)}|${schedule.end.difference(schedule.start).inMinutes}m''',
-                style: context.textTheme.labelLarge?.copyWith(
-                  color: canBook
-                      ? context.colorScheme.onPrimary
-                      : context.theme.disabledColor,
+                subtitle: Text(
+                  '''
+              ${DateFormat.Hm().format(schedule.start)}|${schedule.end.difference(schedule.start).inMinutes}m''',
+                  style: context.textTheme.labelLarge?.copyWith(
+                    color: canBook
+                        ? context.colorScheme.onPrimary
+                        : context.theme.disabledColor,
+                  ),
                 ),
               ),
             ),
@@ -103,16 +105,18 @@ class ScheduleListItemShimmer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ShimmerWidget(
-      child: NeuButton(
-        margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-        child: CheckboxListTile(
-          value: false,
-          onChanged: null,
-          title: SizedBox(
-            height: context.textTheme.bodyLarge?.fontSize,
-          ),
-          subtitle: SizedBox(
-            height: context.textTheme.bodyMedium?.fontSize,
+      child: Padding(
+        padding: const EdgeInsets.all(8),
+        child: NeuButton(
+          child: CheckboxListTile(
+            value: false,
+            onChanged: null,
+            title: SizedBox(
+              height: context.textTheme.bodyLarge?.fontSize,
+            ),
+            subtitle: SizedBox(
+              height: context.textTheme.bodyMedium?.fontSize,
+            ),
           ),
         ),
       ),

@@ -77,17 +77,18 @@ class _SettingsItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return NeuButton(
-      onPressed: onTap == null ? null : () {},
-      margin: const EdgeInsets.all(8),
-      color: backgroundColor ?? context.colorScheme.surfaceVariant,
-      child: ListTile(
-        leading: Icon(leadingIcon),
-        title: Text(label),
-        onTap: onTap,
-        iconColor: foregroundColor ?? context.colorScheme.onSurfaceVariant,
-        textColor: foregroundColor ?? context.colorScheme.onSurfaceVariant,
-        trailing: const Icon(Icons.arrow_forward_ios),
+    return Padding(
+      padding: const EdgeInsets.all(8),
+      child: NeuButton(
+        onPressed: onTap,
+        backgroundColor: backgroundColor ?? context.colorScheme.surfaceVariant,
+        child: ListTile(
+          leading: Icon(leadingIcon),
+          title: Text(label),
+          iconColor: foregroundColor ?? context.colorScheme.onSurfaceVariant,
+          textColor: foregroundColor ?? context.colorScheme.onSurfaceVariant,
+          trailing: const Icon(Icons.arrow_forward_ios),
+        ),
       ),
     );
   }

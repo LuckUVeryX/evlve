@@ -161,19 +161,11 @@ ${(qrSetting.shakeCountReset.inMilliseconds / 1000).toStringAsFixed(2)}s''',
           child: Row(
             children: [
               Expanded(
-                child: NeuButton(
-                  color: context.colorScheme.background,
+                child: NeuTextButton(
+                  label: context.l10n.settingsQRCancel,
+                  backgroundColor: context.colorScheme.background,
+                  foregroundColor: context.colorScheme.onBackground,
                   onPressed: context.pop,
-                  child: Container(
-                    alignment: Alignment.center,
-                    padding: const EdgeInsets.all(8),
-                    child: Text(
-                      context.l10n.settingsQRCancel,
-                      style: context.textTheme.labelLarge?.copyWith(
-                        color: context.colorScheme.onBackground,
-                      ),
-                    ),
-                  ),
                 ),
               ),
               const SizedBox(width: 16),
@@ -195,9 +187,10 @@ class _SaveButton extends ConsumerStatefulWidget {
 
 class _SaveButtonState extends ConsumerState<_SaveButton> {
   bool _debounce = false;
+
   @override
   Widget build(BuildContext context) {
-    return NeuButton(
+    return NeuTextButton(
       onPressed: _debounce
           ? null
           : () async {
@@ -221,22 +214,7 @@ class _SaveButtonState extends ConsumerState<_SaveButton> {
                   );
               }
             },
-      child: Container(
-        alignment: Alignment.center,
-        padding: const EdgeInsets.all(8),
-        child: _debounce
-            ? SizedBox.square(
-                dimension: 20,
-                child: CircularProgressIndicator(
-                  color: context.colorScheme.onPrimary,
-                ),
-              )
-            : Text(
-                context.l10n.settingsQRSave,
-                style: context.textTheme.labelLarge
-                    ?.copyWith(color: context.colorScheme.onPrimary),
-              ),
-      ),
+      label: context.l10n.settingsQRSave,
     );
   }
 }

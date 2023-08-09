@@ -50,8 +50,9 @@ class _LocationIconButton extends ConsumerWidget {
     if (!user.isBlackCard) return const Offstage();
 
     return Center(
-      child: NeuButton(
-        color: context.colorScheme.background,
+      child: NeuIconButton(
+        foregroundColor: context.colorScheme.onBackground,
+        backgroundColor: context.colorScheme.background,
         onPressed: () async {
           final newFacility = await FacilityDialog.show(context);
           if (newFacility == null) return;
@@ -59,13 +60,7 @@ class _LocationIconButton extends ConsumerWidget {
               .read(facilityContollerProvider.notifier)
               .onFacilityChanged(newFacility);
         },
-        child: Padding(
-          padding: const EdgeInsets.all(8),
-          child: Icon(
-            Icons.place_outlined,
-            color: context.colorScheme.onBackground,
-          ),
-        ),
+        icon: Icons.place_outlined,
       ),
     );
   }

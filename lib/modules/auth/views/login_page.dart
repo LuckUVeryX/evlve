@@ -165,27 +165,25 @@ class _SignInButton extends ConsumerWidget {
 
     ref.listenErrors([authControllerProvider]);
 
-    return NeuButton(
-      child: FilledButton(
-        onPressed: auth.isLoading
-            ? null
-            : () async {
-                final isValid = formKey.currentState?.validate() ?? false;
-                if (!isValid) return;
-                final (email, password) = controllers;
-                await ref
-                    .read(authControllerProvider.notifier)
-                    .login(email: email.text, password: password.text);
+    return NeuTextButton(
+      onPressed: auth.isLoading
+          ? null
+          : () async {
+              final isValid = formKey.currentState?.validate() ?? false;
+              if (!isValid) return;
+              final (email, password) = controllers;
+              await ref
+                  .read(authControllerProvider.notifier)
+                  .login(email: email.text, password: password.text);
 
-                // Save username & password for autofill
-                final state = ref.read(authControllerProvider);
-                state.valueOrNull?.mapOrNull(
-                  loggedIn: (_) => TextInput.finishAutofillContext(),
-                  requireOtp: (_) => TextInput.finishAutofillContext(),
-                );
-              },
-        child: Text(context.l10n.login),
-      ),
+              // Save username & password for autofill
+              final state = ref.read(authControllerProvider);
+              state.valueOrNull?.mapOrNull(
+                loggedIn: (_) => TextInput.finishAutofillContext(),
+                requireOtp: (_) => TextInput.finishAutofillContext(),
+              );
+            },
+      label: context.l10n.login,
     );
   }
 }
