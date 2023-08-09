@@ -1,8 +1,10 @@
 import 'package:evlve/app/views/views.dart';
 import 'package:evlve/modules/booking/booking.dart';
 import 'package:evlve/modules/schedule/schedule.dart';
+import 'package:evlve/utils/ref_extensions.dart';
 import 'package:evlve/utils/theme_extensions.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
@@ -18,6 +20,19 @@ class ScheduleListItem extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final bookingProvider = bookingControllerProvider(schedule: schedule);
     final booking = ref.watch(bookingProvider);
+
+    ref
+      ..listenErrors([bookingProvider])
+      ..listen(bookingProvider, (prev, next) {
+        HapticFeedback.mediumImpact();
+        if (next.hasError) return;
+        final msg = next.value?.message;
+        if (msg == null) return;
+        if (prev?.value?.message == msg) return;
+        ScaffoldMessenger.of(context)
+          ..hideCurrentSnackBar()
+          ..showSnackBar(SnackBar(content: Text(msg)));
+      });
 
     final details = booking.value?.schedule.event.classDetails ??
         schedule.event.classDetails;
@@ -43,7 +58,7 @@ class ScheduleListItem extends ConsumerWidget {
             child: CheckboxListTile(
               value: value,
               tristate: true,
-              onChanged: !canBook
+              onChanged: (!canBook)
                   ? null
                   : (_) async {
                       final notifier = ref.read(bookingProvider.notifier);
