@@ -23,7 +23,7 @@ class NeuTextButton extends StatelessWidget {
       backgroundColor: backgroundColor,
       onPressed: onPressed,
       child: Padding(
-        padding: const EdgeInsets.all(8),
+        padding: const EdgeInsets.all(12),
         child: Center(
           child: label != null
               ? Text(
