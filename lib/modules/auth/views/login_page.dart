@@ -4,7 +4,6 @@ import 'package:evlve/modules/auth/controllers/controllers.dart';
 import 'package:evlve/utils/ref_extensions.dart';
 import 'package:evlve/utils/theme_extensions.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class LoginPage extends StatefulWidget {
@@ -34,6 +33,7 @@ class _LoginPageState extends State<LoginPage> {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Form(
+            autovalidateMode: AutovalidateMode.onUserInteraction,
             key: _formKey,
             child: AutofillGroup(
               child: Column(
@@ -50,21 +50,19 @@ class _LoginPageState extends State<LoginPage> {
                   const SizedBox.square(dimension: 12),
                   NeuContainer(
                     child: TextFormField(
-                      textInputAction: TextInputAction.next,
                       controller: _emailController,
+                      textInputAction: TextInputAction.next,
                       keyboardType: TextInputType.emailAddress,
                       autofillHints: const [
                         AutofillHints.email,
                         AutofillHints.username,
                       ],
-                      style: context.textTheme.bodyMedium,
                       validator: (value) {
                         if (value?.trim().isEmpty ?? true) {
                           return context.l10n.loginEmptyEmailErrorText;
                         }
                         return null;
                       },
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
                       onTapOutside: (_) =>
                           FocusManager.instance.primaryFocus?.unfocus(),
                       decoration: InputDecoration(
@@ -117,12 +115,11 @@ class _PasswordTextFieldState extends State<_PasswordTextField> {
   Widget build(BuildContext context) {
     return NeuContainer(
       child: TextFormField(
-        onTapOutside: (_) => FocusManager.instance.primaryFocus?.unfocus(),
         obscureText: _obscureText,
         controller: widget.controller,
         keyboardType: TextInputType.visiblePassword,
         autofillHints: const [AutofillHints.password],
-        autovalidateMode: AutovalidateMode.onUserInteraction,
+        onTapOutside: (_) => FocusManager.instance.primaryFocus?.unfocus(),
         decoration: InputDecoration(
           prefixIcon: const Icon(Icons.key_outlined),
           labelText: context.l10n.loginPagePassword,
@@ -139,7 +136,6 @@ class _PasswordTextFieldState extends State<_PasswordTextField> {
           if (value?.trim().isEmpty ?? true) {
             return context.l10n.loginEmptyPasswordErrorText;
           }
-
           return null;
         },
       ),
@@ -168,20 +164,13 @@ class _SignInButton extends ConsumerWidget {
     return NeuTextButton(
       onPressed: auth.isLoading
           ? null
-          : () async {
+          : () {
               final isValid = formKey.currentState?.validate() ?? false;
               if (!isValid) return;
               final (email, password) = controllers;
-              await ref
+              ref
                   .read(authControllerProvider.notifier)
                   .login(email: email.text, password: password.text);
-
-              // Save username & password for autofill
-              final state = ref.read(authControllerProvider);
-              state.valueOrNull?.mapOrNull(
-                loggedIn: (_) => TextInput.finishAutofillContext(),
-                requireOtp: (_) => TextInput.finishAutofillContext(),
-              );
             },
       label: context.l10n.login,
     );
