@@ -16,9 +16,7 @@ class SchedulePage extends ConsumerWidget {
       shakeEventProvider,
       (_, __) async {
         if (ModalRoute.of(context)?.isCurrent != true) return;
-        ref.read(setMaxBrightnessProvider);
-        await QRDialog.show(context);
-        ref.read(resetBrightnessProvider);
+        await QRDialog.show(ref);
       },
     );
 
