@@ -15,9 +15,7 @@ class QRFloatingActionButton extends ConsumerWidget {
     return NeuIconButton(
       backgroundColor: context.colorScheme.secondary,
       onPressed: () async {
-        ref.read(setMaxBrightnessProvider);
-        await QRDialog.show(context);
-        ref.read(resetBrightnessProvider);
+        await QRDialog.show(ref);
         if (context.mounted) {
           ScaffoldMessenger.of(context)
             ..hideCurrentSnackBar()

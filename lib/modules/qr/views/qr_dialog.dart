@@ -1,16 +1,28 @@
+import 'dart:async';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:evlve/app/views/views.dart';
+import 'package:evlve/modules/qr/qr.dart';
 import 'package:evlve/modules/user/user.dart';
 import 'package:evlve/utils/theme_extensions.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class QRDialog extends ConsumerWidget {
   const QRDialog._();
 
-  static Future<void> show(BuildContext context) {
-    return showDialog(context: context, builder: (_) => const QRDialog._());
+  static Future<void> show(WidgetRef ref) async {
+    unawaited(HapticFeedback.mediumImpact());
+    await ref.read(
+      raiseBrightnessProvider(
+        () async => showDialog(
+          context: ref.context,
+          builder: (_) => const QRDialog._(),
+        ),
+      ).future,
+    );
   }
 
   @override
