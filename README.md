@@ -10,13 +10,10 @@ Evlve
 ---
 
 ## Screenshots
-![Schedules](screenshots/IMG_6673.PNG?raw=true)
-![Dark Theme](screenshots/IMG_6680.PNG?raw=true)
-![Filters](screenshots/IMG_6675.PNG?raw=true)
-![Shake to show QR](screenshots/IMG_6676.PNG?raw=true)
-![Notifications](screenshots/IMG_6677.PNG?raw=true)
-![Appearance](screenshots/IMG_6678.PNG?raw=true)
-![QR Settings](screenshots/IMG_6679.PNG?raw=true)
+![Schedules](screenshots/IMG_7492.PNG?raw=true)
+![Black Card](screenshots/IMG_7493.PNG?raw=true)
+![Shake to show QR](screenshots/IMG_7494.PNG?raw=true)
+![Settings](screenshots/IMG_7495.PNG?raw=true)
 
 ## Getting Started 🚀
 
