@@ -29,7 +29,7 @@ class BookingController extends _$BookingController {
     final value = state.value;
     if (value != null) {
       state = AsyncData(
-        value.copyWith.schedule.event.classDetails(isBookedByMe: true),
+        value.copyWith.schedule.event.classDetails(isBookedByMe: toBook),
       );
     }
     state = const AsyncLoading();
