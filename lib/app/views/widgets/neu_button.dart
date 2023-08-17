@@ -29,7 +29,7 @@ class _NeuButtonState extends State<NeuButton> {
           _pressed ? 4.0 : 0.0,
           _pressed ? 4.0 : 0.0,
         ),
-      duration: const Duration(milliseconds: 200),
+      duration: const Duration(milliseconds: 100),
       curve: Curves.easeInOut,
       decoration: BoxDecoration(
         border: Border.all(width: 4),
