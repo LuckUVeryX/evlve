@@ -28,7 +28,7 @@ class OtpPage extends ConsumerWidget {
               _Pinput(),
               const SizedBox(height: 32),
               Text(context.l10n.otpDidntReceive),
-              const _ResendButton()
+              const _ResendButton(),
             ],
           ),
         ),

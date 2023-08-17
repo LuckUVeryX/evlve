@@ -39,7 +39,7 @@ class FacilityDialog extends ConsumerWidget {
                 ListTile(
                   onTap: () => context.pop(facility),
                   title: Text(facility.key.key),
-                )
+                ),
             ],
           ),
         ),

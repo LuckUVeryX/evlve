@@ -58,7 +58,7 @@ class OtpRoute extends GoRouteData {
           path: QrSettingsRoute.path,
         ),
       ],
-    )
+    ),
   ],
 )
 class ScheduleRoute extends GoRouteData {

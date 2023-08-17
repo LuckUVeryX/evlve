@@ -16,7 +16,7 @@ class SettingsPage extends StatelessWidget {
         headerSliverBuilder: (context, innerBoxIsScrolled) => [
           SliverAppBar.large(
             title: Text(context.l10n.settings),
-          )
+          ),
         ],
         body: ListView(
           children: [

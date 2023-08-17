@@ -66,7 +66,7 @@ class _ScheduleInfiniteListState extends ConsumerState<ScheduleInfiniteList>
                 center: forwardListKey,
                 slivers: [
                   _ReverseList(area: area.key),
-                  _ForwardList(area: area.key, key: forwardListKey)
+                  _ForwardList(area: area.key, key: forwardListKey),
                 ],
               ),
           ],

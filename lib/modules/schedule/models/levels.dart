@@ -55,7 +55,7 @@ enum Level {
       mtWomen,
       mtKids,
       mtPreteen,
-      mtLittleWarrior
+      mtLittleWarrior,
     ];
   }
 
@@ -80,7 +80,7 @@ enum Level {
       bjjPreteen,
       bjjPreteenRandori,
       bjjKids,
-      bjjLittleSamurai
+      bjjLittleSamurai,
     ];
   }
 

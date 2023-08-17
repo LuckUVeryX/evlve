@@ -17,7 +17,7 @@ class QRSettingsPage extends StatelessWidget {
           SliverAppBar.large(
             title: Text(context.l10n.settingsQRCode),
             actions: const [_ResetButton()],
-          )
+          ),
         ],
         body: const SafeArea(child: _QRSettings()),
       ),
@@ -68,7 +68,7 @@ class _QRSettings extends ConsumerWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(context.l10n.settingsShakeCount),
-                    Text('${qrSetting.shakeCount}')
+                    Text('${qrSetting.shakeCount}'),
                   ],
                 ),
               ),
@@ -88,7 +88,7 @@ class _QRSettings extends ConsumerWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(context.l10n.settingsQRShakeThreshold),
-                    Text(qrSetting.shakeThresholdForce.toStringAsFixed(1))
+                    Text(qrSetting.shakeThresholdForce.toStringAsFixed(1)),
                   ],
                 ),
               ),
@@ -110,7 +110,7 @@ class _QRSettings extends ConsumerWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(context.l10n.settingsQRDebounceDuration),
-                    Text('${qrSetting.debounce.inMilliseconds}ms')
+                    Text('${qrSetting.debounce.inMilliseconds}ms'),
                   ],
                 ),
               ),
@@ -135,7 +135,7 @@ class _QRSettings extends ConsumerWidget {
                     Text(
                       '''
 ${(qrSetting.shakeCountReset.inMilliseconds / 1000).toStringAsFixed(2)}s''',
-                    )
+                    ),
                   ],
                 ),
               ),
@@ -172,7 +172,7 @@ ${(qrSetting.shakeCountReset.inMilliseconds / 1000).toStringAsFixed(2)}s''',
               const Expanded(child: _SaveButton()),
             ],
           ),
-        )
+        ),
       ],
     );
   }

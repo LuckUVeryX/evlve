@@ -211,7 +211,7 @@ class _UpcomingNotificationListTile extends ConsumerWidget {
             icon: Icons.delete,
             label: context
                 .l10n.settingsNotificationUpcomingNotificationsSlideableDelete,
-          )
+          ),
         ],
       ),
       child: ListTile(

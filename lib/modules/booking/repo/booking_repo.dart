@@ -27,7 +27,7 @@ class BookingRepo {
         'eventId': id,
         'eventDate': DateFormat('yyyy-MM-dd').format(dt),
         'memberId': _user.id,
-        'action': 'book'
+        'action': 'book',
       },
     );
     return BookingResponse.fromJson(res.data as Map<String, dynamic>);
@@ -43,7 +43,7 @@ class BookingRepo {
         'eventId': id,
         'eventDate': DateFormat('yyyy-MM-dd').format(dt),
         'memberId': _user.id,
-        'action': 'cancel'
+        'action': 'cancel',
       },
     );
 

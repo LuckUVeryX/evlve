@@ -35,7 +35,7 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
       overrides: [
         logProvider.overrideWithValue(log),
         sharedPreferencesProvider.overrideWithValue(pref),
-        notificationRepoProvider.overrideWithValue(notificationRepo)
+        notificationRepoProvider.overrideWithValue(notificationRepo),
       ],
       child: await builder(),
     ),
