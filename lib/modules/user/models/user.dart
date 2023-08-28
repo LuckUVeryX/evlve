@@ -35,4 +35,6 @@ class User with _$User {
   bool get isBlackCard {
     return facilities.length > 1;
   }
+
+  bool get isTester => email == 'luckuveryx@icloud.com';
 }
