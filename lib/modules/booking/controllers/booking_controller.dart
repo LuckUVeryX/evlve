@@ -1,6 +1,7 @@
 import 'package:evlve/modules/booking/booking.dart';
 import 'package:evlve/modules/notifications/notifications.dart';
 import 'package:evlve/modules/schedule/models/models.dart';
+import 'package:evlve/modules/tester/tester.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'booking_controller.g.dart';
@@ -32,6 +33,12 @@ class BookingController extends _$BookingController {
         value.copyWith.schedule.event.classDetails(isBookedByMe: toBook),
       );
     }
+
+    // ! Avoid testflight testers from actually booking classes
+    final isTester = ref.read(testerProvider);
+    if (isTester) return;
+    // !
+
     state = const AsyncLoading();
     state = await AsyncValue.guard(() async {
       return toBook
