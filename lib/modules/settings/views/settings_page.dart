@@ -2,6 +2,7 @@ import 'package:evlve/app/app.dart';
 import 'package:evlve/app/router/routes.dart';
 import 'package:evlve/l10n/l10n.dart';
 import 'package:evlve/modules/auth/auth.dart';
+import 'package:evlve/modules/theme_switcher/theme_switcher.dart';
 import 'package:evlve/utils/theme_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -20,6 +21,10 @@ class SettingsPage extends StatelessWidget {
         ],
         body: ListView(
           children: [
+            const Padding(
+              padding: EdgeInsets.all(8),
+              child: ThemeSwitcherButton(),
+            ),
             _SettingsItem(
               leadingIcon: Icons.person_outline,
               label: context.l10n.settingsAccount,
