@@ -12,6 +12,9 @@ import 'package:go_router/go_router.dart';
 
 part 'routes.g.dart';
 
+final rootKey = GlobalKey<NavigatorState>(debugLabel: 'routerKey');
+final shellKey = GlobalKey<NavigatorState>(debugLabel: 'shellKey');
+
 @TypedGoRoute<SplashRoute>(path: SplashRoute.path)
 class SplashRoute extends GoRouteData {
   const SplashRoute();
@@ -79,6 +82,8 @@ class OtpRoute extends GoRouteData {
 class RootRoute extends StatefulShellRouteData {
   const RootRoute();
 
+  static final GlobalKey<NavigatorState> $navigatorKey = shellKey;
+
   @override
   Widget builder(
     BuildContext context,
@@ -120,6 +125,9 @@ class SettingsRoute extends GoRouteData {
 class AccountSettingsRoute extends GoRouteData {
   const AccountSettingsRoute();
   static const path = 'account';
+
+  static final GlobalKey<NavigatorState> $parentNavigatorKey = rootKey;
+
   @override
   Widget build(BuildContext context, GoRouterState state) {
     return const AccountSettingsPage();
@@ -129,6 +137,9 @@ class AccountSettingsRoute extends GoRouteData {
 class NotificationSettingsRoute extends GoRouteData {
   const NotificationSettingsRoute();
   static const path = 'notification';
+
+  static final GlobalKey<NavigatorState> $parentNavigatorKey = rootKey;
+
   @override
   Widget build(BuildContext context, GoRouterState state) {
     return const NotificationSettingsPage();
@@ -138,6 +149,9 @@ class NotificationSettingsRoute extends GoRouteData {
 class QrSettingsRoute extends GoRouteData {
   const QrSettingsRoute();
   static const path = 'qr';
+
+  static final GlobalKey<NavigatorState> $parentNavigatorKey = rootKey;
+
   @override
   Widget build(BuildContext context, GoRouterState state) {
     return const QRSettingsPage();
