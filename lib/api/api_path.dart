@@ -7,6 +7,7 @@ class ApiPath {
 
   // * Booking
   static const sessions = '/booking/sessions';
+  static const getAttendances = '/booking/get-attendances';
   static const getEvents = '/booking/get-events';
   static const getMemberships = '/booking/get-memberships';
   static const bookClass = '/booking/book-class';
