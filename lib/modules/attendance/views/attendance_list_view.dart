@@ -1,18 +1,35 @@
 import 'package:evlve/l10n/l10n.dart';
 import 'package:evlve/modules/attendance/attendance.dart';
+import 'package:evlve/modules/attendance/controllers/attendance_scroll_controller.dart';
 import 'package:evlve/modules/attendance/views/widgets/attendance_date_header.dart';
 import 'package:evlve/modules/attendance/views/widgets/attendance_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class AttendancePage extends ConsumerWidget {
-  const AttendancePage({super.key});
+class AttendanceListView extends ConsumerStatefulWidget {
+  const AttendanceListView({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<AttendanceListView> createState() => _AttendanceListViewState();
+}
+
+class _AttendanceListViewState extends ConsumerState<AttendanceListView> {
+  late final _controller = ScrollController();
+  @override
+  Widget build(BuildContext context) {
     const pageSize = 100;
 
+    ref.listen(
+      attendanceScrollControllerProvider,
+      (_, __) => _controller.animateTo(
+        0,
+        curve: Curves.easeInOut,
+        duration: const Duration(milliseconds: 250),
+      ),
+    );
+
     return CustomScrollView(
+      controller: _controller,
       slivers: [
         SliverAppBar.large(title: Text(context.l10n.attendance)),
         SliverList.builder(
