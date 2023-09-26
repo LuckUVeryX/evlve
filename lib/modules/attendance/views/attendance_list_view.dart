@@ -1,8 +1,10 @@
+import 'package:dio/dio.dart';
 import 'package:evlve/l10n/l10n.dart';
 import 'package:evlve/modules/attendance/attendance.dart';
 import 'package:evlve/modules/attendance/controllers/attendance_scroll_controller.dart';
 import 'package:evlve/modules/attendance/views/widgets/attendance_date_header.dart';
 import 'package:evlve/modules/attendance/views/widgets/attendance_list_item.dart';
+import 'package:evlve/utils/theme_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -45,14 +47,42 @@ class _AttendanceListViewState extends ConsumerState<AttendanceListView> {
           itemBuilder: (context, index) {
             final page = index ~/ pageSize;
             final indexInPage = index % pageSize;
-            final attendanceList = ref.watch(
-              attendanceProvider(limit: pageSize, page: page),
-            );
+
+            final provider = attendanceProvider(limit: pageSize, page: page);
+            final attendanceList = ref.watch(provider);
+
             return attendanceList.unwrapPrevious().when(
                   loading: () => const AttendanceListItemShimmer(),
                   error: (e, st) {
                     if (indexInPage != 0) return null;
-                    return Text('Error $e');
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 12,
+                        horizontal: 16,
+                      ),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          TextButton.icon(
+                            onPressed: () {
+                              ref.invalidate(provider);
+                            },
+                            icon: const Icon(Icons.refresh),
+                            label: Text(
+                              context.l10n.scheduleListViewErrorRetryButton,
+                            ),
+                          ),
+                          Text(
+                            (e is DioException)
+                                ? e.message ?? e.toString()
+                                : e.toString(),
+                            style: context.textTheme.bodyMedium?.copyWith(
+                              color: context.colorScheme.error,
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
                   },
                   data: (attendances) {
                     if (indexInPage >= attendances.length) return null;

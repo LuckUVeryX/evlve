@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:evlve/l10n/l10n.dart';
 import 'package:evlve/modules/booking/booking.dart';
 import 'package:evlve/modules/facility/facility.dart';
@@ -138,7 +139,9 @@ class _ReverseList extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          e.toString(),
+                          (e is DioException)
+                              ? e.message ?? e.toString()
+                              : e.toString(),
                           style: context.textTheme.bodyMedium?.copyWith(
                             color: context.colorScheme.error,
                           ),
