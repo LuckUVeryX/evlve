@@ -1,5 +1,4 @@
 import 'package:evlve/modules/facility/facility.dart';
-import 'package:evlve/modules/schedule/schedule.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'attendance_response.freezed.dart';
@@ -22,7 +21,7 @@ class Attendance with _$Attendance {
     required DateTime date,
     required String startTime,
     required Facility facility,
-    required Level level,
+    required String level,
   }) = _Attendance;
   factory Attendance.fromJson(Map<String, dynamic> json) =>
       _$AttendanceFromJson(json);
