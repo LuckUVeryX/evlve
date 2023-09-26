@@ -3,7 +3,7 @@ import 'package:evlve/modules/attendance/attendance.dart';
 import 'package:evlve/modules/auth/auth.dart';
 import 'package:evlve/modules/notifications/notifications.dart';
 import 'package:evlve/modules/qr/qr.dart';
-import 'package:evlve/modules/root/widgets/pages/root_page.dart';
+import 'package:evlve/modules/root/root.dart';
 import 'package:evlve/modules/schedule/schedule.dart';
 import 'package:evlve/modules/settings/settings.dart';
 import 'package:evlve/modules/user/user.dart';
