@@ -21,7 +21,7 @@ class Attendance with _$Attendance {
     required DateTime date,
     required String startTime,
     required Facility facility,
-    required String level,
+    @JsonKey(name: 'level') required String name,
   }) = _Attendance;
   factory Attendance.fromJson(Map<String, dynamic> json) =>
       _$AttendanceFromJson(json);

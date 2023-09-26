@@ -28,6 +28,8 @@ class AttendanceRepo {
         'offset': offset,
       },
     );
-    return AttendanceResponse.fromJson(res.data as Map<String, dynamic>);
+    final result =
+        AttendanceResponse.fromJson(res.data as Map<String, dynamic>);
+    return result;
   }
 }
