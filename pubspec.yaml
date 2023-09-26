@@ -53,12 +53,19 @@ flutter:
   generate: true
 
 flutter_native_splash:
-  color: "#fefbff"
+  color: "#ffffff"
   image: assets/launch-image.png
   branding: assets/branding.png
 
+  color_dark: "#121212"
+  image_dark: assets/launch-image-dark.png
+  branding_dark: assets/branding-dark.png
+
   android_12:
     image: assets/launch-image.png
-    icon_background_color: "#fefbff"
+    icon_background_color: "#ffffff"
+
+    image_dark: assets/launch-image-dark.png
+    icon_background_color_dark: "#121212"
 
   web: false
