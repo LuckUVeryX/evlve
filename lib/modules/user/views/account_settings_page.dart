@@ -164,6 +164,13 @@ class _AccountCheckboxListTile extends StatelessWidget {
         margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         color: context.colorScheme.surfaceVariant,
         child: CheckboxListTile(
+          fillColor: MaterialStateProperty.resolveWith((states) {
+            if (states.contains(MaterialState.disabled) &&
+                !states.contains(MaterialState.selected)) {
+              return context.colorScheme.surfaceVariant;
+            }
+            return null;
+          }),
           value: value,
           onChanged: (_) {},
           enabled: false,
