@@ -1,6 +1,7 @@
 import 'package:evlve/app/router/routes.dart';
 import 'package:evlve/l10n/l10n.dart';
-import 'package:evlve/modules/attendance/controllers/attendance_scroll_controller.dart';
+import 'package:evlve/modules/attendance/attendance.dart';
+import 'package:evlve/modules/qr/qr.dart';
 import 'package:evlve/modules/schedule/schedule.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -16,6 +17,14 @@ class RootPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    ref.listen(
+      shakeEventProvider,
+      (_, __) async {
+        if (ModalRoute.of(context)?.isCurrent != true) return;
+        await QRDialog.show(ref);
+      },
+    );
+
     return Scaffold(
       body: shell,
       bottomNavigationBar: NavigationBar(
