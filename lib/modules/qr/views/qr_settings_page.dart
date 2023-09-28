@@ -33,11 +33,16 @@ class _ResetButton extends ConsumerWidget {
     final isDefault = ref.watch(
       qRSettingControllerProvider.select((value) => value == const QRModel()),
     );
-    return TextButton(
-      onPressed: isDefault
-          ? null
-          : ref.read(qRSettingControllerProvider.notifier).reset,
-      child: Text(context.l10n.settingsQRReset),
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.only(right: 8),
+        child: FilledButton.tonal(
+          onPressed: isDefault
+              ? null
+              : ref.read(qRSettingControllerProvider.notifier).reset,
+          child: Text(context.l10n.settingsQRReset),
+        ),
+      ),
     );
   }
 }
