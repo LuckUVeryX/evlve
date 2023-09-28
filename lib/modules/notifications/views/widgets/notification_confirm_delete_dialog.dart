@@ -1,4 +1,5 @@
 import 'package:evlve/l10n/l10n.dart';
+import 'package:evlve/utils/theme_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -14,8 +15,12 @@ class NotificationConfirmDeleteDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
-      title: Text(context.l10n.settingsNotificationConfirmDeleteDialogTitle),
+    return AlertDialog.adaptive(
+      title: Text(
+        context.l10n.settingsNotificationConfirmDeleteDialogTitle,
+        style: context.textTheme.titleLarge
+            ?.copyWith(color: context.colorScheme.onSurfaceVariant),
+      ),
       content:
           Text(context.l10n.settingsNotificationConfirmDeleteDialogContent),
       actions: [
