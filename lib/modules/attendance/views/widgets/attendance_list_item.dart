@@ -1,6 +1,5 @@
 import 'package:evlve/app/app.dart';
 import 'package:evlve/modules/attendance/attendance.dart';
-import 'package:evlve/modules/attendance/models/attendance_state.dart';
 import 'package:evlve/modules/facility/facility.dart';
 import 'package:evlve/modules/schedule/schedule.dart';
 import 'package:evlve/utils/theme_extensions.dart';

@@ -1,5 +1,4 @@
 import 'package:evlve/modules/attendance/attendance.dart';
-import 'package:evlve/modules/attendance/models/attendance_state.dart';
 import 'package:evlve/utils/ref_extensions.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
