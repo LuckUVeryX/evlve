@@ -27,12 +27,14 @@ class LateBookingConfirmDialog extends StatelessWidget {
             children: [
               Text(
                 context.l10n.lateBookingDialogTitle,
-                style: context.textTheme.headlineMedium,
+                style: context.textTheme.headlineMedium
+                    ?.copyWith(color: context.colorScheme.onSurfaceVariant),
               ),
               const SizedBox.square(dimension: 4),
               Text(
                 context.l10n.lateBookingDialogContent,
-                style: context.textTheme.labelLarge,
+                style: context.textTheme.labelLarge
+                    ?.copyWith(color: context.colorScheme.onSurfaceVariant),
               ),
               const SizedBox.square(dimension: 16),
               NeuTextButton(
