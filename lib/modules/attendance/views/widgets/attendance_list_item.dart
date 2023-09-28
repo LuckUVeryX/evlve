@@ -1,11 +1,13 @@
 import 'package:evlve/app/app.dart';
+import 'package:evlve/app/theme/app_theme.dart';
 import 'package:evlve/modules/attendance/attendance.dart';
 import 'package:evlve/modules/facility/facility.dart';
 import 'package:evlve/modules/schedule/schedule.dart';
 import 'package:evlve/utils/theme_extensions.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class AttendanceListItem extends StatelessWidget {
+class AttendanceListItem extends ConsumerWidget {
   const AttendanceListItem({
     required this.index,
     required this.attendance,
@@ -16,16 +18,11 @@ class AttendanceListItem extends StatelessWidget {
   final AttendanceState attendance;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Theme(
-      data: ThemeData.from(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor:
-              attendance.level?.toLevel().color ?? context.colorScheme.primary,
-          brightness: context.theme.brightness,
-        ),
-        useMaterial3: true,
-        textTheme: context.textTheme,
+      data: AppTheme.theme(
+        context.theme.brightness,
+        attendance.level?.toLevel().color ?? context.colorScheme.primary,
       ),
       child: Builder(
         builder: (context) {
@@ -36,8 +33,6 @@ class AttendanceListItem extends StatelessWidget {
             ),
             color: context.colorScheme.primary,
             child: ListTile(
-              dense: true,
-              visualDensity: VisualDensity.compact,
               textColor: context.colorScheme.onPrimary,
               title: Text(attendance.name),
               subtitle: Text(

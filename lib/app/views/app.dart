@@ -40,9 +40,9 @@ class _AppState extends ConsumerState<App> with WidgetsBindingObserver {
 
     return MaterialApp.router(
       routerConfig: router,
-      theme: AppTheme.theme,
-      darkTheme: AppTheme.darkTheme,
       themeMode: themeMode,
+      theme: AppTheme.theme(Brightness.light),
+      darkTheme: AppTheme.theme(Brightness.dark),
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
     );

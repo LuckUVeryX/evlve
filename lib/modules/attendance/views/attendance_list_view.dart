@@ -30,7 +30,12 @@ class _AttendanceListViewState extends ConsumerState<AttendanceListView> {
     return NestedScrollView(
       controller: _controller,
       headerSliverBuilder: (context, innerBoxIsScrolled) {
-        return [SliverAppBar.large(title: Text(context.l10n.attendance))];
+        return [
+          SliverAppBar.large(
+            pinned: false,
+            title: Text(context.l10n.attendance),
+          ),
+        ];
       },
       body: RefreshIndicator(
         onRefresh: () async {

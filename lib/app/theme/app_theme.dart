@@ -1,3 +1,4 @@
+import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -5,55 +6,52 @@ class AppTheme {
   const AppTheme._();
 
   static const seedColor = Color(0xFFEC1B23);
-  static const colorScheme = ColorScheme.highContrastLight(
-    shadow: Colors.black54,
-  );
-  static const colorSchemeDark = ColorScheme.highContrastDark(
-    shadow: Colors.black54,
-  );
-  static final textTheme = GoogleFonts.dmSansTextTheme(
-    ThemeData.light().textTheme.copyWith(
-          headlineMedium: const TextStyle(fontWeight: FontWeight.bold),
-          titleLarge: const TextStyle(fontWeight: FontWeight.bold),
-          bodyLarge: const TextStyle(fontWeight: FontWeight.bold),
-          labelLarge: const TextStyle(fontWeight: FontWeight.bold),
-        ),
-  );
-  static final textThemeDark = GoogleFonts.dmSansTextTheme(
-    ThemeData.dark().textTheme.copyWith(
-          headlineMedium: const TextStyle(fontWeight: FontWeight.bold),
-          titleLarge: const TextStyle(fontWeight: FontWeight.bold),
-          bodyLarge: const TextStyle(fontWeight: FontWeight.bold),
-          labelLarge: const TextStyle(fontWeight: FontWeight.bold),
-        ),
-  );
 
-  static final theme = ThemeData.from(
-    useMaterial3: true,
-    colorScheme: colorScheme,
-    textTheme: textTheme,
-  ).copyWith(
-    shadowColor: Colors.black87,
-    inputDecorationTheme: InputDecorationTheme(
-      filled: true,
-      errorStyle: textTheme.bodyMedium?.copyWith(
-        color: colorScheme.errorContainer,
-      ),
-    ),
-    bottomNavigationBarTheme: const BottomNavigationBarThemeData(),
-  );
+  static ThemeData theme(Brightness brightness, [Color? color]) {
+    final flexColor = FlexSchemeColor.from(primary: color ?? seedColor);
+    final fontFamily = GoogleFonts.dmSans().fontFamily;
 
-  static final darkTheme = ThemeData.from(
-    useMaterial3: true,
-    colorScheme: colorSchemeDark,
-    textTheme: textThemeDark,
-  ).copyWith(
-    shadowColor: Colors.black87,
-    inputDecorationTheme: InputDecorationTheme(
-      filled: true,
-      errorStyle: textTheme.bodyMedium?.copyWith(
-        color: colorScheme.errorContainer,
+    final base = switch (brightness) {
+      Brightness.light => FlexThemeData.light(
+          colors: flexColor,
+          fontFamily: fontFamily,
+        ),
+      Brightness.dark => FlexThemeData.dark(
+          colors: flexColor,
+          fontFamily: fontFamily,
+        ),
+    };
+
+    final textTheme = base.textTheme.copyWith(
+      headlineMedium: const TextStyle(fontWeight: FontWeight.bold),
+      titleLarge: const TextStyle(fontWeight: FontWeight.bold),
+      bodyLarge: const TextStyle(fontWeight: FontWeight.bold),
+      labelLarge: const TextStyle(fontWeight: FontWeight.bold),
+    );
+
+    final listTileTheme = ListTileThemeData(
+      titleTextStyle: textTheme.bodyLarge,
+      subtitleTextStyle: textTheme.labelLarge,
+    );
+
+    final navigationBarThemeData = NavigationBarThemeData(
+      labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
+      indicatorColor: base.colorScheme.primaryContainer,
+      indicatorShape: BeveledRectangleBorder(
+        borderRadius: BorderRadius.circular(double.infinity),
       ),
-    ),
-  );
+      iconTheme: MaterialStateProperty.resolveWith((states) {
+        if (!states.contains(MaterialState.selected)) return base.iconTheme;
+        return base.iconTheme.copyWith(
+          color: base.colorScheme.onPrimaryContainer,
+        );
+      }),
+    );
+
+    return base.copyWith(
+      textTheme: textTheme,
+      listTileTheme: listTileTheme,
+      navigationBarTheme: navigationBarThemeData,
+    );
+  }
 }
