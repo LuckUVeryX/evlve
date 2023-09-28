@@ -12,14 +12,6 @@ class SchedulePage extends ConsumerWidget {
     final facility = ref.watch(facilityContollerProvider);
     final areas = facility.areas;
 
-    ref.listen(
-      shakeEventProvider,
-      (_, __) async {
-        if (ModalRoute.of(context)?.isCurrent != true) return;
-        await QRDialog.show(ref);
-      },
-    );
-
     return DefaultTabController(
       length: areas.length,
       child: Scaffold(
