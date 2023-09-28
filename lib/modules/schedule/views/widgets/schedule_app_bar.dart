@@ -23,7 +23,9 @@ class ScheduleAppBar extends ConsumerWidget {
       bottom: const ScheduleTabBar(),
       leading: const _LocationIconButton(),
       actions: const [_SettingsIconButton()],
+      backgroundColor: context.colorScheme.background,
       foregroundColor: context.colorScheme.onBackground,
+      actionsIconTheme: context.theme.iconTheme,
     );
   }
 }
