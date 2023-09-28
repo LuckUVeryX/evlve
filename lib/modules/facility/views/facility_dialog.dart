@@ -33,12 +33,18 @@ class FacilityDialog extends ConsumerWidget {
               const SizedBox.square(dimension: 12),
               Text(
                 context.l10n.facilityDialogTitle,
-                style: context.textTheme.titleLarge,
+                style: context.textTheme.titleLarge?.copyWith(
+                  color: context.theme.colorScheme.onSurfaceVariant,
+                ),
               ),
               for (final facility in facilities)
                 ListTile(
                   onTap: () => context.pop(facility),
-                  title: Text(facility.key.key),
+                  title: Text(
+                    facility.key.key,
+                    style: context.textTheme.bodyLarge
+                        ?.copyWith(color: context.colorScheme.onSurfaceVariant),
+                  ),
                 ),
             ],
           ),
