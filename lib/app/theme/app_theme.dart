@@ -32,26 +32,36 @@ class AppTheme {
     final listTileTheme = ListTileThemeData(
       titleTextStyle: textTheme.bodyLarge,
       subtitleTextStyle: textTheme.labelLarge,
+      textColor: base.colorScheme.onBackground,
     );
 
-    final navigationBarThemeData = NavigationBarThemeData(
+    final navigationBarTheme = NavigationBarThemeData(
       labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
-      indicatorColor: base.colorScheme.primaryContainer,
+      indicatorColor: base.colorScheme.primary,
       indicatorShape: BeveledRectangleBorder(
         borderRadius: BorderRadius.circular(double.infinity),
       ),
       iconTheme: MaterialStateProperty.resolveWith((states) {
         if (!states.contains(MaterialState.selected)) return base.iconTheme;
         return base.iconTheme.copyWith(
-          color: base.colorScheme.onPrimaryContainer,
+          color: base.colorScheme.onPrimary,
         );
       }),
+    );
+
+    final inputDecorationTheme = InputDecorationTheme(
+      filled: true,
+      fillColor: base.colorScheme.surfaceVariant,
+      errorStyle: textTheme.bodyMedium?.copyWith(
+        color: base.colorScheme.errorContainer,
+      ),
     );
 
     return base.copyWith(
       textTheme: textTheme,
       listTileTheme: listTileTheme,
-      navigationBarTheme: navigationBarThemeData,
+      navigationBarTheme: navigationBarTheme,
+      inputDecorationTheme: inputDecorationTheme,
     );
   }
 }
