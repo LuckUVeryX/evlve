@@ -22,7 +22,7 @@ class AttendanceListItem extends ConsumerWidget {
     return Theme(
       data: AppTheme.theme(
         context.theme.brightness,
-        attendance.level?.toLevel().color ?? context.colorScheme.primary,
+        attendance.level?.toLevel().color,
       ),
       child: Builder(
         builder: (context) {

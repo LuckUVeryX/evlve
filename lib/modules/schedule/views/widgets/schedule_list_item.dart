@@ -1,9 +1,9 @@
+import 'package:evlve/app/theme/app_theme.dart';
 import 'package:evlve/app/views/views.dart';
 import 'package:evlve/modules/booking/booking.dart';
 import 'package:evlve/modules/schedule/schedule.dart';
 import 'package:evlve/utils/ref_extensions.dart';
 import 'package:evlve/utils/theme_extensions.dart';
-import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -41,21 +41,11 @@ class ScheduleListItem extends ConsumerWidget {
     final canBook = details.canBook && !booking.isLoading;
     final value = details.isCP ? null : details.isBookedByMe;
 
-    final themeData = switch (context.theme.brightness) {
-      Brightness.light => FlexThemeData.light(
-          colors: FlexSchemeColor.from(
-            primary: schedule.event.classDetails.level.color,
-          ),
-        ),
-      Brightness.dark => FlexThemeData.dark(
-          colors: FlexSchemeColor.from(
-            primary: schedule.event.classDetails.level.color,
-          ),
-        ),
-    };
-
     return Theme(
-      data: themeData.copyWith(textTheme: context.textTheme),
+      data: AppTheme.theme(
+        context.theme.brightness,
+        schedule.event.classDetails.level.color,
+      ),
       child: Builder(
         builder: (context) {
           return Padding(
