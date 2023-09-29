@@ -2,6 +2,7 @@ import 'package:evlve/app/theme/app_theme.dart';
 import 'package:evlve/app/views/views.dart';
 import 'package:evlve/modules/booking/booking.dart';
 import 'package:evlve/modules/schedule/schedule.dart';
+import 'package:evlve/modules/tester/tester.dart';
 import 'package:evlve/utils/ref_extensions.dart';
 import 'package:evlve/utils/theme_extensions.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +22,7 @@ class ScheduleListItem extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final bookingProvider = bookingControllerProvider(schedule: schedule);
     final booking = ref.watch(bookingProvider);
+    final isTester = ref.watch(testerControllerProvider);
 
     ref
       ..listenErrors([bookingProvider])
@@ -38,7 +40,11 @@ class ScheduleListItem extends ConsumerWidget {
     final details = booking.value?.schedule.event.classDetails ??
         schedule.event.classDetails;
 
-    final canBook = details.canBook && !booking.isLoading;
+    final canBook = details.canBook &&
+        !booking.isLoading &&
+        details.isBookedByMe &&
+        !isTester;
+
     final value = details.isCP ? null : details.isBookedByMe;
 
     return Theme(
@@ -56,7 +62,7 @@ class ScheduleListItem extends ConsumerWidget {
               child: CheckboxListTile(
                 value: value,
                 tristate: true,
-                onChanged: (!canBook)
+                onChanged: !canBook
                     ? null
                     : (_) async {
                         final notifier = ref.read(bookingProvider.notifier);

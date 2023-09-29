@@ -1,7 +1,6 @@
 import 'package:evlve/app/app.dart';
 import 'package:evlve/l10n/l10n.dart';
 import 'package:evlve/modules/facility/facility.dart';
-import 'package:evlve/modules/tester/tester.dart';
 import 'package:evlve/modules/user/user.dart';
 import 'package:evlve/utils/theme_extensions.dart';
 import 'package:flutter/material.dart';
@@ -27,19 +26,7 @@ class AccountSettingsPage extends ConsumerWidget {
         child: CustomScrollView(
           slivers: [
             SliverAppBar.large(
-              title: GestureDetector(
-                onDoubleTap: () async {
-                  await ref.read(overrideTesterProvider.future);
-                  if (context.mounted) {
-                    ScaffoldMessenger.of(context)
-                      ..hideCurrentSnackBar()
-                      ..showSnackBar(
-                        const SnackBar(content: Text('Disabled Tester Mode')),
-                      );
-                  }
-                },
-                child: Text(context.l10n.settingsAccount),
-              ),
+              title: Text(context.l10n.settingsAccount),
             ),
             _AccountTextField(
               initialValue: user.id,
