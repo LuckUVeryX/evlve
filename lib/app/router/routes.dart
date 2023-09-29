@@ -3,7 +3,6 @@ import 'package:evlve/modules/attendance/attendance.dart';
 import 'package:evlve/modules/auth/auth.dart';
 import 'package:evlve/modules/notifications/notifications.dart';
 import 'package:evlve/modules/qr/qr.dart';
-import 'package:evlve/modules/root/root.dart';
 import 'package:evlve/modules/schedule/schedule.dart';
 import 'package:evlve/modules/settings/settings.dart';
 import 'package:evlve/modules/user/user.dart';
@@ -47,63 +46,28 @@ class OtpRoute extends GoRouteData {
   }
 }
 
-@TypedStatefulShellRoute<RootRoute>(
-  branches: [
-    TypedStatefulShellBranch(
+@TypedGoRoute<ScheduleRoute>(
+  path: ScheduleRoute.path,
+  routes: [
+    TypedGoRoute<SettingsRoute>(
+      path: SettingsRoute.path,
       routes: [
-        TypedGoRoute<ScheduleRoute>(
-          path: ScheduleRoute.path,
-          routes: [
-            TypedGoRoute<SettingsRoute>(
-              path: SettingsRoute.path,
-              routes: [
-                TypedGoRoute<AccountSettingsRoute>(
-                  path: AccountSettingsRoute.path,
-                ),
-                TypedGoRoute<NotificationSettingsRoute>(
-                  path: NotificationSettingsRoute.path,
-                ),
-                TypedGoRoute<QrSettingsRoute>(
-                  path: QrSettingsRoute.path,
-                ),
-              ],
-            ),
-          ],
+        TypedGoRoute<AttendanceRoute>(
+          path: AttendanceRoute.path,
         ),
-      ],
-    ),
-    TypedStatefulShellBranch(
-      routes: [
-        TypedGoRoute<AttendanceRoute>(path: AttendanceRoute.path),
+        TypedGoRoute<AccountSettingsRoute>(
+          path: AccountSettingsRoute.path,
+        ),
+        TypedGoRoute<NotificationSettingsRoute>(
+          path: NotificationSettingsRoute.path,
+        ),
+        TypedGoRoute<QrSettingsRoute>(
+          path: QrSettingsRoute.path,
+        ),
       ],
     ),
   ],
 )
-class RootRoute extends StatefulShellRouteData {
-  const RootRoute();
-
-  static final GlobalKey<NavigatorState> $navigatorKey = shellKey;
-
-  @override
-  Widget builder(
-    BuildContext context,
-    GoRouterState state,
-    StatefulNavigationShell navigationShell,
-  ) {
-    return RootPage(shell: navigationShell);
-  }
-}
-
-class AttendanceRoute extends GoRouteData {
-  const AttendanceRoute();
-  static const path = '/attendance';
-
-  @override
-  Widget build(BuildContext context, GoRouterState state) {
-    return const AttendanceListView();
-  }
-}
-
 class ScheduleRoute extends GoRouteData {
   const ScheduleRoute();
   static const path = '/';
@@ -119,6 +83,16 @@ class SettingsRoute extends GoRouteData {
   @override
   Widget build(BuildContext context, GoRouterState state) {
     return const SettingsPage();
+  }
+}
+
+class AttendanceRoute extends GoRouteData {
+  const AttendanceRoute();
+  static const path = 'attendance';
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return const AttendancePage();
   }
 }
 

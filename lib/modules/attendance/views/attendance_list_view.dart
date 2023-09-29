@@ -32,7 +32,7 @@ class _AttendanceListViewState extends ConsumerState<AttendanceListView> {
       headerSliverBuilder: (context, innerBoxIsScrolled) {
         return [
           SliverAppBar.large(
-            pinned: false,
+            floating: true,
             title: Text(context.l10n.attendance),
           ),
         ];

@@ -27,6 +27,11 @@ class SettingsPage extends StatelessWidget {
             ),
             _SettingsItem(
               leadingIcon: Icons.person_outline,
+              label: context.l10n.attendance,
+              onTap: () => const AttendanceRoute().go(context),
+            ),
+            _SettingsItem(
+              leadingIcon: Icons.person_outline,
               label: context.l10n.settingsAccount,
               onTap: () => const AccountSettingsRoute().go(context),
             ),

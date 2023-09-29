@@ -9,6 +9,14 @@ class SchedulePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    ref.listen(
+      shakeEventProvider,
+      (_, __) async {
+        if (ModalRoute.of(context)?.isCurrent != true) return;
+        await QRDialog.show(ref);
+      },
+    );
+
     final facility = ref.watch(facilityContollerProvider);
     final areas = facility.areas;
 
