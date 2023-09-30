@@ -40,10 +40,8 @@ class ScheduleListItem extends ConsumerWidget {
     final details = booking.value?.schedule.event.classDetails ??
         schedule.event.classDetails;
 
-    final canBook = details.canBook &&
-        !booking.isLoading &&
-        details.isBookedByMe &&
-        !isTester;
+    final canBook = (details.canBook && !booking.isLoading && !isTester) ||
+        details.isBookedByMe;
 
     final value = details.isCP ? null : details.isBookedByMe;
 
