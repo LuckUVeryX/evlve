@@ -28,7 +28,7 @@ class DebugObserver extends ProviderObserver {
     Object? value,
     ProviderContainer container,
   ) {
-    _logger.d('Add: ${provider.name ?? provider.runtimeType}');
+    _logger.t('Add: ${provider.name ?? provider.runtimeType}');
   }
 
   @override
@@ -36,6 +36,6 @@ class DebugObserver extends ProviderObserver {
     ProviderBase<Object?> provider,
     ProviderContainer container,
   ) {
-    _logger.d('Dispose: ${provider.name ?? provider.runtimeType}');
+    _logger.t('Dispose: ${provider.name ?? provider.runtimeType}');
   }
 }
