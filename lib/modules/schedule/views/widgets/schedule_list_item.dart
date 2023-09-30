@@ -40,8 +40,9 @@ class ScheduleListItem extends ConsumerWidget {
     final details = booking.value?.schedule.event.classDetails ??
         schedule.event.classDetails;
 
-    final canBook = (details.canBook && !booking.isLoading && !isTester) ||
-        details.isBookedByMe;
+    final canBook = details.canBook && !booking.isLoading && !isTester;
+    final canUnbook = details.isBookedByMe && !details.isPast;
+    final enabled = canBook || canUnbook;
 
     final value = details.isCP ? null : details.isBookedByMe;
 
@@ -55,12 +56,12 @@ class ScheduleListItem extends ConsumerWidget {
           return Padding(
             padding: const EdgeInsets.all(8),
             child: NeuButton(
-              onPressed: canBook ? () {} : null,
+              onPressed: enabled ? () {} : null,
               backgroundColor: context.colorScheme.primary,
               child: CheckboxListTile(
                 value: value,
                 tristate: true,
-                onChanged: !canBook
+                onChanged: !enabled
                     ? null
                     : (_) async {
                         final notifier = ref.read(bookingProvider.notifier);
@@ -78,7 +79,7 @@ class ScheduleListItem extends ConsumerWidget {
                 title: Text(
                   schedule.event.classDetails.level.key,
                   style: context.textTheme.bodyLarge?.copyWith(
-                    color: canBook
+                    color: enabled
                         ? context.colorScheme.onPrimary
                         : context.theme.disabledColor,
                   ),
@@ -87,7 +88,7 @@ class ScheduleListItem extends ConsumerWidget {
                   '''
               ${DateFormat.Hm().format(schedule.start)}|${schedule.end.difference(schedule.start).inMinutes}m''',
                   style: context.textTheme.labelLarge?.copyWith(
-                    color: canBook
+                    color: enabled
                         ? context.colorScheme.onPrimary
                         : context.theme.disabledColor,
                   ),
