@@ -14,16 +14,13 @@ class _AttendancePageState extends ConsumerState<AttendancePage> {
   late final _controller = ScrollController();
 
   @override
-  Widget build(BuildContext context) {
-    ref.listen(
-      attendanceScrollControllerProvider,
-      (_, __) => _controller.animateTo(
-        0,
-        curve: Curves.easeInOut,
-        duration: const Duration(milliseconds: 250),
-      ),
-    );
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
+  @override
+  Widget build(BuildContext context) {
     final view = ref.watch(attendanceViewControllerProvider);
 
     return Scaffold(
@@ -33,14 +30,8 @@ class _AttendancePageState extends ConsumerState<AttendancePage> {
           return [
             SliverAppBar.large(
               pinned: false,
-              title: GestureDetector(
-                onTap: () {
-                  ref
-                      .read(attendanceScrollControllerProvider.notifier)
-                      .scrollToTop();
-                },
-                child: Text(context.l10n.attendance),
-              ),
+              floating: true,
+              title: Text(context.l10n.attendance),
               actions: [
                 IconButton(
                   onPressed: ref
