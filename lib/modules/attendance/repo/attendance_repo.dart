@@ -28,8 +28,25 @@ class AttendanceRepo {
         'offset': offset,
       },
     );
-    final result =
-        AttendanceResponse.fromJson(res.data as Map<String, dynamic>);
-    return result;
+    return AttendanceResponse.fromJson(res.data as Map<String, dynamic>);
+  }
+
+  Future<List<Attendance>> getAllAttendances() async {
+    const limit = 1000;
+    var offset = 0;
+
+    const maxIter = 50;
+    var count = 0;
+
+    final attendances = <Attendance>[];
+
+    while (attendances.length == offset && count < maxIter) {
+      attendances.addAll(
+        (await getAttendances(limit: limit, offset: offset)).attendances,
+      );
+      offset += limit;
+      count += 1;
+    }
+    return attendances;
   }
 }
