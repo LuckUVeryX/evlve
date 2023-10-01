@@ -20,11 +20,11 @@ class AttendanceGraph extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final upcomingSat = DateTime.now().upcomingSat();
-    final value = ref.watch(allAttendanceDayProvider);
+    final value = ref.watch(attendanceDayProvider);
     return value.when(
       data: (attendances) {
         // End nicely on a sunday
-        final earliestDate = attendances.keys.last
+        final earliestDate = (attendances.keys.lastOrNull ?? DateTime.now())
             .upcomingSat()
             .subtract(const Duration(days: 6));
 
@@ -43,6 +43,8 @@ class AttendanceGraph extends ConsumerWidget {
               final date = upcomingSat.subtract(
                 Duration(days: index - row - DateTime.daysPerWeek),
               );
+
+              if (date.isBefore(earliestDate)) return null;
 
               if (idxInRow == DateTime.daysPerWeek) {
                 final datesInRow = <DateTime>[];
@@ -74,8 +76,6 @@ class AttendanceGraph extends ConsumerWidget {
                 );
               }
 
-              if (date.isBefore(earliestDate)) return null;
-
               final dayAttendance = attendances[date] ?? [];
               final color = dayAttendance
                   .map((e) => e.level?.toLevel().color)
@@ -83,20 +83,21 @@ class AttendanceGraph extends ConsumerWidget {
               final opacity = min(2, dayAttendance.length) / 2;
 
               return NeuButton(
-                onPressed: () {},
+                onPressed: dayAttendance.isNotEmpty ? () {} : null,
                 backgroundColor: color?.withOpacity(opacity) ?? Colors.black,
-                child: Directionality(
-                  textDirection: TextDirection.ltr,
-                  child: Tooltip(
-                    triggerMode: TooltipTriggerMode.tap,
-                    message: [
-                      ...dayAttendance
-                          .map((e) => '${e.facility.key} ${e.name}'),
-                      intl.DateFormat.yMMMMd().format(date),
-                    ].join('\n'),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
+                child: dayAttendance.isNotEmpty
+                    ? Directionality(
+                        textDirection: TextDirection.ltr,
+                        child: Tooltip(
+                          message: [
+                            ...dayAttendance
+                                .map((e) => '${e.facility.key} ${e.name}'),
+                            intl.DateFormat.yMMMMd().format(date),
+                          ].join('\n'),
+                          textAlign: TextAlign.center,
+                        ),
+                      )
+                    : null,
               );
             },
           ),
@@ -112,7 +113,7 @@ class AttendanceGraph extends ConsumerWidget {
                 backgroundColor: context.colorScheme.error,
                 onPressed: value.isLoading
                     ? null
-                    : () => ref.invalidate(allAttendanceDayProvider),
+                    : () => ref.invalidate(attendanceDayProvider),
                 label: context.l10n.retry,
               ),
               const SizedBox.square(dimension: 12),
@@ -126,56 +127,58 @@ class AttendanceGraph extends ConsumerWidget {
           ),
         );
       },
-      loading: () => Directionality(
-        textDirection: TextDirection.rtl,
-        child: GridView.builder(
-          padding: const EdgeInsets.only(right: 16),
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 8,
-            crossAxisSpacing: 12,
-            mainAxisSpacing: 12,
-          ),
-          itemBuilder: (context, index) {
-            final idxInRow = index % 8;
+      loading: () {
+        return Directionality(
+          textDirection: TextDirection.rtl,
+          child: GridView.builder(
+            padding: const EdgeInsets.only(right: 16),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 8,
+              crossAxisSpacing: 12,
+              mainAxisSpacing: 12,
+            ),
+            itemBuilder: (context, index) {
+              final idxInRow = index % 8;
 
-            final date = upcomingSat.subtract(
-              Duration(days: index - DateTime.daysPerWeek),
-            );
-            if (idxInRow == DateTime.daysPerWeek) {
-              final datesInRow = <DateTime>[];
-              for (var i = 0; i < DateTime.daysPerWeek; i++) {
-                datesInRow.add(date.add(Duration(days: i + 1)));
+              final date = upcomingSat.subtract(
+                Duration(days: index - DateTime.daysPerWeek),
+              );
+              if (idxInRow == DateTime.daysPerWeek) {
+                final datesInRow = <DateTime>[];
+                for (var i = 0; i < DateTime.daysPerWeek; i++) {
+                  datesInRow.add(date.add(Duration(days: i + 1)));
+                }
+                final firstMonthDate =
+                    datesInRow.firstWhereOrNull((e) => e.day == 1);
+                if (firstMonthDate != null) {
+                  return Align(
+                    alignment: Alignment.centerRight,
+                    child: Text(
+                      intl.DateFormat.MMM().format(firstMonthDate),
+                      style: context.textTheme.labelLarge,
+                    ),
+                  );
+                }
+                return const Offstage();
               }
-              final firstMonthDate =
-                  datesInRow.firstWhereOrNull((e) => e.day == 1);
-              if (firstMonthDate != null) {
+              if (index < DateTime.daysPerWeek) {
                 return Align(
-                  alignment: Alignment.centerRight,
+                  alignment: Alignment.bottomCenter,
                   child: Text(
-                    intl.DateFormat.MMM().format(firstMonthDate),
+                    intl.DateFormat.E().format(date),
                     style: context.textTheme.labelLarge,
                   ),
                 );
               }
-              return const Offstage();
-            }
-            if (index < DateTime.daysPerWeek) {
-              return Align(
-                alignment: Alignment.bottomCenter,
-                child: Text(
-                  intl.DateFormat.E().format(date),
-                  style: context.textTheme.labelLarge,
+              return const ShimmerWidget(
+                child: NeuButton(
+                  backgroundColor: Colors.black,
                 ),
               );
-            }
-            return const ShimmerWidget(
-              child: NeuButton(
-                backgroundColor: Colors.black,
-              ),
-            );
-          },
-        ),
-      ),
+            },
+          ),
+        );
+      },
     );
   }
 }
