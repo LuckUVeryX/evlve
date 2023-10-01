@@ -18,25 +18,6 @@ class AttendanceGraph extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return NestedScrollView(
-      headerSliverBuilder: (context, innerBoxIsScrolled) {
-        return [
-          SliverAppBar.large(
-            title: Text(context.l10n.attendance),
-            pinned: false,
-          ),
-        ];
-      },
-      body: const _AttendanceGridView(),
-    );
-  }
-}
-
-class _AttendanceGridView extends ConsumerWidget {
-  const _AttendanceGridView();
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
     final upcomingSat = DateTime.now().upcomingSat();
     final value = ref.watch(allAttendanceDayProvider);
     return value.when(
@@ -100,8 +81,11 @@ class _AttendanceGridView extends ConsumerWidget {
                   .mostFrequent;
               final opacity = min(2, dayAttendance?.length ?? 0) / 2;
 
-              return NeuContainer(
-                color: color?.withOpacity(opacity),
+              return NeuButton(
+                backgroundColor: color?.withOpacity(opacity) ?? Colors.black,
+                onPressed: () {
+                  // TODO(Ryan): Show tool tip
+                },
               );
             },
           ),
@@ -155,8 +139,8 @@ class _AttendanceGridView extends ConsumerWidget {
               );
             }
             return const ShimmerWidget(
-              child: NeuContainer(
-                color: Colors.black,
+              child: NeuButton(
+                backgroundColor: Colors.black,
               ),
             );
           },
