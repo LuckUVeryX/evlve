@@ -1,3 +1,4 @@
+import 'package:evlve/modules/attendance/attendance.dart';
 import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -18,11 +19,13 @@ extension AttendanceViewX on AttendanceView {
 class AttendanceViewController extends _$AttendanceViewController {
   @override
   AttendanceView build() {
-    return AttendanceView.grid;
+    return ref.watch(attendanceViewRepoProvider).attendanceView ??
+        AttendanceView.grid;
   }
 
   void onToggle() {
     state =
         AttendanceView.values[(state.index + 1) % AttendanceView.values.length];
+    ref.read(attendanceViewRepoProvider).saveAttendanceView(state);
   }
 }
