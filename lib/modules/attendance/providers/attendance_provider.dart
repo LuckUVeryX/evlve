@@ -20,3 +20,11 @@ Future<List<AttendanceState>> attendance(
     },
   );
 }
+
+@riverpod
+Future<List<AttendanceState>> allAttendance(AllAttendanceRef ref) {
+  ref.cache();
+  return ref.watch(attendanceRepoProvider).getAllAttendances().then(
+        (value) => value.map(AttendanceState.fromAttendance).toList(),
+      );
+}
