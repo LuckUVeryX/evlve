@@ -5,32 +5,18 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'attendance_provider.g.dart';
 
 @riverpod
-Future<List<AttendanceState>> attendance(
-  AttendanceRef ref, {
-  required int limit,
-  required int page,
-}) {
+Future<List<AttendanceState>> attendance(AttendanceRef ref) async {
   ref.cache();
-  return ref
-      .watch(attendanceRepoProvider)
-      .getAttendances(limit: limit, offset: page * limit)
-      .then(
-    (value) {
-      return value.attendances.map(AttendanceState.fromAttendance).toList();
-    },
-  );
+  return ref.watch(attendanceRepoProvider).getAllAttendances().then(
+        (value) => value.map(AttendanceState.fromAttendance).toList(),
+      );
 }
 
 @riverpod
-Future<Map<DateTime, List<AttendanceState>>> allAttendanceDay(
-  AllAttendanceDayRef ref,
+Future<Map<DateTime, List<AttendanceState>>> attendanceDay(
+  AttendanceDayRef ref,
 ) async {
-  ref.cache();
-  final attendances =
-      await ref.watch(attendanceRepoProvider).getAllAttendances().then(
-            (value) => value.map(AttendanceState.fromAttendance).toList(),
-          );
-
+  final attendances = await ref.watch(attendanceProvider.future);
   final result = <DateTime, List<AttendanceState>>{};
   var curr = <AttendanceState>[];
 
@@ -42,11 +28,6 @@ Future<Map<DateTime, List<AttendanceState>>> allAttendanceDay(
       curr = [attendance];
     }
   }
-
-  // Handle the last group of items
-  if (curr.isNotEmpty) {
-    result[curr.first.date] = curr;
-  }
-
+  if (curr.isNotEmpty) result[curr.first.date] = curr;
   return result;
 }

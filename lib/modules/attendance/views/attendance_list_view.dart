@@ -9,78 +9,69 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class AttendanceListView extends ConsumerWidget {
   const AttendanceListView({super.key});
 
-  static const _pageSize = 100;
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return RefreshIndicator(
-      onRefresh: () async {
-        ref.invalidate(attendanceProvider);
-        return ref.read(
-          attendanceProvider(page: 0, limit: _pageSize).future,
-        );
-      },
-      child: ListView.builder(
-        padding: EdgeInsets.zero,
-        itemBuilder: (context, index) {
-          final page = index ~/ _pageSize;
-          final indexInPage = index % _pageSize;
+    final attendance = ref.watch(attendanceProvider);
 
-          final provider = attendanceProvider(limit: _pageSize, page: page);
-          final attendanceList = ref.watch(provider);
-
-          return attendanceList.unwrapPrevious().when(
-                loading: () => const AttendanceListItemShimmer(),
-                error: (e, st) {
-                  if (indexInPage != 0) return null;
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 12,
-                      horizontal: 16,
-                    ),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        NeuTextButton(
-                          backgroundColor: context.colorScheme.error,
-                          onPressed: () => ref.invalidate(provider),
-                          label: context.l10n.retry,
-                        ),
-                        const SizedBox.square(dimension: 12),
-                        Text(
-                          (e is DioException)
-                              ? e.message ?? e.toString()
-                              : e.toString(),
-                          style: context.textTheme.bodyMedium?.copyWith(
-                            color: context.colorScheme.error,
+    return Scrollbar(
+      child: RefreshIndicator(
+        onRefresh: () async => ref.refresh(attendanceProvider),
+        child: ListView.builder(
+          itemCount: attendance.valueOrNull?.length,
+          padding: EdgeInsets.zero,
+          itemBuilder: (context, index) {
+            return attendance.unwrapPrevious().when(
+                  loading: () => const AttendanceListItemShimmer(),
+                  error: (e, st) {
+                    if (index != 0) return null;
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 12,
+                        horizontal: 16,
+                      ),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          NeuTextButton(
+                            backgroundColor: context.colorScheme.error,
+                            onPressed: () => ref.invalidate(attendanceProvider),
+                            label: context.l10n.retry,
                           ),
+                          const SizedBox.square(dimension: 12),
+                          Text(
+                            (e is DioException)
+                                ? e.message ?? e.toString()
+                                : e.toString(),
+                            style: context.textTheme.bodyMedium?.copyWith(
+                              color: context.colorScheme.error,
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                  data: (attendances) {
+                    final attendance = attendances[index];
+
+                    final showDateHeader = index == 0 ||
+                        attendance.date != attendances[index - 1].date;
+
+                    return Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        if (showDateHeader)
+                          AttendanceDateHeader(date: attendance.date),
+                        AttendanceListItem(
+                          index: index + 1,
+                          attendance: attendance,
                         ),
                       ],
-                    ),
-                  );
-                },
-                data: (attendances) {
-                  if (indexInPage >= attendances.length) return null;
-                  final attendance = attendances[indexInPage];
-
-                  final showDateHeader = indexInPage == 0 ||
-                      attendance.date != attendances[indexInPage - 1].date;
-
-                  return Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      if (showDateHeader)
-                        AttendanceDateHeader(date: attendance.date),
-                      AttendanceListItem(
-                        index: index + 1,
-                        attendance: attendance,
-                      ),
-                    ],
-                  );
-                },
-              );
-        },
+                    );
+                  },
+                );
+          },
+        ),
       ),
     );
   }
