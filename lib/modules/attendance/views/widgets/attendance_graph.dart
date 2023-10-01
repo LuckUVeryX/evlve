@@ -5,6 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:evlve/app/app.dart';
 import 'package:evlve/l10n/l10n.dart';
 import 'package:evlve/modules/attendance/attendance.dart';
+import 'package:evlve/modules/facility/facility.dart';
 import 'package:evlve/modules/schedule/schedule.dart';
 import 'package:evlve/utils/date_utils.dart';
 import 'package:evlve/utils/iterable_utils.dart';
@@ -75,17 +76,27 @@ class AttendanceGraph extends ConsumerWidget {
 
               if (date.isBefore(earliestDate)) return null;
 
-              final dayAttendance = attendances[date];
+              final dayAttendance = attendances[date] ?? [];
               final color = dayAttendance
-                  ?.map((e) => e.level?.toLevel().color)
+                  .map((e) => e.level?.toLevel().color)
                   .mostFrequent;
-              final opacity = min(2, dayAttendance?.length ?? 0) / 2;
+              final opacity = min(2, dayAttendance.length) / 2;
 
               return NeuButton(
+                onPressed: () {},
                 backgroundColor: color?.withOpacity(opacity) ?? Colors.black,
-                onPressed: () {
-                  // TODO(Ryan): Show tool tip
-                },
+                child: Directionality(
+                  textDirection: TextDirection.ltr,
+                  child: Tooltip(
+                    triggerMode: TooltipTriggerMode.tap,
+                    message: [
+                      ...dayAttendance
+                          .map((e) => '${e.facility.key} ${e.name}'),
+                      intl.DateFormat.yMMMMd().format(date),
+                    ].join('\n'),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
               );
             },
           ),
@@ -118,18 +129,37 @@ class AttendanceGraph extends ConsumerWidget {
       loading: () => Directionality(
         textDirection: TextDirection.rtl,
         child: GridView.builder(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.only(right: 16),
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 7,
+            crossAxisCount: 8,
             crossAxisSpacing: 12,
             mainAxisSpacing: 12,
           ),
           itemBuilder: (context, index) {
+            final idxInRow = index % 8;
+
             final date = upcomingSat.subtract(
               Duration(days: index - DateTime.daysPerWeek),
             );
+            if (idxInRow == DateTime.daysPerWeek) {
+              final datesInRow = <DateTime>[];
+              for (var i = 0; i < DateTime.daysPerWeek; i++) {
+                datesInRow.add(date.add(Duration(days: i + 1)));
+              }
+              final firstMonthDate =
+                  datesInRow.firstWhereOrNull((e) => e.day == 1);
+              if (firstMonthDate != null) {
+                return Align(
+                  alignment: Alignment.centerRight,
+                  child: Text(
+                    intl.DateFormat.MMM().format(firstMonthDate),
+                    style: context.textTheme.labelLarge,
+                  ),
+                );
+              }
+              return const Offstage();
+            }
             if (index < DateTime.daysPerWeek) {
-              if (index.isEven) return const Offstage();
               return Align(
                 alignment: Alignment.bottomCenter,
                 child: Text(
