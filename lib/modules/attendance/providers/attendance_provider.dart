@@ -22,9 +22,31 @@ Future<List<AttendanceState>> attendance(
 }
 
 @riverpod
-Future<List<AttendanceState>> allAttendance(AllAttendanceRef ref) {
+Future<Map<DateTime, List<AttendanceState>>> allAttendanceDay(
+  AllAttendanceDayRef ref,
+) async {
   ref.cache();
-  return ref.watch(attendanceRepoProvider).getAllAttendances().then(
-        (value) => value.map(AttendanceState.fromAttendance).toList(),
-      );
+  final attendances =
+      await ref.watch(attendanceRepoProvider).getAllAttendances().then(
+            (value) => value.map(AttendanceState.fromAttendance).toList(),
+          );
+
+  final result = <DateTime, List<AttendanceState>>{};
+  var curr = <AttendanceState>[];
+
+  for (final attendance in attendances) {
+    if (curr.isEmpty || curr.first.date == attendance.date) {
+      curr.add(attendance);
+    } else {
+      result[curr.first.date] = curr;
+      curr = [attendance];
+    }
+  }
+
+  // Handle the last group of items
+  if (curr.isNotEmpty) {
+    result[curr.first.date] = curr;
+  }
+
+  return result;
 }

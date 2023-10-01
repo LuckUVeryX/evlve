@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:evlve/app/app.dart';
 import 'package:evlve/l10n/l10n.dart';
 import 'package:evlve/modules/booking/booking.dart';
 import 'package:evlve/modules/facility/facility.dart';
@@ -127,17 +128,16 @@ class _ReverseList extends StatelessWidget {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        TextButton.icon(
+                        NeuTextButton(
+                          backgroundColor: context.colorScheme.error,
                           onPressed: () {
                             ref
                               ..invalidate(provider)
                               ..invalidate(bookingControllerProvider);
                           },
-                          icon: const Icon(Icons.refresh),
-                          label: Text(
-                            context.l10n.scheduleListViewErrorRetryButton,
-                          ),
+                          label: context.l10n.retry,
                         ),
+                        const SizedBox.square(dimension: 12),
                         Text(
                           (e is DioException)
                               ? e.message ?? e.toString()
@@ -207,19 +207,20 @@ class _ForwardList extends StatelessWidget {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        TextButton.icon(
+                        NeuTextButton(
+                          backgroundColor: context.colorScheme.error,
                           onPressed: () {
                             ref
                               ..invalidate(provider)
                               ..invalidate(bookingControllerProvider);
                           },
-                          icon: const Icon(Icons.refresh),
-                          label: Text(
-                            context.l10n.scheduleListViewErrorRetryButton,
-                          ),
+                          label: context.l10n.retry,
                         ),
+                        const SizedBox.square(dimension: 12),
                         Text(
-                          e.toString(),
+                          (e is DioException)
+                              ? e.message ?? e.toString()
+                              : e.toString(),
                           style: context.textTheme.bodyMedium?.copyWith(
                             color: context.colorScheme.error,
                           ),
