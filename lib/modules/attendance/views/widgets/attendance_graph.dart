@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:collection/collection.dart';
 import 'package:dio/dio.dart';
 import 'package:evlve/app/app.dart';
 import 'package:evlve/l10n/l10n.dart';
@@ -48,16 +49,37 @@ class _AttendanceGridView extends ConsumerWidget {
         return Directionality(
           textDirection: TextDirection.rtl,
           child: GridView.builder(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
+            padding: const EdgeInsets.only(right: 16),
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 7,
+              crossAxisCount: 8,
               crossAxisSpacing: 12,
               mainAxisSpacing: 12,
             ),
             itemBuilder: (context, index) {
+              final row = index ~/ 8;
+              final idxInRow = index % 8;
               final date = upcomingSat.subtract(
-                Duration(days: index - DateTime.daysPerWeek),
+                Duration(days: index - row - DateTime.daysPerWeek),
               );
+
+              if (idxInRow == DateTime.daysPerWeek) {
+                final datesInRow = <DateTime>[];
+                for (var i = 0; i < DateTime.daysPerWeek; i++) {
+                  datesInRow.add(date.add(Duration(days: i + 1)));
+                }
+                final firstMonthDate =
+                    datesInRow.firstWhereOrNull((e) => e.day == 1);
+                if (firstMonthDate != null) {
+                  return Align(
+                    alignment: Alignment.centerRight,
+                    child: Text(
+                      intl.DateFormat.MMM().format(firstMonthDate),
+                      style: context.textTheme.labelLarge,
+                    ),
+                  );
+                }
+                return const Offstage();
+              }
 
               // Weekday Header
               if (index < DateTime.daysPerWeek) {
