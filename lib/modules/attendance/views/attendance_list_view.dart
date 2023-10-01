@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:evlve/app/app.dart';
 import 'package:evlve/l10n/l10n.dart';
 import 'package:evlve/modules/attendance/attendance.dart';
 import 'package:evlve/utils/theme_extensions.dart';
@@ -65,15 +66,12 @@ class _AttendanceListViewState extends ConsumerState<AttendanceListView> {
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          TextButton.icon(
-                            onPressed: () {
-                              ref.invalidate(provider);
-                            },
-                            icon: const Icon(Icons.refresh),
-                            label: Text(
-                              context.l10n.scheduleListViewErrorRetryButton,
-                            ),
+                          NeuTextButton(
+                            backgroundColor: context.colorScheme.error,
+                            onPressed: () => ref.invalidate(provider),
+                            label: context.l10n.retry,
                           ),
+                          const SizedBox.square(dimension: 12),
                           Text(
                             (e is DioException)
                                 ? e.message ?? e.toString()

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class NeuContainer extends StatelessWidget {
   const NeuContainer({
-    required this.child,
+    this.child,
     this.color,
     this.margin,
     this.padding,
@@ -16,7 +16,7 @@ class NeuContainer extends StatelessWidget {
   final EdgeInsets? padding;
   final double? height;
   final double? width;
-  final Widget child;
+  final Widget? child;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +29,12 @@ class NeuContainer extends StatelessWidget {
         color: color,
         border: Border.all(width: 4),
         borderRadius: BorderRadius.circular(4),
-        boxShadow: const [BoxShadow(offset: Offset(4, 4))],
+        boxShadow: const [
+          BoxShadow(
+            offset: Offset(4, 4),
+            spreadRadius: 1,
+          ),
+        ],
       ),
       child: child,
     );

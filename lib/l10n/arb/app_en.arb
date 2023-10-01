@@ -14,7 +14,7 @@
     "attendance": "Attendance",
     "lateBookingDialogTitle": "Late Book/Cancel",
     "lateBookingDialogContent": "It seems like you are trying to book/cancel a class within the late booking window. Are you sure you want to continue?",
-    "scheduleListViewErrorRetryButton" : "Retry",
+    "retry" : "Retry",
     "settings": "Settings",
     "settingsAccount": "Account",
     "settingsNotifications": "Notifications",

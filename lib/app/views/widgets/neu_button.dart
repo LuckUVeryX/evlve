@@ -35,7 +35,10 @@ class _NeuButtonState extends State<NeuButton> {
         border: Border.all(width: 4),
         borderRadius: BorderRadius.circular(4),
         boxShadow: [
-          BoxShadow(offset: _pressed ? Offset.zero : const Offset(4, 4)),
+          BoxShadow(
+            offset: _pressed ? Offset.zero : const Offset(4, 4),
+            spreadRadius: _pressed ? 0 : 1,
+          ),
         ],
       ),
       child: Material(
