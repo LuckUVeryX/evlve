@@ -72,9 +72,14 @@ class _AttendancePageState extends ConsumerState<AttendancePage> {
                     icon: Icon(graphFilter.icon),
                   ),
                 IconButton(
-                  onPressed: ref
-                      .read(attendanceViewControllerProvider.notifier)
-                      .onToggle,
+                  onPressed: () {
+                    ref
+                        .read(attendanceGraphFilterControllerProvider.notifier)
+                        .reset();
+                    ref
+                        .read(attendanceViewControllerProvider.notifier)
+                        .onToggle();
+                  },
                   icon: Icon(view.icon),
                 ),
               ],
