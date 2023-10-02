@@ -1,3 +1,6 @@
+import 'dart:math';
+
+import 'package:collection/collection.dart';
 import 'package:evlve/app/app.dart';
 import 'package:evlve/l10n/l10n.dart';
 import 'package:evlve/modules/attendance/attendance.dart';
@@ -30,17 +33,19 @@ class _AttendancePageState extends ConsumerState<AttendancePage> {
         controller: _controller,
         headerSliverBuilder: (context, innerBoxIsScrolled) {
           final attendances = ref.watch(attendanceProvider).valueOrNull;
-          final daysAttended = ref.watch(
-            attendanceDayProvider
-                .select((value) => value.valueOrNull?.keys.length),
-          );
+          final attendanceDay = ref.watch(attendanceDayProvider).valueOrNull;
 
           final streak = attendances?.streak;
           final currStreak = streak?.curr;
           final longestStreak = streak?.longest;
+          final classesAttended = attendances?.length;
 
-          final length = attendances?.length;
+          final classEachDay = attendanceDay?.values.map((e) => e.length);
+          final avgClassPerDay = classEachDay?.average;
+          final maxClassPerDay = classEachDay?.reduce(max);
+          final daysAttended = attendanceDay?.keys.length;
           final daysSinceFirstClass = attendances?.daysSinceFirstClass;
+
           return [
             SliverAppBar.large(
               pinned: false,
@@ -65,6 +70,18 @@ class _AttendancePageState extends ConsumerState<AttendancePage> {
               )
             else
               const AttendanceStatsShimmer(),
+            if (maxClassPerDay != null)
+              AttendanceStats(
+                text: 'Max $maxClassPerDay Classes/Day',
+              )
+            else
+              const AttendanceStatsShimmer(flex: 2),
+            if (avgClassPerDay != null)
+              AttendanceStats(
+                text: 'Avg ${avgClassPerDay.toStringAsFixed(2)} Classes/Day',
+              )
+            else
+              const AttendanceStatsShimmer(flex: 2),
             if (daysAttended != null)
               AttendanceStats(
                 text: '$daysAttended/$daysSinceFirstClass Days Attended',
@@ -73,7 +90,7 @@ class _AttendancePageState extends ConsumerState<AttendancePage> {
               const AttendanceStatsShimmer(flex: 3),
             if (daysSinceFirstClass != null)
               AttendanceStats(
-                text: '$length Classes in $daysSinceFirstClass Days',
+                text: '$classesAttended Classes in $daysSinceFirstClass Days',
               )
             else
               const AttendanceStatsShimmer(flex: 3),
