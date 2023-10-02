@@ -15,4 +15,8 @@ class AttendanceGraphFilterController
     state = AttendanceGraphFilter
         .values[(state.index + 1) % AttendanceGraphFilter.values.length];
   }
+
+  void reset() {
+    state = AttendanceGraphFilter.all;
+  }
 }
