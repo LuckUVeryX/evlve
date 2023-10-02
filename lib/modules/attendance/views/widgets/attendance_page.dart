@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:collection/collection.dart';
-import 'package:evlve/app/app.dart';
 import 'package:evlve/l10n/l10n.dart';
 import 'package:evlve/modules/attendance/attendance.dart';
 import 'package:evlve/utils/theme_extensions.dart';
@@ -27,13 +26,18 @@ class _AttendancePageState extends ConsumerState<AttendancePage> {
   @override
   Widget build(BuildContext context) {
     final view = ref.watch(attendanceViewControllerProvider);
+    final graphFilter = ref.watch(attendanceGraphFilterControllerProvider);
 
     return Scaffold(
       body: NestedScrollView(
         controller: _controller,
         headerSliverBuilder: (context, innerBoxIsScrolled) {
-          final attendances = ref.watch(attendanceProvider).valueOrNull;
-          final attendanceDay = ref.watch(attendanceDayProvider).valueOrNull;
+          final attendanceDay =
+              ref.watch(attendanceDayProvider(filter: graphFilter)).valueOrNull;
+          final attendances = attendanceDay?.values.fold(
+            <AttendanceState>[],
+            (prev, next) => [...prev, ...next],
+          );
 
           final streak = attendances?.streak;
           final currStreak = streak?.curr;
@@ -41,8 +45,16 @@ class _AttendancePageState extends ConsumerState<AttendancePage> {
           final classesAttended = attendances?.length;
 
           final classEachDay = attendanceDay?.values.map((e) => e.length);
-          final avgClassPerDay = classEachDay?.average;
-          final maxClassPerDay = classEachDay?.reduce(max);
+          final avgClassPerDay = classEachDay == null
+              ? null
+              : classEachDay.isEmpty
+                  ? -1
+                  : classEachDay.average;
+          final maxClassPerDay = classEachDay == null
+              ? null
+              : classEachDay.isEmpty
+                  ? -1
+                  : classEachDay.reduce(max);
           final daysAttended = attendanceDay?.keys.length;
           final daysSinceFirstClass = attendances?.daysSinceFirstClass;
 
@@ -52,6 +64,13 @@ class _AttendancePageState extends ConsumerState<AttendancePage> {
               floating: true,
               title: Text(context.l10n.attendance),
               actions: [
+                if (view == AttendanceView.grid)
+                  IconButton(
+                    onPressed: ref
+                        .read(attendanceGraphFilterControllerProvider.notifier)
+                        .onToggle,
+                    icon: Icon(graphFilter.icon),
+                  ),
                 IconButton(
                   onPressed: ref
                       .read(attendanceViewControllerProvider.notifier)
@@ -59,6 +78,17 @@ class _AttendancePageState extends ConsumerState<AttendancePage> {
                   icon: Icon(view.icon),
                 ),
               ],
+            ),
+            SliverPadding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              sliver: SliverToBoxAdapter(
+                child: Text(
+                  graphFilter == AttendanceGraphFilter.all
+                      ? ''
+                      : graphFilter.name.toUpperCase(),
+                  style: context.textTheme.titleSmall,
+                ),
+              ),
             ),
             if (currStreak != null)
               AttendanceStats(text: 'Current Streak: $currStreak')
@@ -70,17 +100,19 @@ class _AttendancePageState extends ConsumerState<AttendancePage> {
               )
             else
               const AttendanceStatsShimmer(),
-            if (maxClassPerDay != null)
-              AttendanceStats(
-                text: 'Max $maxClassPerDay Classes/Day',
-              )
-            else
+            if (maxClassPerDay != null) ...[
+              if (maxClassPerDay != -1)
+                AttendanceStats(
+                  text: 'Max $maxClassPerDay Classes/Day',
+                ),
+            ] else
               const AttendanceStatsShimmer(flex: 2),
-            if (avgClassPerDay != null)
-              AttendanceStats(
-                text: 'Avg ${avgClassPerDay.toStringAsFixed(2)} Classes/Day',
-              )
-            else
+            if (avgClassPerDay != null) ...[
+              if (avgClassPerDay != -1)
+                AttendanceStats(
+                  text: 'Avg ${avgClassPerDay.toStringAsFixed(2)} Classes/Day',
+                ),
+            ] else
               const AttendanceStatsShimmer(flex: 2),
             if (daysAttended != null)
               AttendanceStats(
@@ -102,60 +134,6 @@ class _AttendancePageState extends ConsumerState<AttendancePage> {
         },
       ),
       // body: AttendanceListView(),
-    );
-  }
-}
-
-class AttendanceStatsShimmer extends StatelessWidget {
-  const AttendanceStatsShimmer({
-    this.flex = 1,
-    super.key,
-  });
-
-  final int flex;
-
-  @override
-  Widget build(BuildContext context) {
-    return SliverPadding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-      sliver: SliverToBoxAdapter(
-        child: ShimmerWidget(
-          child: Row(
-            children: [
-              Expanded(
-                flex: flex,
-                child: Container(
-                  color: Colors.black,
-                  height: context.textTheme.headlineSmall?.fontSize,
-                  width: double.infinity,
-                ),
-              ),
-              const Spacer(),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class AttendanceStats extends StatelessWidget {
-  const AttendanceStats({
-    required this.text,
-    super.key,
-  });
-  final String text;
-
-  @override
-  Widget build(BuildContext context) {
-    return SliverPadding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      sliver: SliverToBoxAdapter(
-        child: Text(
-          text,
-          style: context.textTheme.headlineSmall,
-        ),
-      ),
     );
   }
 }

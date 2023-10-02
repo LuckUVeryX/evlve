@@ -39,8 +39,7 @@ extension AttendanceStateListX on List<AttendanceState> {
   }
 
   ({int curr, int longest}) get streak {
-    final dates = map((e) => e.date.stripTime()).toList()
-      ..insert(0, DateTime.now().add(const Duration(days: 10)).stripTime());
+    final dates = map((e) => e.date.stripTime()).toList();
 
     var count = 1;
     int? curr;
@@ -49,9 +48,10 @@ extension AttendanceStateListX on List<AttendanceState> {
     for (var i = 1; i < dates.length; i++) {
       final next = dates[i];
       final prev = dates[i - 1];
+      if (next.isAtSameMomentAs(prev)) continue;
       final diff = prev.difference(next);
 
-      if (diff.inDays <= 1) {
+      if (diff.inDays == 1) {
         count += 1;
       } else {
         curr ??= count;
@@ -60,6 +60,11 @@ extension AttendanceStateListX on List<AttendanceState> {
 
       longest = max(count, longest);
     }
+
+    final nowMoreThanOneDaySinceLatest = DateTime.now()
+        .stripTime()
+        .isAfter(dates.first.add(const Duration(days: 1)));
+    if (nowMoreThanOneDaySinceLatest) curr = 0;
 
     return (curr: curr ?? 0, longest: longest);
   }
