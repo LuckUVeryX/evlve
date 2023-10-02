@@ -41,10 +41,11 @@ class AttendanceStatsShimmer extends StatelessWidget {
             children: [
               Expanded(
                 flex: flex,
-                child: Container(
-                  color: Colors.black,
+                child: NeuContainer(
+                  shadow: false,
                   height: context.textTheme.headlineSmall?.fontSize,
                   width: double.infinity,
+                  color: Colors.black,
                 ),
               ),
               const Spacer(),
