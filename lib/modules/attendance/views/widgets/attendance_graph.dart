@@ -94,7 +94,9 @@ class AttendanceGraph extends ConsumerWidget {
                                 .map((e) => '${e.facility.key} ${e.name}'),
                             intl.DateFormat.yMMMMd().format(date),
                           ].join('\n'),
+                          preferBelow: false,
                           textAlign: TextAlign.center,
+                          showDuration: const Duration(seconds: 3),
                         ),
                       )
                     : null,
