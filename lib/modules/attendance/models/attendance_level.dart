@@ -1,3 +1,4 @@
+import 'package:evlve/modules/attendance/attendance.dart';
 import 'package:evlve/modules/schedule/schedule.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -76,6 +77,46 @@ enum AttendanceLevel {
 extension AttendanceLevelX on AttendanceLevel {
   String get key {
     return switch (this) { _ => _$AttendanceLevelEnumMap[this]! };
+  }
+
+  AttendanceGraphFilter toType() {
+    switch (this) {
+      case AttendanceLevel.mtLevel1:
+      case AttendanceLevel.mtLevel2:
+      case AttendanceLevel.mtLevel3:
+      case AttendanceLevel.mtSparring:
+      case AttendanceLevel.mtConditioning:
+      case AttendanceLevel.mtClinching:
+      case AttendanceLevel.mtWomen:
+      case AttendanceLevel.mtKids:
+      case AttendanceLevel.mtPreteen:
+      case AttendanceLevel.mtLittleWarrior:
+        return AttendanceGraphFilter.muayThai;
+      case AttendanceLevel.boxingLevel1:
+      case AttendanceLevel.boxingLevel2:
+      case AttendanceLevel.boxingLevel3:
+      case AttendanceLevel.boxing2Sparring:
+        return AttendanceGraphFilter.boxing;
+      case AttendanceLevel.bjjBlue:
+      case AttendanceLevel.bjjBlueTechniques:
+      case AttendanceLevel.bjjBlueGrappling:
+      case AttendanceLevel.bjjBlueNogi:
+      case AttendanceLevel.bjjPurple:
+      case AttendanceLevel.bjjNogi:
+      case AttendanceLevel.bjjRandori:
+      case AttendanceLevel.bjjCompetitorsProgram:
+      case AttendanceLevel.bjjKidsCompetitorsProgram:
+      case AttendanceLevel.bjjPreteen:
+      case AttendanceLevel.bjjPreteenRandori:
+      case AttendanceLevel.bjjKids:
+      case AttendanceLevel.bjjLittleSamurai:
+        return AttendanceGraphFilter.bjj;
+      case AttendanceLevel.warriorFit:
+      case AttendanceLevel.warriorFit2:
+      case AttendanceLevel.mma:
+      case AttendanceLevel.wrestling:
+        return AttendanceGraphFilter.others;
+    }
   }
 
   Level toLevel() {

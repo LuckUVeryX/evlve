@@ -6,9 +6,7 @@ import 'package:evlve/app/app.dart';
 import 'package:evlve/l10n/l10n.dart';
 import 'package:evlve/modules/attendance/attendance.dart';
 import 'package:evlve/modules/facility/facility.dart';
-import 'package:evlve/modules/schedule/schedule.dart';
 import 'package:evlve/utils/date_utils.dart';
-import 'package:evlve/utils/iterable_utils.dart';
 import 'package:evlve/utils/theme_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -19,8 +17,10 @@ class AttendanceGraph extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final graphFilter = ref.watch(attendanceGraphFilterControllerProvider);
+
     final upcomingSat = DateTime.now().upcomingSat();
-    final value = ref.watch(attendanceDayProvider);
+    final value = ref.watch(attendanceDayProvider(filter: graphFilter));
     return value.when(
       data: (attendances) {
         // End nicely on a sunday
@@ -34,8 +34,8 @@ class AttendanceGraph extends ConsumerWidget {
             padding: const EdgeInsets.only(right: 16),
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 8,
-              crossAxisSpacing: 12,
-              mainAxisSpacing: 12,
+              crossAxisSpacing: 2,
+              mainAxisSpacing: 2,
             ),
             itemBuilder: (context, index) {
               final row = index ~/ 8;
@@ -77,29 +77,21 @@ class AttendanceGraph extends ConsumerWidget {
               }
 
               final dayAttendance = attendances[date] ?? [];
-              final color = dayAttendance
-                  .map((e) => e.level?.toLevel().color)
-                  .mostFrequent;
-              final opacity = min(2, dayAttendance.length) / 2;
+              final color = graphFilter.color;
+              final opacity = max(min(2, dayAttendance.length) / 2, 0.05);
 
-              return NeuButton(
-                onPressed: dayAttendance.isNotEmpty ? () {} : null,
-                backgroundColor: color?.withOpacity(opacity) ?? Colors.black,
-                child: dayAttendance.isNotEmpty
-                    ? Directionality(
-                        textDirection: TextDirection.ltr,
-                        child: Tooltip(
-                          message: [
-                            ...dayAttendance
-                                .map((e) => '${e.facility.key} ${e.name}'),
-                            intl.DateFormat.yMMMMd().format(date),
-                          ].join('\n'),
-                          preferBelow: false,
-                          textAlign: TextAlign.center,
-                          showDuration: const Duration(seconds: 3),
-                        ),
-                      )
-                    : null,
+              return Tooltip(
+                message: [
+                  ...dayAttendance.map((e) => '${e.facility.key} ${e.name}'),
+                  intl.DateFormat.yMMMMd().format(date),
+                ].join('\n'),
+                preferBelow: false,
+                textAlign: TextAlign.center,
+                showDuration: const Duration(seconds: 3),
+                child: NeuContainer(
+                  shadow: false,
+                  color: color.withOpacity(opacity),
+                ),
               );
             },
           ),
@@ -136,8 +128,8 @@ class AttendanceGraph extends ConsumerWidget {
             padding: const EdgeInsets.only(right: 16),
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 8,
-              crossAxisSpacing: 12,
-              mainAxisSpacing: 12,
+              crossAxisSpacing: 2,
+              mainAxisSpacing: 2,
             ),
             itemBuilder: (context, index) {
               final idxInRow = index % 8;
@@ -173,8 +165,9 @@ class AttendanceGraph extends ConsumerWidget {
                 );
               }
               return const ShimmerWidget(
-                child: NeuButton(
-                  backgroundColor: Colors.black,
+                child: NeuContainer(
+                  shadow: false,
+                  color: Colors.black,
                 ),
               );
             },

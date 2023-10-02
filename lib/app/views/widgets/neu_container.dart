@@ -8,6 +8,7 @@ class NeuContainer extends StatelessWidget {
     this.padding,
     this.height,
     this.width,
+    this.shadow = true,
     super.key,
   });
 
@@ -17,6 +18,7 @@ class NeuContainer extends StatelessWidget {
   final double? height;
   final double? width;
   final Widget? child;
+  final bool shadow;
 
   @override
   Widget build(BuildContext context) {
@@ -29,12 +31,9 @@ class NeuContainer extends StatelessWidget {
         color: color,
         border: Border.all(width: 4),
         borderRadius: BorderRadius.circular(4),
-        boxShadow: const [
-          BoxShadow(
-            offset: Offset(4, 4),
-            spreadRadius: 1,
-          ),
-        ],
+        boxShadow: shadow
+            ? const [BoxShadow(offset: Offset(4, 4), spreadRadius: 1)]
+            : null,
       ),
       child: child,
     );

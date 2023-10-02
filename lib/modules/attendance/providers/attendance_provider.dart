@@ -14,9 +14,14 @@ Future<List<AttendanceState>> attendance(AttendanceRef ref) async {
 
 @riverpod
 Future<Map<DateTime, List<AttendanceState>>> attendanceDay(
-  AttendanceDayRef ref,
-) async {
-  final attendances = await ref.watch(attendanceProvider.future);
+  AttendanceDayRef ref, {
+  required AttendanceGraphFilter filter,
+}) async {
+  ref.cache();
+  final attendances = (await ref.watch(attendanceProvider.future)).where((e) {
+    if (filter == AttendanceGraphFilter.all) return true;
+    return e.level?.toType() == filter;
+  });
   final result = <DateTime, List<AttendanceState>>{};
   var curr = <AttendanceState>[];
 
