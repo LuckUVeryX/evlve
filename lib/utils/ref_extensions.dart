@@ -62,7 +62,7 @@ extension WidgetRefX on WidgetRef {
 
 extension AutoDisposeRefX<T> on AutoDisposeRef<T> {
   void cache({
-    Duration duration = const Duration(seconds: 30),
+    Duration duration = const Duration(minutes: 5),
     CancelToken? cancelToken,
   }) {
     final link = keepAlive();
