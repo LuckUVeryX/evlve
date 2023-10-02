@@ -1,3 +1,4 @@
+import 'package:evlve/app/app.dart';
 import 'package:evlve/l10n/l10n.dart';
 import 'package:evlve/modules/attendance/attendance.dart';
 import 'package:evlve/utils/theme_extensions.dart';
@@ -55,55 +56,89 @@ class _AttendancePageState extends ConsumerState<AttendancePage> {
               ],
             ),
             if (currStreak != null)
-              SliverPadding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                sliver: SliverToBoxAdapter(
-                  child: Text(
-                    'Current Streak: $currStreak',
-                    style: context.textTheme.headlineSmall,
-                  ),
-                ),
-              ),
+              AttendanceStats(text: 'Current Streak: $currStreak')
+            else
+              const AttendanceStatsShimmer(),
             if (longestStreak != null)
-              SliverPadding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                sliver: SliverToBoxAdapter(
-                  child: Text(
-                    'Longest Streak: $longestStreak',
-                    style: context.textTheme.headlineSmall,
-                  ),
-                ),
-              ),
+              AttendanceStats(
+                text: 'Longest Streak: $longestStreak',
+              )
+            else
+              const AttendanceStatsShimmer(),
             if (daysAttended != null)
-              SliverPadding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                sliver: SliverToBoxAdapter(
-                  child: Text(
-                    '$daysAttended/$daysSinceFirstClass Days Attended',
-                    style: context.textTheme.headlineSmall,
-                  ),
-                ),
-              ),
+              AttendanceStats(
+                text: '$daysAttended/$daysSinceFirstClass Days Attended',
+              )
+            else
+              const AttendanceStatsShimmer(flex: 3),
             if (daysSinceFirstClass != null)
-              SliverPadding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                sliver: SliverToBoxAdapter(
-                  child: Text(
-                    '$length Classes in $daysSinceFirstClass Days',
-                    style: context.textTheme.headlineSmall,
-                  ),
-                ),
-              ),
+              AttendanceStats(
+                text: '$length Classes in $daysSinceFirstClass Days',
+              )
+            else
+              const AttendanceStatsShimmer(flex: 3),
           ];
         },
-        body: () {
-          return switch (view) {
-            AttendanceView.list => const AttendanceListView(),
-            AttendanceView.grid => const AttendanceGraph(),
-          };
-        }.call(),
+        body: switch (view) {
+          AttendanceView.list => const AttendanceListView(),
+          AttendanceView.grid => const AttendanceGraph(),
+        },
       ),
       // body: AttendanceListView(),
+    );
+  }
+}
+
+class AttendanceStatsShimmer extends StatelessWidget {
+  const AttendanceStatsShimmer({
+    this.flex = 1,
+    super.key,
+  });
+
+  final int flex;
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverPadding(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+      sliver: SliverToBoxAdapter(
+        child: ShimmerWidget(
+          child: Row(
+            children: [
+              Expanded(
+                flex: flex,
+                child: Container(
+                  color: Colors.black,
+                  height: context.textTheme.headlineSmall?.fontSize,
+                  width: double.infinity,
+                ),
+              ),
+              const Spacer(),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class AttendanceStats extends StatelessWidget {
+  const AttendanceStats({
+    required this.text,
+    super.key,
+  });
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverPadding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      sliver: SliverToBoxAdapter(
+        child: Text(
+          text,
+          style: context.textTheme.headlineSmall,
+        ),
+      ),
     );
   }
 }
