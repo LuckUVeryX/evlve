@@ -7,7 +7,7 @@ environment:
   sdk: ">=3.0.0 <4.0.0"
 
 dependencies:
-  awesome_notifications: ^0.7.5
+  awesome_notifications: ^0.8.2
   cached_network_image: ^3.2.3
   collection: ^1.17.1
   dio: ^5.3.3
