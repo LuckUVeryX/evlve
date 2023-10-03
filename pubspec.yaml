@@ -48,10 +48,6 @@ dev_dependencies:
   riverpod_lint: ^2.0.1
   very_good_analysis: ^5.1.0
 
-dependency_overrides: 
-  # https://github.com/rafaelsetragni/awesome_notifications/issues/860
-  awesome_notifications: 0.7.6
-
 flutter:
   uses-material-design: true
   generate: true
