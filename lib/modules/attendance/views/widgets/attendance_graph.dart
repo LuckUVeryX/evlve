@@ -15,6 +15,8 @@ import 'package:intl/intl.dart' as intl;
 class AttendanceGraph extends ConsumerWidget {
   const AttendanceGraph({super.key});
 
+  static const _crossAxisCount = DateTime.daysPerWeek * 2 + 1;
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final graphFilter = ref.watch(attendanceGraphFilterControllerProvider);
@@ -23,33 +25,35 @@ class AttendanceGraph extends ConsumerWidget {
     final value = ref.watch(attendanceDayProvider(filter: graphFilter));
     return value.when(
       data: (attendances) {
-        // End nicely on a sunday
-        final earliestDate = (attendances.keys.lastOrNull ?? DateTime.now())
-            .upcomingSat()
-            .subtract(const Duration(days: 6));
+        // Starts nicely on a sunday from the left
+        final earliestDate =
+            (attendances.keys.lastOrNull ?? DateTime.now()).stripTime();
 
         return Directionality(
           textDirection: TextDirection.rtl,
           child: GridView.builder(
             padding: const EdgeInsets.only(right: 16),
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 8,
+              crossAxisCount: _crossAxisCount,
               crossAxisSpacing: 2,
               mainAxisSpacing: 2,
             ),
             itemBuilder: (context, index) {
-              final row = index ~/ 8;
-              final idxInRow = index % 8;
-              final date = upcomingSat.subtract(
-                Duration(days: index - row - DateTime.daysPerWeek),
-              );
+              final row = index ~/ _crossAxisCount;
+              final idxInRow = index % _crossAxisCount;
+
+              // First date displayed is upcomingSat's date.
+              // We add an additional row on top for Weekday label
+              final date = upcomingSat
+                  .subtract(Duration(days: index - row - _crossAxisCount + 1));
 
               if (date.isBefore(earliestDate)) return null;
 
-              if (idxInRow == DateTime.daysPerWeek) {
+              // * Month Label
+              if (idxInRow == _crossAxisCount - 1) {
                 final datesInRow = <DateTime>[];
-                for (var i = 0; i < DateTime.daysPerWeek; i++) {
-                  datesInRow.add(date.add(Duration(days: i + 1)));
+                for (var i = 1; i < _crossAxisCount; i++) {
+                  datesInRow.add(date.add(Duration(days: i)));
                 }
                 final firstMonthDate =
                     datesInRow.firstWhereOrNull((e) => e.day == 1);
@@ -58,20 +62,21 @@ class AttendanceGraph extends ConsumerWidget {
                     alignment: Alignment.centerRight,
                     child: Text(
                       intl.DateFormat.MMM().format(firstMonthDate),
-                      style: context.textTheme.labelLarge,
+                      style: context.textTheme.labelSmall,
                     ),
                   );
                 }
                 return const Offstage();
               }
 
-              // Weekday Header
-              if (index < DateTime.daysPerWeek) {
+              // * Weekday Header
+              if (row == 0) {
                 return Align(
                   alignment: Alignment.bottomCenter,
                   child: Text(
-                    intl.DateFormat.E().format(date),
-                    style: context.textTheme.labelLarge,
+                    intl.DateFormat.E().format(date).characters.first,
+                    textAlign: TextAlign.center,
+                    style: context.textTheme.labelSmall,
                   ),
                 );
               }
@@ -79,6 +84,10 @@ class AttendanceGraph extends ConsumerWidget {
               final dayAttendance = attendances[date] ?? [];
               final color = graphFilter.color;
               final opacity = max(min(2, dayAttendance.length) / 2, 0.05);
+              var border = const Border();
+              if (date == DateTime.now().stripTime()) {
+                border = Border.all(width: 2);
+              }
 
               return Tooltip(
                 message: [
@@ -90,6 +99,7 @@ class AttendanceGraph extends ConsumerWidget {
                 showDuration: const Duration(seconds: 3),
                 child: NeuContainer(
                   shadow: false,
+                  border: border,
                   color: color.withOpacity(opacity),
                 ),
               );
@@ -127,20 +137,24 @@ class AttendanceGraph extends ConsumerWidget {
           child: GridView.builder(
             padding: const EdgeInsets.only(right: 16),
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 8,
+              crossAxisCount: _crossAxisCount,
               crossAxisSpacing: 2,
               mainAxisSpacing: 2,
             ),
             itemBuilder: (context, index) {
-              final idxInRow = index % 8;
+              final row = index ~/ _crossAxisCount;
+              final idxInRow = index % _crossAxisCount;
 
-              final date = upcomingSat.subtract(
-                Duration(days: index - DateTime.daysPerWeek),
-              );
-              if (idxInRow == DateTime.daysPerWeek) {
+              // First date displayed is upcomingSat's date.
+              // We add an additional row on top for Weekday label
+              final date = upcomingSat
+                  .subtract(Duration(days: index - row - _crossAxisCount + 1));
+
+              // * Month Label
+              if (idxInRow == _crossAxisCount - 1) {
                 final datesInRow = <DateTime>[];
-                for (var i = 0; i < DateTime.daysPerWeek; i++) {
-                  datesInRow.add(date.add(Duration(days: i + 1)));
+                for (var i = 1; i < _crossAxisCount; i++) {
+                  datesInRow.add(date.add(Duration(days: i)));
                 }
                 final firstMonthDate =
                     datesInRow.firstWhereOrNull((e) => e.day == 1);
@@ -149,21 +163,25 @@ class AttendanceGraph extends ConsumerWidget {
                     alignment: Alignment.centerRight,
                     child: Text(
                       intl.DateFormat.MMM().format(firstMonthDate),
-                      style: context.textTheme.labelLarge,
+                      style: context.textTheme.labelSmall,
                     ),
                   );
                 }
                 return const Offstage();
               }
-              if (index < DateTime.daysPerWeek) {
+
+              // * Weekday Header
+              if (row == 0) {
                 return Align(
                   alignment: Alignment.bottomCenter,
                   child: Text(
-                    intl.DateFormat.E().format(date),
-                    style: context.textTheme.labelLarge,
+                    intl.DateFormat.E().format(date).characters.first,
+                    textAlign: TextAlign.center,
+                    style: context.textTheme.labelSmall,
                   ),
                 );
               }
+
               return const ShimmerWidget(
                 child: NeuContainer(
                   shadow: false,
