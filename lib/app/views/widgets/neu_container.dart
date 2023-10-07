@@ -4,6 +4,7 @@ class NeuContainer extends StatelessWidget {
   const NeuContainer({
     this.child,
     this.color,
+    this.border,
     this.margin,
     this.padding,
     this.height,
@@ -12,12 +13,13 @@ class NeuContainer extends StatelessWidget {
     super.key,
   });
 
+  final Widget? child;
   final Color? color;
+  final BoxBorder? border;
   final EdgeInsets? margin;
   final EdgeInsets? padding;
   final double? height;
   final double? width;
-  final Widget? child;
   final bool shadow;
 
   @override
@@ -29,7 +31,7 @@ class NeuContainer extends StatelessWidget {
       padding: padding,
       decoration: BoxDecoration(
         color: color,
-        border: Border.all(width: 4),
+        border: border ?? Border.all(width: 4),
         borderRadius: BorderRadius.circular(4),
         boxShadow: shadow
             ? const [BoxShadow(offset: Offset(4, 4), spreadRadius: 1)]
