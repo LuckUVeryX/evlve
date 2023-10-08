@@ -3,34 +3,21 @@ import 'dart:math';
 import 'package:collection/collection.dart';
 import 'package:evlve/l10n/l10n.dart';
 import 'package:evlve/modules/attendance/attendance.dart';
+import 'package:evlve/modules/attendance/views/widgets/attendance_list_grid.dart';
 import 'package:evlve/utils/theme_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class AttendancePage extends ConsumerStatefulWidget {
+class AttendancePage extends ConsumerWidget {
   const AttendancePage({super.key});
 
   @override
-  ConsumerState<AttendancePage> createState() => _AttendancePageState();
-}
-
-class _AttendancePageState extends ConsumerState<AttendancePage> {
-  late final _controller = ScrollController();
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final view = ref.watch(attendanceViewControllerProvider);
     final graphFilter = ref.watch(attendanceGraphFilterControllerProvider);
 
     return Scaffold(
       body: NestedScrollView(
-        controller: _controller,
         headerSliverBuilder: (context, innerBoxIsScrolled) {
           final attendanceDay =
               ref.watch(attendanceDayProvider(filter: graphFilter)).valueOrNull;
@@ -84,58 +71,62 @@ class _AttendancePageState extends ConsumerState<AttendancePage> {
                 ),
               ],
             ),
-            SliverPadding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              sliver: SliverToBoxAdapter(
-                child: Text(
-                  graphFilter == AttendanceGraphFilter.all
-                      ? ''
-                      : graphFilter.name.toUpperCase(),
-                  style: context.textTheme.titleSmall,
+            if (view != AttendanceView.listGrid) ...[
+              SliverPadding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                sliver: SliverToBoxAdapter(
+                  child: Text(
+                    graphFilter == AttendanceGraphFilter.all
+                        ? ''
+                        : graphFilter.name.toUpperCase(),
+                    style: context.textTheme.titleSmall,
+                  ),
                 ),
               ),
-            ),
-            if (currStreak != null)
-              AttendanceStats(text: 'Current Streak: $currStreak')
-            else
-              const AttendanceStatsShimmer(),
-            if (longestStreak != null)
-              AttendanceStats(
-                text: 'Longest Streak: $longestStreak',
-              )
-            else
-              const AttendanceStatsShimmer(),
-            if (maxClassPerDay != null) ...[
-              if (maxClassPerDay != -1)
+              if (currStreak != null)
+                AttendanceStats(text: 'Current Streak: $currStreak')
+              else
+                const AttendanceStatsShimmer(),
+              if (longestStreak != null)
                 AttendanceStats(
-                  text: 'Max $maxClassPerDay Classes/Day',
-                ),
-            ] else
-              const AttendanceStatsShimmer(flex: 2),
-            if (avgClassPerDay != null) ...[
-              if (avgClassPerDay != -1)
+                  text: 'Longest Streak: $longestStreak',
+                )
+              else
+                const AttendanceStatsShimmer(),
+              if (maxClassPerDay != null) ...[
+                if (maxClassPerDay != -1)
+                  AttendanceStats(
+                    text: 'Max $maxClassPerDay Classes/Day',
+                  ),
+              ] else
+                const AttendanceStatsShimmer(flex: 2),
+              if (avgClassPerDay != null) ...[
+                if (avgClassPerDay != -1)
+                  AttendanceStats(
+                    text:
+                        'Avg ${avgClassPerDay.toStringAsFixed(2)} Classes/Day',
+                  ),
+              ] else
+                const AttendanceStatsShimmer(flex: 2),
+              if (daysAttended != null)
                 AttendanceStats(
-                  text: 'Avg ${avgClassPerDay.toStringAsFixed(2)} Classes/Day',
-                ),
-            ] else
-              const AttendanceStatsShimmer(flex: 2),
-            if (daysAttended != null)
-              AttendanceStats(
-                text: '$daysAttended/$daysSinceFirstClass Days Attended',
-              )
-            else
-              const AttendanceStatsShimmer(flex: 3),
-            if (daysSinceFirstClass != null)
-              AttendanceStats(
-                text: '$classesAttended Classes in $daysSinceFirstClass Days',
-              )
-            else
-              const AttendanceStatsShimmer(flex: 3),
+                  text: '$daysAttended/$daysSinceFirstClass Days Attended',
+                )
+              else
+                const AttendanceStatsShimmer(flex: 3),
+              if (daysSinceFirstClass != null)
+                AttendanceStats(
+                  text: '$classesAttended Classes in $daysSinceFirstClass Days',
+                )
+              else
+                const AttendanceStatsShimmer(flex: 3),
+            ],
           ];
         },
         body: switch (view) {
           AttendanceView.list => const AttendanceListView(),
           AttendanceView.grid => const AttendanceGraph(),
+          AttendanceView.listGrid => const AttendanceListGrid(),
         },
       ),
       // body: AttendanceListView(),
