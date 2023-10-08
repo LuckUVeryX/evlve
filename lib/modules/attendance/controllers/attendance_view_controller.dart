@@ -4,13 +4,14 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'attendance_view_controller.g.dart';
 
-enum AttendanceView { grid, list }
+enum AttendanceView { listGrid, grid, list }
 
 extension AttendanceViewX on AttendanceView {
   IconData get icon {
     return switch (this) {
       AttendanceView.grid => Icons.list,
       AttendanceView.list => Icons.grid_view,
+      AttendanceView.listGrid => Icons.list_alt,
     };
   }
 }
