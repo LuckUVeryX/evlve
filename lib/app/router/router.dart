@@ -29,21 +29,17 @@ GoRouter router(RouterRef ref) {
         return const SplashRoute().location;
       }
       final auth = authState.value.requireValue;
-      final isSplash = state.uri.path == const SplashRoute().location;
-      if (isSplash) {
-        return auth.map(
-          loggedIn: (_) {
-            final currentRoute = state.uri.toString();
-            final isLoggingIn =
-                currentRoute.startsWith(const LoginRoute().location);
-            return isLoggingIn ? const ScheduleRoute().location : null;
-          },
-          loggedOut: (_) => const LoginRoute().location,
-          requireOtp: (_) => const OtpRoute().location,
-        );
-      }
-
-      return null;
+      return auth.map(
+        loggedIn: (_) {
+          final currentRoute = state.uri.toString();
+          final isLoggingIn =
+              currentRoute.startsWith(const LoginRoute().location) ||
+                  currentRoute == const SplashRoute().location;
+          return isLoggingIn ? const ScheduleRoute().location : null;
+        },
+        loggedOut: (_) => const LoginRoute().location,
+        requireOtp: (_) => const OtpRoute().location,
+      );
     },
   );
 
