@@ -4,7 +4,7 @@ import 'package:evlve/modules/facility/facility.dart';
 import 'package:evlve/modules/user/user.dart';
 import 'package:evlve/utils/theme_extensions.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class AccountSettingsPage extends ConsumerWidget {
   const AccountSettingsPage({super.key});
