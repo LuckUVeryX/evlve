@@ -16,7 +16,7 @@ Stream<ShakeEvent> shakeEvent(ShakeEventRef ref) async* {
   var shakeCount = 0;
   final qr = ref.watch(qRControllerProvider);
 
-  await for (final event in accelerometerEvents) {
+  await for (final event in accelerometerEventStream()) {
     final forceSquared =
         (pow(event.x, 2) + pow(event.y, 2) + pow(event.z, 2)) / pow(gravity, 2);
     if (forceSquared > pow(qr.shakeThresholdForce, 2)) {
