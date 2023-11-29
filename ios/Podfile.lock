@@ -75,7 +75,7 @@ SPEC CHECKSUMS:
   IosAwnCore: ed1b2b6d84962a758354dbacd9ce525c72ce28a9
   path_provider_foundation: 29f094ae23ebbca9d3d0cec13889cd9060c0e943
   screen_brightness_ios: 715ca807df953bf676d339f11464e438143ee625
-  sensors_plus: 4ee32bc7d61a055f27f88d3215ad6b6fb96a2b8e
+  sensors_plus: 42b9de1b8237675fa8d8121e4bb93be0f79fa61d
   shared_preferences_foundation: 5b919d13b803cadd15ed2dc053125c68730e5126
   smart_auth: 4bedbc118723912d0e45a07e8ab34039c19e04f2
   sqflite: 31f7eba61e3074736dff8807a9b41581e4f7f15a
