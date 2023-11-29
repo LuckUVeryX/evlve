@@ -1,7 +1,7 @@
 import 'package:evlve/modules/tester/controllers/tester_detector_controller.dart';
 import 'package:evlve/modules/tester/tester.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class TesterDetector extends ConsumerWidget {
   const TesterDetector({

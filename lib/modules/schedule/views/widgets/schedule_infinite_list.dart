@@ -8,7 +8,7 @@ import 'package:evlve/utils/date_utils.dart';
 import 'package:evlve/utils/ref_extensions.dart';
 import 'package:evlve/utils/theme_extensions.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class ScheduleInfiniteList extends ConsumerStatefulWidget {
   const ScheduleInfiniteList({

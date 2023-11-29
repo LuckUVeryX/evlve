@@ -5,7 +5,7 @@ import 'package:evlve/app/observers/observers.dart';
 import 'package:evlve/modules/notifications/notifications.dart';
 import 'package:evlve/providers/providers.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

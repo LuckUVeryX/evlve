@@ -1,6 +1,6 @@
 import 'package:evlve/modules/theme_switcher/theme_switcher.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class ThemeSwitcherButton extends ConsumerWidget {
   const ThemeSwitcherButton({super.key});

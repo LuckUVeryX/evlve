@@ -9,7 +9,7 @@ import 'package:evlve/modules/facility/facility.dart';
 import 'package:evlve/utils/date_utils.dart';
 import 'package:evlve/utils/theme_extensions.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 
 class AttendanceCard extends ConsumerWidget {
