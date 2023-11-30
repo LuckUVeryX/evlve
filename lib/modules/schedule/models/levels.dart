@@ -30,6 +30,7 @@ enum Level {
   bjjBlueNogi,
   @JsonValue('BJJ_PURLE')
   bjjPurple,
+  bjjBlack,
   bjjNogi,
   bjjRandori,
   bjjCompetitorsProgram,
@@ -72,6 +73,7 @@ extension LevelX on Level {
       Level.warriorFit2 => Colors.orange,
       Level.bjjBlue || Level.bjjBlueNogi => Colors.blue,
       Level.bjjPurple || Level.bjjNogi || Level.bjjRandori => Colors.purple,
+      Level.bjjBlack => Colors.grey.shade700,
       Level.bjjCompetitorsProgram => Colors.blueGrey,
       Level.bjjPreteen || Level.bjjPreteenRandori => Colors.green,
       Level.bjjKids || Level.bjjKidsCompetitorsProgram => Colors.orange,
