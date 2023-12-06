@@ -42,6 +42,7 @@ enum Level {
   warriorFit,
   @JsonValue('WARRIOR_FIT_2')
   warriorFit2,
+  warriorFitHiit,
   mma,
   wrestling;
 }
@@ -70,7 +71,7 @@ extension LevelX on Level {
       Level.boxing2Sparring =>
         Colors.brown,
       Level.warriorFit => Colors.yellow,
-      Level.warriorFit2 => Colors.orange,
+      Level.warriorFit2 || Level.warriorFitHiit => Colors.orange,
       Level.bjjBlue || Level.bjjBlueNogi => Colors.blue,
       Level.bjjPurple || Level.bjjNogi || Level.bjjRandori => Colors.purple,
       Level.bjjBlack => Colors.grey.shade700,
