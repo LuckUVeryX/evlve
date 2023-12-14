@@ -31,6 +31,7 @@ enum Level {
   @JsonValue('BJJ_PURLE')
   bjjPurple,
   bjjBlack,
+  bjjWomen,
   bjjNogi,
   bjjRandori,
   bjjCompetitorsProgram,
@@ -60,7 +61,7 @@ extension LevelX on Level {
       Level.mtLevel1 => Colors.grey,
       Level.mtLevel2 || Level.mtSparring || Level.mtClinching => Colors.red,
       Level.mtLevel3 => Colors.lime,
-      Level.mtWomen => Colors.pink,
+      Level.mtWomen || Level.bjjWomen => Colors.pink,
       Level.mtConditioning => Colors.blueGrey,
       Level.mtKids => Colors.orange,
       Level.mtPreteen => Colors.brown,
