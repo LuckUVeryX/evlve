@@ -14,7 +14,7 @@ dependencies:
   duration_picker: ^1.1.1
   flutter:
     sdk: flutter
-  flutter_hooks: ^0.20.3
+  flutter_hooks: ^0.20.4
   flutter_localizations:
     sdk: flutter
   flutter_secure_storage: ^9.0.0
