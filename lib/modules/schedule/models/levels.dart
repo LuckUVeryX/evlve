@@ -46,7 +46,8 @@ enum Level {
   warriorFit2,
   warriorFitHiit,
   mma,
-  wrestling;
+  wrestling,
+  outdoorClass;
 }
 
 extension LevelX on Level {
@@ -61,7 +62,7 @@ extension LevelX on Level {
     return switch (this) {
       Level.mtLevel1 => Colors.grey,
       Level.mtLevel2 || Level.mtSparring || Level.mtClinching => Colors.red,
-      Level.mtLevel3 => Colors.lime,
+      Level.mtLevel3 || Level.outdoorClass => Colors.lime,
       Level.mtWomen || Level.bjjWomen => Colors.pink,
       Level.mtConditioning => Colors.blueGrey,
       Level.mtKids => Colors.orange,
