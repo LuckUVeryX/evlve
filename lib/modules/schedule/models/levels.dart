@@ -5,6 +5,7 @@ part 'levels.g.dart';
 
 @JsonEnum(alwaysCreate: true, fieldRename: FieldRename.screamingSnake)
 enum Level {
+  none,
   @JsonValue('MT_LEVEL_1')
   mtLevel1,
   @JsonValue('MT_LEVEL_2')
@@ -61,7 +62,8 @@ extension LevelX on Level {
 
   Color get color {
     return switch (this) {
-      Level.customClass => Colors.white,
+      Level.none => Colors.grey.shade300,
+      Level.customClass => Colors.black,
       Level.mtLevel1 => Colors.grey,
       Level.mtLevel2 || Level.mtSparring || Level.mtClinching => Colors.red,
       Level.mtLevel3 || Level.outdoorClass => Colors.lime,
