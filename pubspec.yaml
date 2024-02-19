@@ -10,7 +10,7 @@ dependencies:
   awesome_notifications: ^0.8.2
   cached_network_image: ^3.2.3
   collection: ^1.18.0
-  dio: ^5.4.0
+  dio: ^5.4.1
   duration_picker: ^1.1.1
   flutter:
     sdk: flutter
