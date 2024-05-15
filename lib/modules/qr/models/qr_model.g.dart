@@ -17,11 +17,11 @@ _$QRModelImpl _$$QRModelImplFromJson(Map<String, dynamic> json) =>
           (json['shakeThresholdForce'] as num?)?.toDouble() ?? 2.5,
       debounce: json['debounce'] == null
           ? const Duration(milliseconds: 250)
-          : Duration(microseconds: (json['debounce'] as num).toInt()),
+          : Duration(microseconds: json['debounce'] as int),
       shakeCountReset: json['shakeCountReset'] == null
           ? const Duration(seconds: 3)
-          : Duration(microseconds: (json['shakeCountReset'] as num).toInt()),
-      shakeCount: (json['shakeCount'] as num?)?.toInt() ?? 1,
+          : Duration(microseconds: json['shakeCountReset'] as int),
+      shakeCount: json['shakeCount'] as int? ?? 1,
     );
 
 Map<String, dynamic> _$$QRModelImplToJson(_$QRModelImpl instance) =>
