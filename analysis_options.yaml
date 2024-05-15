@@ -12,4 +12,5 @@ analyzer:
 linter:
   rules:
     avoid_positional_boolean_parameters: false
+    lines_longer_than_80_chars: false
     public_member_api_docs: false

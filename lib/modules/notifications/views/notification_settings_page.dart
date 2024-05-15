@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:awesome_notifications/awesome_notifications.dart';
-import 'package:duration_picker/duration_picker.dart';
 import 'package:evlve/l10n/l10n.dart';
 import 'package:evlve/modules/notifications/notifications.dart';
 import 'package:evlve/utils/ref_extensions.dart';
