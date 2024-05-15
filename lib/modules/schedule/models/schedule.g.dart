@@ -115,6 +115,7 @@ Map<String, dynamic> _$$ClassDetailsImplToJson(_$ClassDetailsImpl instance) =>
     };
 
 const _$LevelEnumMap = {
+  Level.none: 'NONE',
   Level.mtLevel1: 'MT_LEVEL_1',
   Level.mtLevel2: 'MT_LEVEL_2',
   Level.mtLevel3: 'MT_LEVEL_3',
@@ -132,7 +133,9 @@ const _$LevelEnumMap = {
   Level.bjjBlue: 'BJJ_BLUE',
   Level.bjjBlueNogi: 'BJJ_BLUE_NOGI',
   Level.bjjPurple: 'BJJ_PURLE',
+  Level.bjjTakedowns: 'BJJ_TAKEDOWNS',
   Level.bjjBlack: 'BJJ_BLACK',
+  Level.bjjWomen: 'BJJ_WOMEN',
   Level.bjjNogi: 'BJJ_NOGI',
   Level.bjjRandori: 'BJJ_RANDORI',
   Level.bjjCompetitorsProgram: 'BJJ_COMPETITORS_PROGRAM',
@@ -143,6 +146,9 @@ const _$LevelEnumMap = {
   Level.bjjLittleSamurai: 'BJJ_LITTLE_SAMURAI',
   Level.warriorFit: 'WARRIOR_FIT',
   Level.warriorFit2: 'WARRIOR_FIT_2',
+  Level.warriorFitHiit: 'WARRIOR_FIT_HIIT',
   Level.mma: 'MMA',
   Level.wrestling: 'WRESTLING',
+  Level.outdoorClass: 'OUTDOOR_CLASS',
+  Level.customClass: 'CUSTOM_CLASS',
 };
