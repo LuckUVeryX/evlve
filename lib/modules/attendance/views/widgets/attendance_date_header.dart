@@ -17,7 +17,7 @@ class AttendanceDateHeader extends StatelessWidget {
       child: Text(
         DateFormat.yMMMEd().format(date),
         style: context.textTheme.headlineSmall?.copyWith(
-          color: context.colorScheme.onBackground,
+          color: context.colorScheme.onSurface,
           fontWeight: FontWeight.bold,
         ),
       ),

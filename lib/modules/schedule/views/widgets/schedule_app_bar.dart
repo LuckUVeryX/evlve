@@ -23,8 +23,8 @@ class ScheduleAppBar extends ConsumerWidget {
       bottom: const ScheduleTabBar(),
       leading: const _LocationIconButton(),
       actions: const [_SettingsIconButton()],
-      backgroundColor: context.colorScheme.background,
-      foregroundColor: context.colorScheme.onBackground,
+      backgroundColor: context.colorScheme.surface,
+      foregroundColor: context.colorScheme.onSurface,
       actionsIconTheme: context.theme.iconTheme,
     );
   }
@@ -53,8 +53,8 @@ class _LocationIconButton extends ConsumerWidget {
 
     return Center(
       child: NeuIconButton(
-        foregroundColor: context.colorScheme.onBackground,
-        backgroundColor: context.colorScheme.background,
+        foregroundColor: context.colorScheme.onSurface,
+        backgroundColor: context.colorScheme.surface,
         onPressed: () async {
           final newFacility = await FacilityDialog.show(context);
           if (newFacility == null) return;

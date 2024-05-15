@@ -25,12 +25,12 @@ class AppTheme {
     final listTileTheme = ListTileThemeData(
       titleTextStyle: textTheme.bodyLarge,
       subtitleTextStyle: textTheme.labelLarge,
-      textColor: colorScheme.onBackground,
+      textColor: colorScheme.onSurface,
     );
 
     final inputDecorationTheme = InputDecorationTheme(
       filled: true,
-      fillColor: colorScheme.surfaceVariant,
+      fillColor: colorScheme.surfaceContainerHighest,
       errorStyle: textTheme.bodyMedium?.copyWith(
         color: colorScheme.errorContainer,
       ),

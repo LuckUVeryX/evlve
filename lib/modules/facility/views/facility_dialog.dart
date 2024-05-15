@@ -24,7 +24,7 @@ class FacilityDialog extends ConsumerWidget {
 
     return Dialog(
       child: NeuContainer(
-        color: context.colorScheme.surfaceVariant,
+        color: context.colorScheme.surfaceContainerHighest,
         child: Material(
           color: Colors.transparent,
           child: Column(

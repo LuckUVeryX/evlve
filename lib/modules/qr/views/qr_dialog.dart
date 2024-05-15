@@ -47,15 +47,15 @@ class QRCode extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final id = ref.watch(userProvider).id;
     return QrImageView(
-      backgroundColor: context.colorScheme.background,
+      backgroundColor: context.colorScheme.surface,
       data: id,
       eyeStyle: QrEyeStyle(
         eyeShape: QrEyeShape.square,
-        color: context.colorScheme.onBackground,
+        color: context.colorScheme.onSurface,
       ),
       dataModuleStyle: QrDataModuleStyle(
         dataModuleShape: QrDataModuleShape.square,
-        color: context.colorScheme.onBackground,
+        color: context.colorScheme.onSurface,
       ),
       embeddedImage: const CachedNetworkImageProvider(
         'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQs_VVgajqAz15gS4Pt8drb59szsee8MZTjtcpQU9Woh9gRpMf7',

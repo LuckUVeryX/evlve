@@ -92,7 +92,8 @@ class _SettingsItem extends StatelessWidget {
       padding: const EdgeInsets.all(8),
       child: NeuButton(
         onPressed: onTap,
-        backgroundColor: backgroundColor ?? context.colorScheme.surfaceVariant,
+        backgroundColor:
+            backgroundColor ?? context.colorScheme.surfaceContainerHighest,
         child: ListTile(
           leading: Icon(leadingIcon),
           title: Text(label),

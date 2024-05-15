@@ -168,8 +168,8 @@ ${(qrSetting.shakeCountReset.inMilliseconds / 1000).toStringAsFixed(2)}s''',
               Expanded(
                 child: NeuTextButton(
                   label: context.l10n.settingsQRCancel,
-                  backgroundColor: context.colorScheme.background,
-                  foregroundColor: context.colorScheme.onBackground,
+                  backgroundColor: context.colorScheme.surface,
+                  foregroundColor: context.colorScheme.onSurface,
                   onPressed: context.pop,
                 ),
               ),

@@ -24,7 +24,7 @@ class AttendanceCard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     const height = 160.0;
     const margin = EdgeInsets.symmetric(vertical: 8);
-    final backgroundColor = context.colorScheme.background;
+    final backgroundColor = context.colorScheme.surface;
     final value = ref.watch(AttendanceDayProvider(filter: filter));
 
     return value.when(

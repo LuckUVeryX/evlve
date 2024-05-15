@@ -14,7 +14,7 @@ class ScheduleTabBar extends ConsumerWidget implements PreferredSizeWidget {
     final areas = facility.areas;
 
     return NeuContainer(
-      color: context.colorScheme.background,
+      color: context.colorScheme.surface,
       padding: const EdgeInsets.all(2),
       margin: const EdgeInsets.all(4).copyWith(right: 8),
       child: TabBar(
@@ -33,7 +33,7 @@ class ScheduleTabBar extends ConsumerWidget implements PreferredSizeWidget {
           borderRadius: BorderRadius.circular(2),
         ),
         labelColor: context.colorScheme.onPrimary,
-        unselectedLabelColor: context.colorScheme.onBackground,
+        unselectedLabelColor: context.colorScheme.onSurface,
       ),
     );
   }

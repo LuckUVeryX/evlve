@@ -18,7 +18,7 @@ class LateBookingConfirmDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return Dialog(
       child: NeuContainer(
-        color: context.colorScheme.surfaceVariant,
+        color: context.colorScheme.surfaceContainerHighest,
         child: Padding(
           padding: const EdgeInsets.all(16),
           child: Column(

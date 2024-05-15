@@ -17,7 +17,7 @@ class EvolveLogo extends StatelessWidget {
       dimension: dimension ?? 24,
       child: CustomPaint(
         painter: _EvolveLogoPainter(
-          color: color ?? context.colorScheme.onBackground,
+          color: color ?? context.colorScheme.onSurface,
         ),
       ),
     );

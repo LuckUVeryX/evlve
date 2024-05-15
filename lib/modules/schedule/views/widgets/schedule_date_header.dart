@@ -15,7 +15,7 @@ class ScheduleDateHeader extends StatelessWidget {
         child: Text(
           DateFormat.MMMEd().format(dt),
           style: context.textTheme.headlineLarge?.copyWith(
-            color: context.colorScheme.onBackground,
+            color: context.colorScheme.onSurface,
             fontWeight: FontWeight.bold,
           ),
         ),

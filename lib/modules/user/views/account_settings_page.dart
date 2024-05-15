@@ -16,11 +16,11 @@ class AccountSettingsPage extends ConsumerWidget {
     return Scaffold(
       body: CheckboxTheme(
         data: CheckboxThemeData(
-          fillColor: MaterialStateColor.resolveWith((states) {
-            if (states.contains(MaterialState.selected)) {
+          fillColor: WidgetStateColor.resolveWith((states) {
+            if (states.contains(WidgetState.selected)) {
               return context.colorScheme.primary;
             }
-            return context.colorScheme.onBackground;
+            return context.colorScheme.onSurface;
           }),
         ),
         child: CustomScrollView(
@@ -85,7 +85,7 @@ class AccountSettingsPage extends ConsumerWidget {
               title: Text(
                 context.l10n.settingsAccountAutoBook,
                 style: context.textTheme.bodyLarge
-                    ?.copyWith(color: context.colorScheme.onBackground),
+                    ?.copyWith(color: context.colorScheme.onSurface),
               ),
             ),
             _AccountCheckboxListTile(
@@ -93,7 +93,7 @@ class AccountSettingsPage extends ConsumerWidget {
               title: Text(
                 context.l10n.settingsAccountAddBuddy,
                 style: context.textTheme.bodyLarge
-                    ?.copyWith(color: context.colorScheme.onBackground),
+                    ?.copyWith(color: context.colorScheme.onSurface),
               ),
             ),
             _AccountCheckboxListTile(
@@ -101,7 +101,7 @@ class AccountSettingsPage extends ConsumerWidget {
               title: Text(
                 context.l10n.settingsAccountIsEmployee,
                 style: context.textTheme.bodyLarge
-                    ?.copyWith(color: context.colorScheme.onBackground),
+                    ?.copyWith(color: context.colorScheme.onSurface),
               ),
             ),
             _AccountCheckboxListTile(
@@ -109,7 +109,7 @@ class AccountSettingsPage extends ConsumerWidget {
               title: Text(
                 context.l10n.settingsAccountAccessToRegularClasses,
                 style: context.textTheme.bodyLarge
-                    ?.copyWith(color: context.colorScheme.onBackground),
+                    ?.copyWith(color: context.colorScheme.onSurface),
               ),
             ),
             _AccountCheckboxListTile(
@@ -117,7 +117,7 @@ class AccountSettingsPage extends ConsumerWidget {
               title: Text(
                 context.l10n.settingsAccountHasActiveTEAP,
                 style: context.textTheme.bodyLarge
-                    ?.copyWith(color: context.colorScheme.onBackground),
+                    ?.copyWith(color: context.colorScheme.onSurface),
               ),
             ),
             _AccountCheckboxListTile(
@@ -125,7 +125,7 @@ class AccountSettingsPage extends ConsumerWidget {
               title: Text(
                 context.l10n.settingsAccountIsActveGeneralMembership,
                 style: context.textTheme.bodyLarge
-                    ?.copyWith(color: context.colorScheme.onBackground),
+                    ?.copyWith(color: context.colorScheme.onSurface),
               ),
             ),
           ],
@@ -149,12 +149,12 @@ class _AccountCheckboxListTile extends StatelessWidget {
     return SliverToBoxAdapter(
       child: NeuContainer(
         margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        color: context.colorScheme.surfaceVariant,
+        color: context.colorScheme.surfaceContainerHighest,
         child: CheckboxListTile(
-          fillColor: MaterialStateProperty.resolveWith((states) {
-            if (states.contains(MaterialState.disabled) &&
-                !states.contains(MaterialState.selected)) {
-              return context.colorScheme.surfaceVariant;
+          fillColor: WidgetStateProperty.resolveWith((states) {
+            if (states.contains(WidgetState.disabled) &&
+                !states.contains(WidgetState.selected)) {
+              return context.colorScheme.surfaceContainerHighest;
             }
             return null;
           }),
