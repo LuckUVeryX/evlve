@@ -20,5 +20,5 @@ jobs:
       min_coverage: 0
       coverage_excludes: "**/*.g.dart **/*.freezed.dart lib/l10n/l10n.dart"
       setup: |
-        flutter pub run build_runner build --delete-conflicting-outputs
+        dart run build_runner build --delete-conflicting-outputs
         flutter pub get
