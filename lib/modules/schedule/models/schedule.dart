@@ -90,7 +90,7 @@ class ScheduleExtraData with _$ScheduleExtraData {
 class ClassDetails with _$ClassDetails {
   const factory ClassDetails({
     required Area area,
-    required Level level,
+    @JsonKey(unknownEnumValue: Level.customClass) required Level level,
     required bool isBookedByMe,
     required bool isWaitingByMe,
     required bool isBookAvailable,

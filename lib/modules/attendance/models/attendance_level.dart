@@ -12,6 +12,8 @@ enum AttendanceLevel {
   mtLevel2,
   @JsonValue('Muay Thai (III)')
   mtLevel3,
+  @JsonValue('Muay Thai Competitors Program')
+  mtCompetitorsProgram,
   @JsonValue('Muay Thai Sparring')
   mtSparring,
   @JsonValue('Muay Thai Conditioning')
@@ -67,7 +69,11 @@ enum AttendanceLevel {
   @JsonValue('Mixed Martial Arts')
   mma,
   @JsonValue('Wrestling')
-  wrestling;
+  wrestling,
+  @JsonValue('Outdoor Class')
+  outdoorClass,
+  @JsonValue('Custom Class')
+  customClass;
 
   static Map<String, AttendanceLevel> get attendanceLevelEnumMap {
     return _$AttendanceLevelEnumMap.map((key, value) => MapEntry(value, key));
@@ -91,6 +97,9 @@ extension AttendanceLevelX on AttendanceLevel {
       case AttendanceLevel.mtKids:
       case AttendanceLevel.mtPreteen:
       case AttendanceLevel.mtLittleWarrior:
+      case AttendanceLevel.mtCompetitorsProgram:
+      case AttendanceLevel.outdoorClass:
+      case AttendanceLevel.customClass:
         return AttendanceGraphFilter.muayThai;
       case AttendanceLevel.boxingLevel1:
       case AttendanceLevel.boxingLevel2:
@@ -124,6 +133,9 @@ extension AttendanceLevelX on AttendanceLevel {
       AttendanceLevel.mtLevel1 => Level.mtLevel1,
       AttendanceLevel.mtLevel2 => Level.mtLevel2,
       AttendanceLevel.mtLevel3 => Level.mtLevel3,
+      AttendanceLevel.mtCompetitorsProgram => Level.mtCompetitorsProgram,
+      AttendanceLevel.outdoorClass => Level.outdoorClass,
+      AttendanceLevel.customClass => Level.customClass,
       AttendanceLevel.mtSparring => Level.mtSparring,
       AttendanceLevel.mtConditioning => Level.mtConditioning,
       AttendanceLevel.mtClinching => Level.mtClinching,

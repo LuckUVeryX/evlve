@@ -5,7 +5,6 @@ part 'levels.g.dart';
 
 @JsonEnum(alwaysCreate: true, fieldRename: FieldRename.screamingSnake)
 enum Level {
-  none,
   @JsonValue('MT_LEVEL_1')
   mtLevel1,
   @JsonValue('MT_LEVEL_2')
@@ -19,6 +18,7 @@ enum Level {
   mtKids,
   mtPreteen,
   mtLittleWarrior,
+  mtCompetitorsProgram,
   @JsonValue('BOXING_LEVEL_1')
   boxingLevel1,
   @JsonValue('BOXING_LEVEL_2')
@@ -49,7 +49,7 @@ enum Level {
   mma,
   wrestling,
   outdoorClass,
-  customClass;
+  customClass,
 }
 
 extension LevelX on Level {
@@ -62,8 +62,7 @@ extension LevelX on Level {
 
   Color get color {
     return switch (this) {
-      Level.none => Colors.grey.shade300,
-      Level.customClass => Colors.black,
+      Level.customClass => Colors.grey.shade300,
       Level.mtLevel1 => Colors.grey,
       Level.mtLevel2 || Level.mtSparring || Level.mtClinching => Colors.red,
       Level.mtLevel3 || Level.outdoorClass => Colors.lime,
@@ -72,6 +71,7 @@ extension LevelX on Level {
       Level.mtKids => Colors.orange,
       Level.mtPreteen => Colors.brown,
       Level.mtLittleWarrior => Colors.orange.shade100,
+      Level.mtCompetitorsProgram => Colors.purple.shade200,
       Level.boxingLevel1 => Colors.green,
       Level.boxingLevel2 ||
       Level.boxingLevel3 ||
@@ -88,6 +88,48 @@ extension LevelX on Level {
       Level.bjjLittleSamurai => Colors.blue.shade100,
       Level.mma => Colors.blue.shade900,
       Level.wrestling => Colors.brown.shade900,
+    };
+  }
+
+  String get attendanceLevel {
+    return switch (this) {
+      Level.mtLevel1 => 'Muay Thai (I)',
+      Level.mtLevel2 => 'Muay Thai (II)',
+      Level.mtLevel3 => 'Muay Thai (III)',
+      Level.mtCompetitorsProgram => 'Muay Thai Competitors Program',
+      Level.mtSparring => 'Muay Thai Sparring',
+      Level.mtConditioning => 'Muay Thai Conditioning',
+      Level.mtClinching => 'Muay Thai Clinching',
+      Level.mtWomen => 'Muay Thai (Women)',
+      Level.mtKids => 'Muay Thai Kids',
+      Level.mtPreteen => 'Muay Thai Preteen',
+      Level.mtLittleWarrior => 'Little Warrior',
+      Level.boxingLevel1 => 'Boxing (I)',
+      Level.boxingLevel2 => 'Boxing (II)',
+      Level.boxingLevel3 => 'Boxing (III)',
+      Level.boxing2Sparring => 'Boxing Sparring',
+      Level.bjjBlue => 'Brazilian Jiu-Jitsu (Blue)',
+      Level.bjjBlueNogi => 'Brazilian Jiu-Jitsu (Blue Nogi)',
+      Level.bjjPurple => 'Brazilian Jiu-Jitsu (Purple)',
+      Level.bjjNogi => 'Brazilian Jiu-Jitsu (Nogi)',
+      Level.bjjRandori => 'Brazilian Jiu-Jitsu (Randori)',
+      Level.bjjCompetitorsProgram => 'Brazilian Jiu-Jitsu Competitors Program',
+      Level.bjjKidsCompetitorsProgram =>
+        'Brazilian Jiu-Jitsu Kids Competitors Program',
+      Level.bjjPreteen => 'Brazilian Jiu-Jitsu Preteen',
+      Level.bjjPreteenRandori => 'Brazilian Jiu-Jitsu Preteen Randori',
+      Level.bjjKids => 'Brazilian Jiu-Jitsu Kids',
+      Level.bjjLittleSamurai => 'Brazilian Jiu-Jitsu Little Samurai',
+      Level.warriorFit => 'Warrior Fit',
+      Level.warriorFit2 => 'Warrior Fit (II)',
+      Level.warriorFitHiit => 'Warrior Fit Hiit',
+      Level.mma => 'Mixed Martial Arts',
+      Level.wrestling => 'Wrestling',
+      Level.bjjTakedowns => 'Brazilian Jiu-Jitsu Takedowns',
+      Level.bjjBlack => 'Brazilian Jiu-Jitsu (Black)',
+      Level.bjjWomen => 'Brazilian Jiu-Jitsu (Women)',
+      Level.outdoorClass => 'Outdoor Class',
+      Level.customClass => 'Custom Class',
     };
   }
 }
