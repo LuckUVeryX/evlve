@@ -12,7 +12,7 @@ Logger log(LogRef ref) {
 }
 
 /// Outputs simple log messages:
-/// ```
+/// ```bash
 /// [E] Log message  ERROR: Error info
 /// ```
 ///

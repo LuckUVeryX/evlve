@@ -5,8 +5,10 @@ import 'package:evlve/modules/auth/controllers/controllers.dart';
 import 'package:evlve/utils/theme_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:pinput/pinput.dart';
+import 'package:smart_auth/smart_auth.dart';
 
 class OtpPage extends ConsumerWidget {
   const OtpPage({super.key});
@@ -89,6 +91,8 @@ class _ResendButtonState extends ConsumerState<_ResendButton> {
 class _Pinput extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final smsRetriever = useRef(_SmsRetrieverImpl(SmartAuth()));
+
     final defaultPinTheme = PinTheme(
       width: 56,
       height: 60,
@@ -103,8 +107,8 @@ class _Pinput extends ConsumerWidget {
       length: 6,
       autofocus: true,
       defaultPinTheme: defaultPinTheme,
+      smsRetriever: smsRetriever.value,
       onTapOutside: (_) => FocusManager.instance.primaryFocus?.unfocus(),
-      androidSmsAutofillMethod: AndroidSmsAutofillMethod.smsUserConsentApi,
       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
       onCompleted: ref.read(authControllerProvider.notifier).signInOtp,
       focusedPinTheme: defaultPinTheme.copyWith(
@@ -122,4 +126,27 @@ class _Pinput extends ConsumerWidget {
       ),
     );
   }
+}
+
+class _SmsRetrieverImpl implements SmsRetriever {
+  const _SmsRetrieverImpl(this.smartAuth);
+
+  final SmartAuth smartAuth;
+
+  @override
+  Future<void> dispose() {
+    return smartAuth.removeSmsListener();
+  }
+
+  @override
+  Future<String?> getSmsCode() async {
+    final res = await smartAuth.getSmsCode();
+    if (res.succeed && res.codeFound) {
+      return res.code!;
+    }
+    return null;
+  }
+
+  @override
+  bool get listenForMultipleSms => false;
 }
