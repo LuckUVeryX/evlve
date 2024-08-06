@@ -36,7 +36,7 @@ dependencies:
   smart_auth: ^2.0.0
 
 dev_dependencies:
-  build_runner: ^2.4.11
+  build_runner: ^2.4.12
   custom_lint: ^0.6.0
   flutter_native_splash: ^2.3.8
   flutter_test:
